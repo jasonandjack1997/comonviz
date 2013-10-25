@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.8.4
+Created-By: 1.7.0_45-b18 (Oracle Corporation)
+Bundle-ManifestVersion: 2
+Bundle-Name: OntoGraf Plug-in
+Bundle-SymbolicName: org.protege.ontograf;singleton:=true
+Bundle-Category: protege
+Bundle-Description: A plugin for visualizing ontologies
+Bundle-Vendor: The Protege Team
+Bundle-DocURL: http://protege.stanford.edu/
+Bundle-ClassPath: .,lib/layouts.jar,lib/org.eclipse.draw2d_3.2.100.v20
+ 070522.jar,lib/piccolo.jar,lib/piccolox.jarF:\Protege_workspace_1\org
+ .protege.editor.owl\lib\protege-owlapi-extensions.jar
+Import-Package: javax.imageio,javax.swing,javax.swing.border,javax.swi
+ ng.colorchooser,javax.swing.event,javax.swing.filechooser,javax.swing
+ .plaf,javax.swing.plaf.basic,javax.swing.plaf.metal,javax.swing.plaf.
+ multi,javax.swing.plaf.synth,javax.swing.table,javax.swing.text,javax
+ .swing.text.html,javax.swing.text.html.parser,javax.swing.text.rtf,ja
+ vax.swing.tree,javax.swing.undo,javax.xml.parsers,org.apache.log4j,or
+ g.osgi.framework,org.w3c.dom,org.w3c.dom.bootstrap,org.w3c.dom.events
+ ,org.w3c.dom.ls,org.xml.sax,org.xml.sax.ext,org.xml.sax.helpers
+Bundle-Version: 1.0.4.2013_10_21_1049
+Bundle-Activator: org.protege.editor.core.plugin.DefaultPluginActivato
+ r 
+Require-Bundle: org.protege.common,org.protege.editor.core.application
+ ,org.protege.editor.owl,org.semanticweb.owl.owlapi,ca.uvic.cs.chisel.
+ cajun
+Built-By: uqwwan10
+

@@ -1,0 +1,619 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE Ontology [
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY xml "http://www.w3.org/XML/1998/namespace" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base=""
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     ontologyIRI="http://www.semanticweb.org/ontologies/2011/2/CMOntology.owl">
+    <Prefix name="" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Declaration>
+        <Class IRI="#Advisory"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Assurance"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Audit"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#BusinessProcess"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#BusinessProcessManagement"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ChangeManagement"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#CodeofPractice"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Committee"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Communication&amp;Consultation"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Competency&amp;Training"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Competency&amp;TrainingTool"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ComplianceAwareness"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ComplianceDriver"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ComplianceManagement"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ComplianceValue"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ContextEstablishment"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Contract"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Control&amp;Monitoring"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Control&amp;MonitoringTool"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ControlsAssessment&amp;Maintenance"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ControlsIdentification&amp;Definition"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ControlsImplementation"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ControlsSelection"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#CorrectiveControls"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Culture"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#CultureManagement"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#CultureMeasurement"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#DetectiveControls"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Direction"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ExternalAudit"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ExternalPolicy"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#FormalCulture"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ImplementationCost"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#InformalCulture"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#InternalAudit"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#InternalPolicy"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#MandatoryObligation"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#MonetaryCost"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Monitor&amp;Review"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Non-MonetaryCost"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Obligation"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ObligationIdentification&amp;Assessment"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ObligationManagementTool"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#OrganizationalCommitment"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#PenaltyAvoidance"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#PenaltyCost"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Planning"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Policy"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#PreventativeControls"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ProcessActivity"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ProcessImprovement"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ProcessMonitoring"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ProcessObjective"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ProcessRule"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Program"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#RecordKeeping&amp;Reporting"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#RecordKeeping&amp;ReportingTool"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Regulation"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#RemediationCost"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ReputationalCost"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ResistanceManagementCost"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Resource"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Review"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ReviewTool"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#RiskAnalysis"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#RiskAssessment"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#RiskEvaluation"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#RiskIdentification"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#RiskManagement"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#RiskManagementFramework"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#RiskManagementPrinciple"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#RiskManagementProcess"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#RiskTreatment"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Role"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Service"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Solution"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Stakeholder"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Standard"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Structure"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Tool"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Training"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#VoluntaryObligation"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="#Advisory"/>
+        <Class IRI="#Service"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Assurance"/>
+        <Class IRI="#Service"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Audit"/>
+        <Class IRI="#Service"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#BusinessProcess"/>
+        <Class IRI="#BusinessProcessManagement"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#BusinessProcessManagement"/>
+        <Class IRI="#ComplianceManagement"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ChangeManagement"/>
+        <Class IRI="#OrganizationalCommitment"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#CodeofPractice"/>
+        <Class IRI="#VoluntaryObligation"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Committee"/>
+        <Class IRI="#Structure"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Communication&amp;Consultation"/>
+        <Class IRI="#RiskManagementProcess"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Competency&amp;Training"/>
+        <Class IRI="#Program"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Competency&amp;TrainingTool"/>
+        <Class IRI="#Tool"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ComplianceAwareness"/>
+        <Class IRI="#OrganizationalCommitment"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ComplianceDriver"/>
+        <Class IRI="#OrganizationalCommitment"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ComplianceValue"/>
+        <Class IRI="#ComplianceDriver"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ContextEstablishment"/>
+        <Class IRI="#RiskManagementProcess"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Contract"/>
+        <Class IRI="#MandatoryObligation"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Control&amp;Monitoring"/>
+        <Class IRI="#Program"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Control&amp;MonitoringTool"/>
+        <Class IRI="#Tool"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ControlsAssessment&amp;Maintenance"/>
+        <Class IRI="#Control&amp;Monitoring"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ControlsIdentification&amp;Definition"/>
+        <Class IRI="#Control&amp;Monitoring"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ControlsImplementation"/>
+        <Class IRI="#Control&amp;Monitoring"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ControlsSelection"/>
+        <Class IRI="#Control&amp;Monitoring"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#CorrectiveControls"/>
+        <Class IRI="#ControlsIdentification&amp;Definition"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Culture"/>
+        <Class IRI="#CultureManagement"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#CultureManagement"/>
+        <Class IRI="#ComplianceManagement"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#CultureMeasurement"/>
+        <Class IRI="#CultureManagement"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#DetectiveControls"/>
+        <Class IRI="#ControlsIdentification&amp;Definition"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Direction"/>
+        <Class IRI="#ComplianceDriver"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ExternalAudit"/>
+        <Class IRI="#Audit"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ExternalPolicy"/>
+        <Class IRI="#Policy"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#FormalCulture"/>
+        <Class IRI="#Culture"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ImplementationCost"/>
+        <Class IRI="#MonetaryCost"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#InformalCulture"/>
+        <Class IRI="#Culture"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#InternalAudit"/>
+        <Class IRI="#Audit"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#InternalPolicy"/>
+        <Class IRI="#Policy"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#MandatoryObligation"/>
+        <Class IRI="#Obligation"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#MonetaryCost"/>
+        <Class IRI="#Resource"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Monitor&amp;Review"/>
+        <Class IRI="#RiskManagementProcess"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Non-MonetaryCost"/>
+        <Class IRI="#Resource"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Obligation"/>
+        <Class IRI="#ComplianceManagement"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ObligationIdentification&amp;Assessment"/>
+        <Class IRI="#Program"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ObligationManagementTool"/>
+        <Class IRI="#Tool"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#OrganizationalCommitment"/>
+        <Class IRI="#CultureManagement"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#PenaltyAvoidance"/>
+        <Class IRI="#ComplianceDriver"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#PenaltyCost"/>
+        <Class IRI="#MonetaryCost"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Planning"/>
+        <Class IRI="#Advisory"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Policy"/>
+        <Class IRI="#MandatoryObligation"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#PreventativeControls"/>
+        <Class IRI="#ControlsIdentification&amp;Definition"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ProcessActivity"/>
+        <Class IRI="#BusinessProcess"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ProcessImprovement"/>
+        <Class IRI="#BusinessProcessManagement"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ProcessMonitoring"/>
+        <Class IRI="#BusinessProcessManagement"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ProcessObjective"/>
+        <Class IRI="#BusinessProcess"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ProcessRule"/>
+        <Class IRI="#BusinessProcess"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Program"/>
+        <Class IRI="#ComplianceManagement"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#RecordKeeping&amp;Reporting"/>
+        <Class IRI="#Program"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#RecordKeeping&amp;ReportingTool"/>
+        <Class IRI="#Tool"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Regulation"/>
+        <Class IRI="#MandatoryObligation"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#RemediationCost"/>
+        <Class IRI="#MonetaryCost"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ReputationalCost"/>
+        <Class IRI="#Non-MonetaryCost"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ResistanceManagementCost"/>
+        <Class IRI="#Non-MonetaryCost"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Resource"/>
+        <Class IRI="#ComplianceManagement"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Review"/>
+        <Class IRI="#Program"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ReviewTool"/>
+        <Class IRI="#Tool"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#RiskAnalysis"/>
+        <Class IRI="#RiskAssessment"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#RiskAssessment"/>
+        <Class IRI="#RiskManagementProcess"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#RiskEvaluation"/>
+        <Class IRI="#RiskAssessment"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#RiskIdentification"/>
+        <Class IRI="#RiskAssessment"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#RiskManagement"/>
+        <Class IRI="#ComplianceManagement"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#RiskManagementFramework"/>
+        <Class IRI="#RiskManagement"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#RiskManagementPrinciple"/>
+        <Class IRI="#RiskManagement"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#RiskManagementProcess"/>
+        <Class IRI="#RiskManagement"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#RiskTreatment"/>
+        <Class IRI="#RiskManagementProcess"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Role"/>
+        <Class IRI="#Structure"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Service"/>
+        <Class IRI="#Solution"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Solution"/>
+        <Class IRI="#ComplianceManagement"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Stakeholder"/>
+        <Class IRI="#Structure"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Standard"/>
+        <Class IRI="#VoluntaryObligation"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Structure"/>
+        <Class IRI="#Program"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Tool"/>
+        <Class IRI="#Solution"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Training"/>
+        <Class IRI="#Advisory"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#VoluntaryObligation"/>
+        <Class IRI="#Obligation"/>
+    </SubClassOf>
+    <DisjointClasses>
+        <Class IRI="#Contract"/>
+        <Class IRI="#Policy"/>
+        <Class IRI="#Regulation"/>
+        <Class IRI="#Standard"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#ControlsAssessment&amp;Maintenance"/>
+        <Class IRI="#ControlsIdentification&amp;Definition"/>
+        <Class IRI="#ControlsImplementation"/>
+        <Class IRI="#ControlsSelection"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#CorrectiveControls"/>
+        <Class IRI="#PreventativeControls"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#Service"/>
+        <Class IRI="#Tool"/>
+    </DisjointClasses>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+
