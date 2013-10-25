@@ -11,11 +11,14 @@ public class EntityTreeInfo {
 	
 	private OWLEntity owlEntity;
 	
-	private Tree tree;
+	/**
+	 * the tree node this entity related with
+	 */
+	private Tree treeNode;
 	/**
 	 * refer to the tree branch it belongs, so as to get the color
 	 */
-	private Object branchObject;
+	private OWLEntity branchObject;
 	/**
 	 * the order of this node among its siblings to arrange the order on the graph
 	 */
@@ -34,16 +37,16 @@ public class EntityTreeInfo {
 	public void setOwlEntity(OWLEntity owlEntity) {
 		this.owlEntity = owlEntity;
 	}
-	public Tree getTree() {
-		return tree;
+	public Tree getTreeNode() {
+		return treeNode;
 	}
-	public void setTree(Tree tree) {
-		this.tree = tree;
+	public void setTreeNode(Tree tree) {
+		this.treeNode = tree;
 	}
-	public Object getBranchObject() {
+	public OWLEntity getBranchObject() {
 		return branchObject;
 	}
-	public void setBranchObject(Object branchObject) {
+	public void setBranchObject(OWLEntity branchObject) {
 		this.branchObject = branchObject;
 	}
 	public int getSiblingNumber() {
@@ -64,9 +67,9 @@ public class EntityTreeInfo {
 	public void setGraphNode(GraphNode graphNode) {
 		this.graphNode = graphNode;
 	}
-	public EntityTreeInfo(OWLEntity owlEntity, Tree tree, Object branchObject, int level, int siblingNumber){
+	public EntityTreeInfo(OWLEntity owlEntity, Tree treeNode, OWLEntity branchObject, int level, int siblingNumber){
 		this.owlEntity = owlEntity;
-		this.tree = tree;
+		this.treeNode = treeNode;
 		this.branchObject = branchObject;
 		this.level = level;
 		this.siblingNumber = siblingNumber;

@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 
 import org.protege.ontograf.common.GraphController;
 import org.protege.ontograf.common.ProtegeGraphModel;
+import org.protege.ontograf.common.StyleManager;
 import org.protege.ontograf.tree.TreeInfoManager;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
@@ -63,17 +64,38 @@ public class EntryPoint {
 	        	Set<OWLClassExpression> subClasses;
 	        	subClasses = cls.getSubClasses(ontology);
 	        	if(subClasses == null || subClasses.size() == 0){
-	        		continue;
+	        		//continue;
 	        	}
 	        	((ProtegeGraphModel)(gc.getModel())).addNode((OWLEntity)cls);
 	        	//then the model have all nodes, so we can generate tree information
 	        	
-				    		
 	        	gc.showOWLClass(cls);
-	        	System.out.println(cls.toStringID());
 	        }
-        	Collection nodes = gc.getModel().getVisibleNodes();
+ 
+	        Collection nodes = gc.getModel().getVisibleNodes();
         	TreeInfoManager.getTreeManager().generateTreeInfo(nodes);
+
+			StyleManager.initStyleManager(TreeInfoManager.getTreeManager().getBranchNodes().size(), 3);
+        	
+
+			
+			for (OWLClass cls : ontology.getClassesInSignature()) {
+	        	//gc.getModel().removeNode(cls);
+	        }
+	        
+	        for (OWLClass cls : ontology.getClassesInSignature()) {
+	        	Set<OWLClassExpression> subClasses;
+	        	subClasses = cls.getSubClasses(ontology);
+	        	if(subClasses == null || subClasses.size() == 0){
+	        		//continue;
+	        	}
+	        	((ProtegeGraphModel)(gc.getModel())).addNode((OWLEntity)cls);
+	        	//then the model have all nodes, so we can generate tree information
+	        	
+	        	gc.showOWLClass(cls);
+	        }
+	        
+		
 			layoutAction.doAction();
 
 

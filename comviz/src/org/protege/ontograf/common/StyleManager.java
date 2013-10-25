@@ -1,11 +1,13 @@
 package org.protege.ontograf.common;
 
 import java.awt.Color;
-import java.awt.color.ColorSpace;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.protege.ontograf.tree.TreeInfoManager;
+import org.semanticweb.owlapi.model.OWLEntity;
 
 /**
  * @author uqwwan10
@@ -14,6 +16,7 @@ import java.util.Map;
 public class StyleManager {
 	
 	private static StyleManager instance;
+	
 
 	private static List<Color> 	nodeBackgroundColors;
 	private static List<Color>	arcColors;
@@ -21,8 +24,8 @@ public class StyleManager {
 	private static Map<Object, Color> 	nodeBackgroundColorMap;
 	private static Map<Object, Color>	arcColorMap;
 	
-	final private static float NODE_BACKGROUND_SATUATION = 0.1F;
-	final private static float NODE_BACKGROUND_BRIGHTNESS = 0F;
+	final private static float NODE_BACKGROUND_SATUATION = 0.2F;
+	final private static float NODE_BACKGROUND_BRIGHTNESS = 1F;
 	final private static float NODE_HUE_START = 0F;
 	final private static float NODE_HUE_END = 1F;
 	
@@ -40,11 +43,15 @@ public class StyleManager {
 		
 	}
 	
-	public static StyleManager getStyleManager(int numBranches, int numArcTypes){
+	public static void initStyleManager(int numBranches, int numArcTypes){
+		generateNodeColors(numBranches);
+		generateArcColors(numArcTypes);
+		
+	}
+	
+	public static StyleManager getStyleManager(){
 		if(instance == null){
 			instance = new StyleManager();
-			generateNodeColors(numBranches);
-			generateArcColors(numArcTypes);
 		}
 		return instance;
 	}
@@ -53,16 +60,23 @@ public class StyleManager {
 	 * @param numBranches, the number of branches
 	 */
 	private static void generateNodeColors(int numBranches){
-		nodeBackgroundColors = new ArrayList<Color>(numBranches);
-		float hueDistance = (NODE_HUE_END - NODE_HUE_START)/numBranches;
 		
-		for(int i = 0; i< numBranches; i++){
-			Color color = Color.getHSBColor(NODE_HUE_START + hueDistance * i, NODE_BACKGROUND_SATUATION, NODE_BACKGROUND_BRIGHTNESS);
+		
+		nodeBackgroundColorMap = new HashMap();
+		int numColors = numBranches + 1;
+		nodeBackgroundColors = new ArrayList<Color>(numColors);
+		float hueDistance = (NODE_HUE_END - NODE_HUE_START)/numColors;
+		
+		for(int i = 0; i< numColors; i++){
+			Color color = Color.getHSBColor(NODE_HUE_START + 100 + hueDistance * i, NODE_BACKGROUND_SATUATION, NODE_BACKGROUND_BRIGHTNESS);
 			nodeBackgroundColors.add(color);
 		}
+				
+		return;
 	}
 	
 	private static void generateArcColors(int numArcTypes){
+		arcColorMap = new HashMap();
 		arcColors = new ArrayList<Color>(numArcTypes);
 		float hueDistance = (ARC_HUE_END - ARC_HUE_START)/numArcTypes;
 		
@@ -72,20 +86,26 @@ public class StyleManager {
 		}
 	}
 	
-	public  Color getNodeBackgroundColor(Object branchEntity){
-		if(nodeBackgroundColorMap == null){
-			nodeBackgroundColorMap = new HashMap();
-		}
+	public  Color getNodeBackgroundColor(OWLEntity node){
+		
+		
+		TreeInfoManager treeInfoManager = TreeInfoManager.getTreeManager();
+		
+		Object branchEntity = treeInfoManager.getBranchEntity(node);
 		
 		if(nodeBackgroundColorMap.get(branchEntity) == null){
+			try{
 			nodeBackgroundColorMap.put(branchEntity, nodeBackgroundColors.get(0));
 			nodeBackgroundColors.remove(0);
+			}catch (IndexOutOfBoundsException e){
+				int a = 1;
+			}
 		}
 		
 		return nodeBackgroundColorMap.get(branchEntity);
 	}
 
-	public  Color getNodeBorderColor(Object branchEntity){
+	public  Color getNodeBorderColor(OWLEntity branchEntity){
 		Color backgroundColor = getNodeBackgroundColor(branchEntity);
 		
 		//ColorSpace colorSpace = new ColorSpace(ColorSpace.TYPE_HSV, 3);
@@ -93,9 +113,6 @@ public class StyleManager {
 	}
 
 	public  Color getArcColor(Object arc){
-		if(arcColorMap == null){
-			arcColorMap = new HashMap();
-		}
 		
 		if(arcColorMap.get(arc) == null){
 			arcColorMap.put(arc, arcColors.get(0));

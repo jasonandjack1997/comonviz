@@ -325,7 +325,7 @@ public class GraphController {
 
 			public void actionPerformed(ActionEvent e) {
 				owlClass = (OWLEntity)graph.getFirstSelectedNode().getUserObject();
-				model.hideAscendants(graph.getFirstSelectedNode());
+				//model.hideAscendants(graph.getFirstSelectedNode());
 				graph.performLayout();
 			}
 		});

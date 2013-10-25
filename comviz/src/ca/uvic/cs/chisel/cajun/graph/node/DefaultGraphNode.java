@@ -105,7 +105,8 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 		
 		this.changeListeners = new ArrayList<ChangeListener>();
 
-		this.style = new DefaultGraphNodeStyle();
+		//this.style = new DefaultGraphNodeStyle();
+		this.style = new CustomGraphNodeStyle1();
 		this.selected = false;
 		this.highlighted = false;
 		this.matching = false;
@@ -148,7 +149,7 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 
 	public void setNodeStyle(GraphNodeStyle style) {
 		if ((style != null) && (this.style != style)) {
-			this.style = style;
+			//this.style = style;
 			invalidateFullBounds();
 			invalidatePaint();
 		}

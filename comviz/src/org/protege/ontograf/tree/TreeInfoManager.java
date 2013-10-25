@@ -9,6 +9,7 @@ import java.util.Map;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import uk.ac.manchester.cs.bhig.util.MutableTree;
+import uk.ac.manchester.cs.bhig.util.Tree;
 import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
 import ca.uvic.cs.chisel.cajun.graph.node.DefaultGraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
@@ -22,7 +23,11 @@ public class TreeInfoManager {
         
         private static List<MutableTree> branchNodes;
         
-        private static boolean initiated = false;
+        public static List<MutableTree> getBranchNodes() {
+			return branchNodes;
+		}
+
+		private static boolean initiated = false;
 
         
         private TreeInfoManager(){
@@ -40,13 +45,22 @@ public class TreeInfoManager {
         	return entityTreeInfoMap.get(key);
         }
         
+        public Object getBranchEntity(Object key){
+        	EntityTreeInfo entityTreeInfo  = entityTreeInfoMap.get(key);
+        	
+        	return entityTreeInfo.getBranchObject();
+        }
+        
+        public Tree getTree(Object key){
+        	return entityTreeInfoMap.get(key).getTreeNode();
+        }
         @SuppressWarnings({ "rawtypes", "unchecked" })
         public void generateTreeInfo(Collection nodes){
                 
                 List<GraphNode> localNodeList = new ArrayList();
                 localNodeList.addAll(nodes);
                 
-                //生成一个treeList
+                //ç”Ÿæˆ�ä¸€ä¸ªtreeList
                 List<MutableTree> treeNodeList = new ArrayList();
                 for(GraphNode node: localNodeList){
                         treeNodeList.add(new MutableTree(node));
@@ -95,8 +109,9 @@ public class TreeInfoManager {
                 if(rootList.size() == 1){
                         
                         branchNodes = rootList.get(0).getChildren();
+                        //branchNodes.add(rootList.get(0));//only one root, the root have to have color
                         OWLEntity entity = (OWLEntity)(((GraphNode) (rootList.get(0).getUserObject())).getUserObject());
-                        EntityTreeInfo entityTreeInfo = new EntityTreeInfo(entity, rootList.get(0), rootList.get(0), 0, -1);
+                        EntityTreeInfo entityTreeInfo = new EntityTreeInfo(entity, rootList.get(0), (OWLEntity)((GraphNode) rootList.get(0).getUserObject()).getUserObject(), 0, -1);
                         entityTreeInfoMap.put(entity, entityTreeInfo);
 
                 }
@@ -108,6 +123,7 @@ public class TreeInfoManager {
                 
                 //test
                 Collection path = rootList.get(0).getPathToRoot();
+               
                 for(MutableTree t: treeNodeList){
                         
                         OWLEntity entity = (OWLEntity)(((GraphNode) (t.getUserObject())).getUserObject());
@@ -115,10 +131,10 @@ public class TreeInfoManager {
                         
                         level = Math.max(t.getPathToRoot().size(), level);
                         
-                        for(MutableTree branchNode: branchNodes){
-                                if(t.getPathToRoot().contains(branchNode)){//that means they belong to the same cluster
+                        for(MutableTree branchTreeNode: branchNodes){
+                                if(t.getPathToRoot().contains(branchTreeNode)){//that means they belong to the same cluster
                                         
-                                        EntityTreeInfo entityTreeInfo = new EntityTreeInfo(entity, t, branchNode, level, -1);
+                                        EntityTreeInfo entityTreeInfo = new EntityTreeInfo(entity, t, (OWLEntity)((GraphNode) branchTreeNode.getUserObject()).getUserObject(), level, -1);
                                         entityTreeInfoMap.put(entity, entityTreeInfo);
                                 }
                         }
