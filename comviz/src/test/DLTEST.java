@@ -1,4 +1,4 @@
-package main.test;
+package test;
 
 //import org.semanticweb.HermiT.Reasoner;
 import java.io.BufferedReader;

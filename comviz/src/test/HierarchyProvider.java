@@ -1,4 +1,4 @@
-package main.test;
+package test;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -6,9 +6,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import main.test.extractor.ChildClassExtractor;
-import main.test.extractor.ParentClassExtractor;
-
+import org.protege.ontograf.extractor.ChildClassExtractor;
+import org.protege.ontograf.extractor.ParentClassExtractor;
 import org.protege.owlapi.inference.orphan.Relation;
 import org.protege.owlapi.inference.orphan.TerminalElementFinder;
 import org.semanticweb.owlapi.model.OWLAxiom;

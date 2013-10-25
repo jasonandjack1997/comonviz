@@ -1,4 +1,4 @@
-package main.test.extractor;
+package org.protege.ontograf.extractor;
 
 import java.util.Set;
 

@@ -1,5 +1,5 @@
 
-package main.test;
+package test;
 
 /*
  * This relies on having the Java Look and Feel Graphics Repository

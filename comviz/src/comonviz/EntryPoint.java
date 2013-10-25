@@ -1,4 +1,4 @@
-package org.protege.ontograf;
+package comonviz;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,8 +6,6 @@ import java.util.Collection;
 import java.util.Set;
 
 import javax.swing.JFrame;
-
-import main.test.OwlApi;
 
 import org.protege.ontograf.common.GraphController;
 import org.protege.ontograf.common.ProtegeGraphModel;
@@ -19,6 +17,7 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
+import test.OwlApi;
 import ca.uvic.cs.chisel.cajun.actions.LayoutAction;
 import ca.uvic.cs.chisel.cajun.constants.LayoutConstants;
 import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;

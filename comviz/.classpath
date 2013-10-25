@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="org/protege/ontograf/common/CopyOfProtegeGraphModel.java|org/protege/ontograf/test/" kind="src" path="src"/>
+	<classpathentry excluding="org/protege/ontograf/common/CopyOfProtegeGraphModel.java|org/protege/ontograf/test/|resources/" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.protege.editor.core.application"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.protege.editor.owl"/>

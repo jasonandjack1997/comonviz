@@ -1,4 +1,4 @@
-package main.test;
+package test;
 
 import org.protege.editor.owl.model.hierarchy.AssertedClassHierarchyProvider;
 import org.protege.owlapi.apibinding.ProtegeOWLManager;

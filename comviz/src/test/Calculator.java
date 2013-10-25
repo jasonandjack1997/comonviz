@@ -1,6 +1,6 @@
-package main.test;
+package test;
 public class Calculator {
-    private static int result; // 静态变量，用于存储运行结果
+    private static int result; // �?��?�?��?，用于存储�?行结果
     public void add(int n) {
         result = result + n;
         System.out.println("hello add");
