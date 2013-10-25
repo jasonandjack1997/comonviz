@@ -217,7 +217,10 @@ public class CustomGraphNodeStyle1 implements GraphNodeStyle {
 	}
 
 	public Paint getBorderPaint(GraphNode node) {
-		return (node.isMatching() ? borderMatchingPaint : (node.isSelected() ? borderSelectionPaint : (node.isHighlighted() ? borderHighlightPaint : borderPaint)));
+
+		return StyleManager.getStyleManager().getNodeBorderColor((OWLEntity) node.getUserObject());
+	
+		//		return (node.isMatching() ? borderMatchingPaint : (node.isSelected() ? borderSelectionPaint : (node.isHighlighted() ? borderHighlightPaint : borderPaint)));
 	}
 
 	public Stroke getBorderStroke(GraphNode node) {

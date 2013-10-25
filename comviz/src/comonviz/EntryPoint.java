@@ -1,5 +1,6 @@
 package comonviz;
 
+import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
@@ -22,17 +23,23 @@ import test.OwlApi;
 import ca.uvic.cs.chisel.cajun.actions.LayoutAction;
 import ca.uvic.cs.chisel.cajun.constants.LayoutConstants;
 import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;
+import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
 
 public class EntryPoint {
 	
 	public static OWLOntology ontology = null;
 	
-	private static String ontologyURI = "CoMOn-281111.owl";
+	
+	//private static String ontologyURI = "CoMOn-281111.owl";
 	//private static String ontologyURI = "pizza.owl";
+	private static String ontologyURI = "COMON_v2.owl";
+	
+	private static GraphController gc;
     /**
      * 
      */
-    private static void start() {
+    @SuppressWarnings("unused")
+	private static void start() {
     	
     	ontologyURI = "file:///" + (new File(ontologyURI)).getAbsolutePath();
     	ontologyURI = ontologyURI.replace("\\","/");
@@ -49,13 +56,21 @@ public class EntryPoint {
 			e1.printStackTrace();
 		}
         //Create and set up the window.
-        JFrame frame = new JFrame("HelloWorldSwing");
+        JFrame frame = new JFrame("CoMOnViz");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		try {
+        //Display the window.
+        frame.pack();
+        frame.setBounds(0, 0, 800, 600);
+        frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+
+        try {
 			
-			GraphController gc = new GraphController(frame);
-			gc.getModel().owlOntology = EntryPoint.ontology;
+			gc = new GraphController(frame);
+	        FlatGraph fg = (FlatGraph)gc.getGraph();
+	        frame.setVisible(true);
+
+	        gc.getModel().owlOntology = EntryPoint.ontology;
 			//LayoutAction layoutAction = ((AbstractGraph)gc.getGraph()).getLayout(LayoutConstants.LAYOUT_SPRING);
 			LayoutAction layoutAction = ((AbstractGraph)gc.getGraph()).getLayout(LayoutConstants.LAYOUT_RADIAL);
 			
@@ -110,10 +125,6 @@ public class EntryPoint {
 			e.printStackTrace();
 		}
 
-        //Display the window.
-        frame.pack();
-        frame.setBounds(0, 0, 800, 600);
-        frame.setVisible(true);
     }
 
     public static void main(String[] args) {

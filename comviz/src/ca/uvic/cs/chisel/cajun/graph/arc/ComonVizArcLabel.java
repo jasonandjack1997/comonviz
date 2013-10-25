@@ -454,8 +454,11 @@ public class ComonVizArcLabel extends PNode implements GraphNode {
 	 */
 	private void updateBounds() {
 		PBounds textBounds = textNode.getBounds();
-		double w = (3 * PADDING_X) + iconWidth + ICON_GAP + textBounds.getWidth();
-		double h = (2 * PADDING_Y) + Math.max(iconHeight, textBounds.getHeight());
+//		double w = (3 * PADDING_X) + iconWidth + ICON_GAP + textBounds.getWidth();
+//		double h = (2 * PADDING_Y) + Math.max(iconHeight, textBounds.getHeight());
+		
+		double w = textBounds.getWidth();
+		double h = textBounds.getHeight();
 		setBounds(getX(), getY(), w, h);
 	}
 
@@ -468,7 +471,8 @@ public class ComonVizArcLabel extends PNode implements GraphNode {
 			if (pImage != null) {
 				pImage.setBounds(getX() + PADDING_X, getY() + PADDING_Y, iconWidth, iconHeight);
 			}
-			textNode.setBounds(getX() + PADDING_X + iconWidth + ICON_GAP, getY() + PADDING_Y, textNode.getWidth(), textNode.getHeight());
+//			textNode.setBounds(getX() + PADDING_X + iconWidth + ICON_GAP, getY() + PADDING_Y, textNode.getWidth(), textNode.getHeight());
+			textNode.setBounds(getX() , getY() , textNode.getWidth(), textNode.getHeight());
 			updateArcLocations();
 			invalidatePaint();
 			
@@ -607,21 +611,31 @@ public class ComonVizArcLabel extends PNode implements GraphNode {
 			g2.setPaint(bg);
 			g2.setPaint(Color.WHITE);
 			// Mac bug - doesn't fill the shape!
-			//g2.fill(shape);
+			g2.fill(shape);
 			Rectangle r = shape.getBounds();
-			g2.fillRoundRect(r.x, r.y, r.width, r.height, 5, 5);
 		}
 
 		// 2. paint the border
 		if ((borderPaint != null) && (borderStroke != null)) {
 			g2.setPaint(borderPaint);
 			g2.setStroke(borderStroke);
-			g2.draw(shape);
+			//g2.draw(shape);
 		}
+		
+		super.paint(paintContext);
 
-		addOverlayIcons(style.getOverlayIcons(this));
+
+		//addOverlayIcons(style.getOverlayIcons(this));
 		//super.paint(paintContext);
 	}
+
+
+	@Override
+	public void invalidatePaint() {
+			super.invalidatePaint();
+	}
+
+
 
 	/**
 	 * If necessary, creates the overlay icons as PImage's and adds them to this node as a child

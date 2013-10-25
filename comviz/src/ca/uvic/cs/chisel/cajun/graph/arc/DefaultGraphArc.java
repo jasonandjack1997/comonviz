@@ -1,5 +1,6 @@
 package ca.uvic.cs.chisel.cajun.graph.arc;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.Shape;
@@ -101,7 +102,7 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 		this.style = new DefaultGraphArcStyle();
 		
 		this.updateArcPath();
-		this.arcLable = new ComonVizArcLabel(this,"new lable",null,null,null);
+		this.arcLable = new ComonVizArcLabel(this,this.type.toString(),null,null,null);
 		addChild(arcLable);
 	}
 	
@@ -249,7 +250,7 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 			moveTo((float) startX, (float) startY);
 			if (curveFactor == 0) {
 				lineTo((float) endX, (float) endY);
-				arrowHead.setPoint(segment.getMidPoint());
+				arrowHead.setPoint(segment.getArrowPoint());
 			} else {
 				// the distance that the ctrl point should be offset in the y direction
 				double lineLength = segment.getLineLength();
@@ -361,7 +362,8 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 			if (showArrowHead) {
 				Shape shape = arrowHead.getShape();
 				// first fill the arrow head in white
-				g2.setPaint(ArrowHead.FILL);
+				//g2.setPaint(ArrowHead.FILL);
+				g2.setPaint(Color.red);
 				g2.fill(shape);
 				// now draw the outline
 				g2.setPaint(paint);
@@ -389,6 +391,11 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 
 		private Point2D destPtT;
 		private AffineTransform lineT;
+		private Point2D arrowPoint;
+
+		public Point2D getArrowPoint() {
+			return arrowPoint;
+		}
 
 		/**
 		 * Build a segment from the specified source to the specified destination
@@ -415,6 +422,9 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 			Point2D.Double srcPt = new Point2D.Double(0, 0);
 			Point2D.Double destPt = new Point2D.Double(lineLength, 0);
 			Point2D.Double midPt = new Point2D.Double(lineLength / 2.0, 0);
+			Point2D.Double arrowPt = new Point2D.Double(lineLength * 0.75, 0);
+			
+			arrowPoint = lineT.transform(arrowPt, new Point2D.Double());
 			srcPtT = lineT.transform(srcPt, new Point2D.Double());
 			midPtT = lineT.transform(midPt, new Point2D.Double());//real middle point
 			destPtT = lineT.transform(destPt, new Point2D.Double());

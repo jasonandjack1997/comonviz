@@ -1,5 +1,7 @@
 package ca.uvic.cs.chisel.cajun.actions;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -7,7 +9,6 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.swing.Icon;
-
 
 import org.eclipse.zest.layouts.InvalidLayoutConfiguration;
 import org.eclipse.zest.layouts.LayoutAlgorithm;
@@ -102,14 +103,18 @@ public class LayoutAction extends CajunAction {
 		DefaultGraphArc[] rels = filteredArcs.toArray(new DefaultGraphArc[filteredArcs.size()]);
 
 		PCanvas canvas = graph.getCanvas();
-		//graph.
 
 		double x = 0, y = 0;
 		double w = Math.max(0, canvas.getWidth() - 10);
 		double h = Math.max(0, canvas.getHeight() - 10);
+
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int width = (int) screenSize.getWidth();
+		int height = (int) screenSize.getHeight();
+
+		w = width;
+		h = height - 100;
 		
-		w = 2000;
-		h = 2000;
 
 		// to allow extra room for wide nodes
 		if (w > 400) {

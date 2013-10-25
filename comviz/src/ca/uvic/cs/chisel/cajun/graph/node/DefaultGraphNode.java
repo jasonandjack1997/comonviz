@@ -1,6 +1,7 @@
 package ca.uvic.cs.chisel.cajun.graph.node;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
@@ -8,6 +9,7 @@ import java.awt.Paint;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.Stroke;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,6 +35,7 @@ import edu.umd.cs.piccolo.nodes.PImage;
 import edu.umd.cs.piccolo.nodes.PText;
 import edu.umd.cs.piccolo.util.PBounds;
 import edu.umd.cs.piccolo.util.PPaintContext;
+import edu.umd.cs.piccolox.util.PFixedWidthStroke;
 
 /**
  * Default graph node implementation. Displays some text and possible an image/icon.
@@ -49,8 +52,8 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 	private static final int ICON_GAP = 4;
 	private static final int PADDING_X = 12;
 	private static final int PADDING_Y = 6;
-	protected static final int MAX_TEXT_CHARS = 15;
-	protected static final int MAX_LINES = 2;
+	protected static final int MAX_TEXT_CHARS = 12;
+	protected static final int MAX_LINES = 5;
 
 	private Object userObject;
 	private String fullText;
@@ -117,6 +120,7 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 		this.setChildrenPickable(false);
 
 		textNode = new GraphTextNode();
+		textNode.setHorizontalAlignment(Component.CENTER_ALIGNMENT);;
 		// make this node match the text size
 		textNode.setConstrainWidthToTextWidth(true);
 		textNode.setConstrainHeightToTextHeight(true);
@@ -271,7 +275,7 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 	 * the max number of lines.
 	 */
 	protected String splitTextIntoLines(String text, int maxLines, int maxCharsPerLine) {
-		text = text.trim();
+		text = text.replace('_', ' ').trim();
 		StringBuffer buffer = new StringBuffer(text.length() + 10);
 		if (text.length() > maxCharsPerLine) {
 			int lines = 0;
@@ -461,8 +465,10 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 	 */
 	private void updateBounds() {
 		PBounds textBounds = textNode.getBounds();
-		double w = (3 * PADDING_X) + iconWidth + ICON_GAP + textBounds.getWidth();
+/*		double w = (3 * PADDING_X) + iconWidth + ICON_GAP + textBounds.getWidth();
 		double h = (2 * PADDING_Y) + Math.max(iconHeight, textBounds.getHeight());
+*/		double w = textBounds.getWidth();
+		double h = textBounds.getHeight();
 		setBounds(getX(), getY(), w, h);
 	}
 
@@ -475,7 +481,8 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 			if (pImage != null) {
 				pImage.setBounds(getX() + PADDING_X, getY() + PADDING_Y, iconWidth, iconHeight);
 			}
-			textNode.setBounds(getX() + PADDING_X + iconWidth + ICON_GAP, getY() + PADDING_Y, textNode.getWidth(), textNode.getHeight());
+//			textNode.setBounds(getX() + PADDING_X + iconWidth + ICON_GAP, getY() + PADDING_Y, textNode.getWidth(), textNode.getHeight());
+			textNode.setBounds(getX(), getY(), textNode.getWidth(), textNode.getHeight());
 			updateArcLocations();
 			invalidatePaint();
 			
@@ -602,23 +609,41 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 			borderPaint = updateGradientPaintPoints((GradientPaint) borderPaint);
 		}
 
+		
+		//stroke
+		
+		Stroke stroke = new PFixedWidthStroke(3f);
+
+		
+		//different shapes
+		Rectangle r = shape.getBounds();
+		
+		//round
+		int w = Math.min(r.width, r.height);
+		int h = Math.min(r.width, r.height);
+		
+		//circle
+		int ovalR = Math.max(r.width, r.height)/2 + 10;
+		int ovalD = ovalR*2;
+		
+		Ellipse2D round = new Ellipse2D.Double(r.x + r.width/2 - ovalR, r.y + r.height/2 - ovalR, ovalD, ovalD);
+		
+		Shape drawShape = round;
+		
 		// 1. paint the background shape
 		if (bg != null) {
 			g2.setPaint(bg);
-			// Mac bug - doesn't fill the shape!
-			//g2.fill(shape);
-			Rectangle r = shape.getBounds();
-			g2.fillRoundRect(r.x, r.y, r.width, r.height, 5, 5);
+			g2.fill(drawShape);
 		}
 
 		// 2. paint the border
 		if ((borderPaint != null) && (borderStroke != null)) {
 			g2.setPaint(borderPaint);
-			g2.setStroke(borderStroke);
-			g2.draw(shape);
+			g2.setStroke(stroke);
+			g2.draw(drawShape);
 		}
 
-		addOverlayIcons(style.getOverlayIcons(this));
+		//addOverlayIcons(style.getOverlayIcons(this));
 	}
 
 	/**

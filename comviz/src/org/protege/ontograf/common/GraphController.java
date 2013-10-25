@@ -7,7 +7,9 @@ package org.protege.ontograf.common;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Stroke;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import java.util.Set;
 
 import javax.swing.Action;
 import javax.swing.Icon;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
@@ -85,6 +88,13 @@ public class GraphController {
 		model = new ProtegeGraphModel();
 		this.graph = new FlatGraph(model);
 		this.graph.setShowNodeTooltips(false);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int width = (int) screenSize.getWidth();
+		int height = (int) screenSize.getHeight();
+
+		this.graph.setBounds(0, 0, width, height);
+		int a = this.graph.getWidth();
+		this.graph.setBounds(0, 0, width, height);
 
 		// show the plus icon for expandable nodes
 		DefaultGraphNodeStyle nodeStyle = new DefaultGraphNodeStyle() {
