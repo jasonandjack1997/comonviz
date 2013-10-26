@@ -22,9 +22,10 @@ import javax.swing.JSplitPane;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
+import org.protege.ontograf.ui.TreeExplorer;
+
+import test.OntologyTreeExplorer;
 import ca.uvic.cs.chisel.cajun.actions.CajunAction;
-import ca.uvic.cs.chisel.cajun.actions.ClearOrphansAction;
-import ca.uvic.cs.chisel.cajun.actions.FocusOnHomeAction;
 import ca.uvic.cs.chisel.cajun.actions.LayoutAction;
 import ca.uvic.cs.chisel.cajun.actions.NoZoomAction;
 import ca.uvic.cs.chisel.cajun.actions.ZoomInAction;
@@ -50,6 +51,10 @@ public class DefaultFlatGraphView extends JPanel {
 	private FilterPanel arcFilterPanel;
 	
 	private JSplitPane horizontalSplitPane;
+	
+	private JSplitPane topHorizontalSplitPane;
+
+	private JSplitPane leftPanel;
 
 	public DefaultFlatGraphView(FlatGraph graph) {
 		super(new BorderLayout());
@@ -63,9 +68,15 @@ public class DefaultFlatGraphView extends JPanel {
 		
 		this.add(getStatusBar(), BorderLayout.SOUTH);
 		
+		topHorizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+		
 		horizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		horizontalSplitPane.add(getMainPanel());
 		horizontalSplitPane.add(getRightPanel());
+		
+		topHorizontalSplitPane.add(getLeftPanel());
+		topHorizontalSplitPane.add(horizontalSplitPane);
+		getLeftPanel().add(new OntologyTreeExplorer());
 		
 		this.addComponentListener(new ComponentAdapter() {
 			@Override
@@ -75,7 +86,8 @@ public class DefaultFlatGraphView extends JPanel {
 			}
 		});
 		
-		this.add(horizontalSplitPane, BorderLayout.CENTER);
+//		this.add(horizontalSplitPane, BorderLayout.CENTER);
+		this.add(topHorizontalSplitPane, BorderLayout.CENTER);
 		
 		this.addComponentListener(new ComponentAdapter() {
 			@Override
@@ -95,17 +107,19 @@ public class DefaultFlatGraphView extends JPanel {
 
 	private void initializeToolBar() {
 		// Home
-		addToolBarAction(new FocusOnHomeAction(graph.getAnimationHandler()));
-		addToolBarAction(new ClearOrphansAction(graph.getModel(), graph));
+		//addToolBarAction(new FocusOnHomeAction(graph.getAnimationHandler()));
+		//addToolBarAction(new ClearOrphansAction(graph.getModel(), graph));
 
-		getToolBar().addSeparator();
+		//getToolBar().addSeparator();
 
 		// Layouts
 		for (LayoutAction action : graph.getLayouts()) {
-			addToolBarAction(action);
+			//addToolBarAction(action);
 		}
 
-		getToolBar().addSeparator();
+		//getToolBar().addSeparator();
+		
+		//add BOTH Button & the ACTION
 
 		// zoom
 		addToolBarAction(new ZoomInAction(graph.getCamera()));
@@ -115,15 +129,15 @@ public class DefaultFlatGraphView extends JPanel {
 		getToolBar().addSeparator();
 
 		// node and arc filter actions
-		final JToggleButton nodesToggle = addToolBarToggleAction(new ShowFilterPanelAction(getNodeFilterPanel()));
+		//final JToggleButton nodesToggle = addToolBarToggleAction(new ShowFilterPanelAction(getNodeFilterPanel()));
 		final JToggleButton arcsToggle = addToolBarToggleAction(new ShowFilterPanelAction(getArcFilterPanel()));
 		// listen for panel close events - keep the toggle buttons in sync
-		getNodeFilterPanel().getCloseButton().addActionListener(new ActionListener() {
+/*		getNodeFilterPanel().getCloseButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				nodesToggle.setSelected(false);
 			}
 		});
-		getArcFilterPanel().getCloseButton().addActionListener(new ActionListener() {
+*/		getArcFilterPanel().getCloseButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				arcsToggle.setSelected(false);
 			}
@@ -160,6 +174,23 @@ public class DefaultFlatGraphView extends JPanel {
 		return status;
 	}
 
+	public JSplitPane getLeftPanel() {
+		if (leftPanel == null) {
+			leftPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT); //new GradientPanel();
+			leftPanel.setBorder(BorderFactory.createEmptyBorder(1, 1, 40, 1));
+			leftPanel.addContainerListener(new ContainerListener() {
+				public void componentAdded(ContainerEvent e) {
+					//refeshLeftPanel();
+				}
+
+				public void componentRemoved(ContainerEvent e) {
+					//refeshLeftPanel();
+				}
+			});
+		}
+		return leftPanel;
+	}
+	
 	public JSplitPane getRightPanel() {
 		if (rightPanel == null) {
 			rightPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT); //new GradientPanel();
@@ -183,6 +214,7 @@ public class DefaultFlatGraphView extends JPanel {
 	private void refeshRightPanel() {
 		this.invalidate();
 		this.validate();
+		this.revalidate();
 		this.repaint();
 
 		if(rightPanel.getTopComponent() == null && rightPanel.getBottomComponent() == null) {
@@ -355,7 +387,7 @@ public class DefaultFlatGraphView extends JPanel {
 				getRightPanel().add(filterPanel);
 				getRightPanel().invalidate();
 				
-				horizontalSplitPane.setDividerLocation(0.7);
+				horizontalSplitPane.setDividerLocation(0.8);
 			}
 		}
 	}

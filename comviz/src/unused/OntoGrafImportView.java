@@ -1,4 +1,4 @@
-package org.protege.ontograf;
+package unused;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

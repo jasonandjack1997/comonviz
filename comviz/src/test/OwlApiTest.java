@@ -9,6 +9,8 @@ import org.junit.Test;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
+import comonviz.OwlApi;
+
 public class OwlApiTest {
 
     private static OwlApi owlTest = new OwlApi();

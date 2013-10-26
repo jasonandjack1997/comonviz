@@ -1,4 +1,4 @@
-package org.protege.ontograf.actions;
+package unused;
 
 import java.awt.Component;
 import java.io.File;

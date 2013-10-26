@@ -1,4 +1,4 @@
-package org.protege.ontograf;
+package unused;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -28,9 +28,6 @@ import org.protege.editor.owl.ui.view.cls.AbstractOWLClassViewComponent;
 import org.protege.ontograf.actions.ConfigTooltipsAction;
 import org.protege.ontograf.actions.ExportAsDotAction;
 import org.protege.ontograf.actions.ExportImageAction;
-import org.protege.ontograf.actions.OpenGraphAction;
-import org.protege.ontograf.actions.PinTooltipsAction;
-import org.protege.ontograf.actions.SaveGraphAction;
 import org.protege.ontograf.common.GraphController;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntity;

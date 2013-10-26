@@ -2,7 +2,7 @@
  * Copyright 1998-2007, CHISEL Group, University of Victoria, Victoria, BC, Canada.
  * All rights reserved.
  */
-package org.protege.ontograf.common;
+package unused;
 
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
@@ -28,6 +28,8 @@ import org.eclipse.zest.layouts.algorithms.HorizontalDirectedGraphLayoutAlgorith
 import org.eclipse.zest.layouts.progress.ProgressEvent;
 import org.eclipse.zest.layouts.progress.ProgressListener;
 import org.protege.editor.owl.OWLEditorKit;
+import org.protege.ontograf.common.ProtegeGraphModel;
+import org.protege.ontograf.common.ProtegeInputEventHandler;
 import org.protege.ontograf.common.util.IconConstants;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntity;

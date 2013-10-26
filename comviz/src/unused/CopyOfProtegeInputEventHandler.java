@@ -1,5 +1,6 @@
-package org.protege.ontograf.common;
+package unused;
 
+import org.protege.ontograf.common.ProtegeGraphModel;
 import org.protege.ontograf.ui.FrameTooltipNode;
 import org.semanticweb.owlapi.model.OWLEntity;
 

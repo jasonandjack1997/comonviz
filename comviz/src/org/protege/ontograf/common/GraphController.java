@@ -93,8 +93,6 @@ public class GraphController {
 		int height = (int) screenSize.getHeight();
 
 		this.graph.setBounds(0, 0, width, height);
-		int a = this.graph.getWidth();
-		this.graph.setBounds(0, 0, width, height);
 
 		// show the plus icon for expandable nodes
 		DefaultGraphNodeStyle nodeStyle = new DefaultGraphNodeStyle() {
