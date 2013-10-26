@@ -1,5 +1,9 @@
 package org.protege.ontograf.tree;
 
+import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
+import ca.uvic.cs.chisel.cajun.graph.node.DefaultGraphNode;
+import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -10,12 +14,11 @@ import org.semanticweb.owlapi.model.OWLEntity;
 
 import uk.ac.manchester.cs.bhig.util.MutableTree;
 import uk.ac.manchester.cs.bhig.util.Tree;
-import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
-import ca.uvic.cs.chisel.cajun.graph.node.DefaultGraphNode;
-import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 
 public class TreeInfoManager {
         
+	
+		private static MutableTree treeRoot;
         private static TreeInfoManager instance;
         
         
@@ -62,6 +65,8 @@ public class TreeInfoManager {
                 
                 //ç”Ÿæˆ�ä¸€ä¸ªtreeList
                 List<MutableTree> treeNodeList = new ArrayList();
+                
+                
                 for(GraphNode node: localNodeList){
                         treeNodeList.add(new MutableTree(node));
                 }
@@ -107,6 +112,7 @@ public class TreeInfoManager {
                 List<MutableTree> level1Nodes;
 
                 if(rootList.size() == 1){
+                		this.treeRoot = rootList.get(0);
                         
                         branchNodes = rootList.get(0).getChildren();
                         //branchNodes.add(rootList.get(0));//only one root, the root have to have color
@@ -116,7 +122,11 @@ public class TreeInfoManager {
 
                 }
                 else{
+                		this.treeRoot = new MutableTree("Thing");
                         branchNodes = rootList;
+                        for(MutableTree t: branchNodes){
+                        	treeRoot.addChild(t);
+                        }
                 }
                 
                 //then, we generate level and branch info for each node, map them into map
@@ -146,6 +156,10 @@ public class TreeInfoManager {
                 return;
                 
         }
+
+		public static MutableTree getTreeRoot() {
+			return treeRoot;
+		}
         
         
         

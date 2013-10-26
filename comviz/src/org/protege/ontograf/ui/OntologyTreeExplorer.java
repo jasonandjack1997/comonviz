@@ -1,4 +1,4 @@
-package test;
+package org.protege.ontograf.ui;
 
 import java.awt.*;
 import java.util.regex.Matcher;

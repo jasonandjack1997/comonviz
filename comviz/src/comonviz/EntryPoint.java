@@ -1,5 +1,8 @@
 package comonviz;
 
+import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;
+import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
+
 import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
@@ -8,21 +11,23 @@ import java.util.Set;
 
 import javax.swing.JFrame;
 
-import org.protege.ontograf.common.GraphController;
-import org.protege.ontograf.common.ProtegeGraphModel;
-import org.protege.ontograf.common.StyleManager;
-import org.protege.ontograf.tree.TreeInfoManager;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+import org.protege.ontograf.common.GraphController;
+import org.protege.ontograf.common.ProtegeGraphModel;
+import org.protege.ontograf.common.StyleManager;
 
 import ca.uvic.cs.chisel.cajun.actions.LayoutAction;
 import ca.uvic.cs.chisel.cajun.constants.LayoutConstants;
-import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;
-import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
+
+import org.protege.ontograf.tree.TreeInfoManager;
+import org.protege.ontograf.ui.TopView;
+
+import uk.ac.manchester.cs.bhig.util.MutableTree;
 
 public class EntryPoint {
 	
@@ -88,6 +93,12 @@ public class EntryPoint {
  
 	        Collection nodes = gc.getModel().getVisibleNodes();
         	TreeInfoManager.getTreeManager().generateTreeInfo(nodes);
+        	
+        	MutableTree tree = TreeInfoManager.getTreeManager().getTreeRoot();
+        	
+        	TopView topView = gc.getView();
+        	
+        	topView.initialize(tree);
 
 			StyleManager.initStyleManager(TreeInfoManager.getTreeManager().getBranchNodes().size(), 3);
         	

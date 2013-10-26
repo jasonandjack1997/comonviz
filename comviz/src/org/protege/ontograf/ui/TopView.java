@@ -1,4 +1,4 @@
-package ca.uvic.cs.chisel.cajun.graph.ui;
+package org.protege.ontograf.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -22,9 +22,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
-import org.protege.ontograf.ui.OntologyTreeExplorer;
-import org.protege.ontograf.ui.TreeExplorer;
-
+import uk.ac.manchester.cs.bhig.util.MutableTree;
 import ca.uvic.cs.chisel.cajun.actions.CajunAction;
 import ca.uvic.cs.chisel.cajun.actions.LayoutAction;
 import ca.uvic.cs.chisel.cajun.actions.NoZoomAction;
@@ -34,10 +32,14 @@ import ca.uvic.cs.chisel.cajun.filter.FilterManager;
 import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
 import ca.uvic.cs.chisel.cajun.graph.Graph;
 import ca.uvic.cs.chisel.cajun.graph.GraphModelAdapter;
+import ca.uvic.cs.chisel.cajun.graph.ui.FilterPanel;
+import ca.uvic.cs.chisel.cajun.graph.ui.StatusProgressBar;
 import ca.uvic.cs.chisel.cajun.resources.ResourceHandler;
 import edu.umd.cs.piccolox.swing.PScrollPane;
 
-public class DefaultFlatGraphView extends JPanel {
+public class TopView extends JPanel {
+	
+	private MutableTree ontologyTree;
 	private static final long serialVersionUID = -7720543969598323711L;
 
 	private FlatGraph graph;
@@ -56,14 +58,16 @@ public class DefaultFlatGraphView extends JPanel {
 
 	private JSplitPane leftPanel;
 
-	public DefaultFlatGraphView(FlatGraph graph) {
+	public TopView(FlatGraph graph) {
 		super(new BorderLayout());
 		this.graph = graph;
 
-		initialize();
+		//initialize();
 	}
 
-	private void initialize() {
+	public void initialize(MutableTree ontologyTree) {
+		this.ontologyTree = ontologyTree;
+
 		this.add(getToolBar(), BorderLayout.NORTH);
 		
 		this.add(getStatusBar(), BorderLayout.SOUTH);
@@ -82,7 +86,7 @@ public class DefaultFlatGraphView extends JPanel {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				horizontalSplitPane.setDividerLocation(1.0);
-				DefaultFlatGraphView.this.removeComponentListener(this);
+				TopView.this.removeComponentListener(this);
 			}
 		});
 		

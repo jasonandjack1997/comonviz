@@ -32,6 +32,8 @@ import org.eclipse.zest.layouts.algorithms.HorizontalDirectedGraphLayoutAlgorith
 import org.eclipse.zest.layouts.progress.ProgressEvent;
 import org.eclipse.zest.layouts.progress.ProgressListener;
 import org.protege.editor.owl.OWLEditorKit;
+import org.protege.ontograf.common.ProtegeGraphModel;
+import org.protege.ontograf.common.ProtegeInputEventHandler;
 import org.protege.ontograf.common.util.IconConstants;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -41,6 +43,11 @@ import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import ca.uvic.cs.chisel.cajun.actions.CajunAction;
 import ca.uvic.cs.chisel.cajun.actions.LayoutAction;
 import ca.uvic.cs.chisel.cajun.constants.LayoutConstants;
+
+import org.protege.ontograf.ui.TopView;
+
+import uk.ac.manchester.cs.bhig.util.MutableTree;
+import edu.umd.cs.piccolo.util.PBounds;
 import ca.uvic.cs.chisel.cajun.filter.FilterChangedEvent;
 import ca.uvic.cs.chisel.cajun.filter.FilterChangedListener;
 import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
@@ -50,8 +57,6 @@ import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
 import ca.uvic.cs.chisel.cajun.graph.node.DefaultGraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.DefaultGraphNodeStyle;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
-import ca.uvic.cs.chisel.cajun.graph.ui.DefaultFlatGraphView;
-import edu.umd.cs.piccolo.util.PBounds;
 
 /**
  * Controller for the graph and model elements. This controller ties the appropriate graph model
@@ -70,7 +75,7 @@ public class GraphController {
 	private ProtegeGraphModel model;
 	
 	/** the panel that renders the graph view */
-	private DefaultFlatGraphView view;
+	private TopView view;
 
 	private Action expandAction;
 	private Action collapseAction;
@@ -82,9 +87,20 @@ public class GraphController {
 	public static final String CONTAINS = "contains";
 	
 	private OWLEntity owlClass;
+
+	private MutableTree treeOntology;
 	
+	public MutableTree getTreeOntology() {
+		return treeOntology;
+	}
+
+	public void setTreeOntology(MutableTree treeOntology) {
+		this.treeOntology = treeOntology;
+	}
+
 	public GraphController(Container parentContainer) throws OWLOntologyCreationException, OWLOntologyStorageException, IOException {
 		
+		this.treeOntology = treeOntology;
 		model = new ProtegeGraphModel();
 		this.graph = new FlatGraph(model);
 		this.graph.setShowNodeTooltips(false);
@@ -304,7 +320,7 @@ public class GraphController {
 			}
 		}
 
-		view = new DefaultFlatGraphView(graph);
+		view = new TopView(graph);
 
 		parentContainer.add(view, BorderLayout.CENTER);
 
@@ -312,6 +328,14 @@ public class GraphController {
 		graph.addInputEventListener(new ProtegeInputEventHandler(model, graph));
 	}
 	
+	public TopView getView() {
+		return view;
+	}
+
+	public void setView(TopView view) {
+		this.view = view;
+	}
+
 	/**
 	 * Initializes the menu for the right-click operation on a graph node.
 	 * 
