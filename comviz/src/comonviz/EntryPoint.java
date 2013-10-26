@@ -85,22 +85,24 @@ public class EntryPoint {
 	        	if(subClasses == null || subClasses.size() == 0){
 	        		//continue;
 	        	}
-	        	((ProtegeGraphModel)(gc.getModel())).addNode((OWLEntity)cls);
+	        	//((ProtegeGraphModel)(gc.getModel())).addNode((OWLEntity)cls);
 	        	//then the model have all nodes, so we can generate tree information
 	        	
-	        	gc.showOWLClass(cls);
+	        	//gc.showOWLClass(cls);
+	        	gc.getModel().generateNodesAndArcs(cls, ((AbstractGraph) gc.getGraph()).getFilterManager());
 	        }
  
 	        Collection nodes = gc.getModel().getVisibleNodes();
-        	TreeInfoManager.getTreeManager().generateTreeInfo(nodes);
+	        TreeInfoManager treeInfoManager = TreeInfoManager.getTreeManager();
+	        treeInfoManager.generateTreeInfo(nodes);
         	
-        	MutableTree tree = TreeInfoManager.getTreeManager().getTreeRoot();
+        	MutableTree tree = treeInfoManager.getTreeRoot();
         	
         	TopView topView = gc.getView();
         	
         	topView.initialize(tree);
 
-			StyleManager.initStyleManager(TreeInfoManager.getTreeManager().getBranchNodes().size(), 3);
+			StyleManager.initStyleManager(treeInfoManager.getBranchNodes().size(), 3);
         	
 
 			
@@ -111,13 +113,12 @@ public class EntryPoint {
 	        for (OWLClass cls : ontology.getClassesInSignature()) {
 	        	Set<OWLClassExpression> subClasses;
 	        	subClasses = cls.getSubClasses(ontology);
-	        	if(subClasses == null || subClasses.size() == 0){
-	        		//continue;
-	        	}
-	        	((ProtegeGraphModel)(gc.getModel())).addNode((OWLEntity)cls);
+	        	if(treeInfoManager.getLevel(cls) <= 2){
+	        		//((ProtegeGraphModel)(gc.getModel())).addNode((OWLEntity)cls);
 	        	//then the model have all nodes, so we can generate tree information
 	        	
-	        	gc.showOWLClass(cls);
+	        		//gc.showOWLClass(cls);
+	        	}
 	        }
 	        
 		

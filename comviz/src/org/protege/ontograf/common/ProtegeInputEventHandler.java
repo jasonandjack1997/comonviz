@@ -40,7 +40,7 @@ public class ProtegeInputEventHandler extends PBasicInputEventHandler {
 	public void mouseMoved(PInputEvent event) {
 		if(event.getPickedNode() instanceof GraphNode) {
 			if(!event.getPickedNode().equals(currentNode)) {
-				showToolTip((DefaultGraphNode)event.getPickedNode());
+				//showToolTip((DefaultGraphNode)event.getPickedNode());
 			}
 		}
 		else if(currentNode != null) {
@@ -102,11 +102,13 @@ public class ProtegeInputEventHandler extends PBasicInputEventHandler {
 		graphNode.moveToFront();
 
 		if (graphModel.isExpanded(graphNode)) {
-			//graphModel.collapseNode(graphNode);
-			graphModel.hideAllDesendants(graphNode);
+			graphModel.collapseNode(graphNode);
+			//graphModel.hideAllDesendants(graphNode);
 		} else {
-			//graphModel.expandNode(graphNode);
-			graphModel.showNewLeaves((OWLEntity)graphNode.getUserObject());
+			graphModel.expandNode(graphNode);
+			//graphModel.showNewLeaves((OWLEntity)graphNode.getUserObject());
+			//graphModel.showAllDesendants(entity);
+			
 		}
 
 		graph.performLayout();

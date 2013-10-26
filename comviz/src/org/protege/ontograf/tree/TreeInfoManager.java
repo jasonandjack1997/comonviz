@@ -36,12 +36,17 @@ public class TreeInfoManager {
         private TreeInfoManager(){
         };
         
+        
         public static TreeInfoManager getTreeManager(){
         		if(instance == null){
                         instance = new TreeInfoManager();
                         entityTreeInfoMap = new HashMap();
         		}
                 return instance;
+        }
+        
+        public int getLevel(Object key){
+        	return getEntityTreeInfo(key).getLevel();
         }
         
         public EntityTreeInfo getEntityTreeInfo(Object key){

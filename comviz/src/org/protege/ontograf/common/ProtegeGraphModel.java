@@ -88,7 +88,7 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 	protected static final String INDIVIDUAL_ART_TYPE = "individual";
 
 	/** used to restrict an expansion to a specific arc type */
-	protected String restrictToArcType;
+	protected String restrictToArcType = "";
 	
 	/** map to store the number of arcs associated with a given frame object */
 	private Map<OWLEntity, Set<GraphArc>> frameToArcCount;
@@ -154,6 +154,18 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 		recalculateArcStyles();
 	}
 
+	public void generateNodesAndArcs(OWLEntity entity, FilterManager filterManager) {
+		
+		this.filterManager = filterManager;
+		List<GraphArc> arcs = new ArrayList<GraphArc>();
+		
+		addNode(entity);
+		
+		arcs.addAll(createIncomingRelationships(entity, false));
+		arcs.addAll(createOutgoingRelationships(entity, false));
+		addArcsToModel(arcs, false);
+		recalculateArcStyles();
+	}
 	/**
 	 * Shows the neighborhood for a given Frame.
 	 * 
@@ -353,10 +365,13 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 	 * @return The created or found GraphArc.
 	 */
 	protected GraphArc addArc(OWLEntity srcEntity, OWLEntity destEntity, String relType, Icon icon) {
+		try{
 		if (!relType.contains(restrictToArcType)) {
 			return null;
 		}
-
+		}catch (NullPointerException e){
+			return null;
+		}
 		boolean newNode = true;
 		if (getNode(destEntity) != null) {
 			newNode = false;

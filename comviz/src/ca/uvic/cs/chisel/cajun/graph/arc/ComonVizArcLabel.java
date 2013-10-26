@@ -347,37 +347,37 @@ public class ComonVizArcLabel extends PNode implements GraphNode {
 	}
 
 	public void setSelected(boolean selected) {
-		if (this.selected != selected) {
+/*		if (this.selected != selected) {
 			this.selected = selected;
 			updateArcs();
 			textNode.invalidatePaint();
 			invalidatePaint();
 		}
-	}
+*/	}
 
 	public boolean isHighlighted() {
 		return highlighted;
 	}
 
 	public void setHighlighted(boolean highlighted) {
-		if (this.highlighted != highlighted) {
+/*		if (this.highlighted != highlighted) {
 			this.highlighted = highlighted;
 			bubbleNode();
 			textNode.invalidatePaint();
 			invalidatePaint();
 		}
-	}
+*/	}
 
 	public boolean isMatching() {
 		return matching;
 	}
 
 	public void setMatching(boolean matching) {
-		if (this.matching != matching) {
+/*		if (this.matching != matching) {
 			this.matching = matching;
 			invalidatePaint();
 		}
-	}
+*/	}
 
 	/**
 	 * Scales the node back to normal size if the canvas is currently scaled below the regular size.
