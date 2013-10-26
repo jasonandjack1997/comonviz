@@ -105,8 +105,8 @@ public class ProtegeInputEventHandler extends PBasicInputEventHandler {
 			graphModel.collapseNode(graphNode);
 			//graphModel.hideAllDesendants(graphNode);
 		} else {
-			graphModel.expandNode(graphNode);
-			//graphModel.showNewLeaves((OWLEntity)graphNode.getUserObject());
+			//graphModel.expandNode(graphNode);
+			graphModel.showNewLeaves(entity);
 			//graphModel.showAllDesendants(entity);
 			
 		}

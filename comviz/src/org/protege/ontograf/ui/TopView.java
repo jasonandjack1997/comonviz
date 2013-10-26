@@ -22,6 +22,8 @@ import javax.swing.JSplitPane;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
+import comonviz.EntryPoint;
+
 import uk.ac.manchester.cs.bhig.util.MutableTree;
 import ca.uvic.cs.chisel.cajun.actions.CajunAction;
 import ca.uvic.cs.chisel.cajun.actions.LayoutAction;
@@ -62,11 +64,11 @@ public class TopView extends JPanel {
 		super(new BorderLayout());
 		this.graph = graph;
 
-		//initialize();
+		initialize();
 	}
 
-	public void initialize(MutableTree ontologyTree) {
-		this.ontologyTree = ontologyTree;
+	public void initialize() {
+		//this.ontologyTree = ontologyTree;
 
 		this.add(getToolBar(), BorderLayout.NORTH);
 		
@@ -80,7 +82,7 @@ public class TopView extends JPanel {
 		
 		topHorizontalSplitPane.add(getLeftPanel());
 		topHorizontalSplitPane.add(horizontalSplitPane);
-		getLeftPanel().add(new OntologyTreeExplorer());
+		getLeftPanel().add(EntryPoint.ontologyTreeExplorer);
 		
 		this.addComponentListener(new ComponentAdapter() {
 			@Override

@@ -110,6 +110,8 @@ public class GraphController {
 
 		this.graph.setBounds(0, 0, width, height);
 
+		this.view = new TopView(this.graph);
+
 		// show the plus icon for expandable nodes
 		DefaultGraphNodeStyle nodeStyle = new DefaultGraphNodeStyle() {
 			public Collection<Icon> getOverlayIcons(GraphNode graphNode) {

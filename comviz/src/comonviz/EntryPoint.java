@@ -25,6 +25,7 @@ import ca.uvic.cs.chisel.cajun.actions.LayoutAction;
 import ca.uvic.cs.chisel.cajun.constants.LayoutConstants;
 
 import org.protege.ontograf.tree.TreeInfoManager;
+import org.protege.ontograf.ui.OntologyTreeExplorer;
 import org.protege.ontograf.ui.TopView;
 
 import uk.ac.manchester.cs.bhig.util.MutableTree;
@@ -39,6 +40,10 @@ public class EntryPoint {
 	private static String ontologyURI = "COMON_v2.owl";
 	
 	private static GraphController gc;
+	
+	public static MutableTree ontologyTree;
+	
+	public static OntologyTreeExplorer ontologyTreeExplorer = new OntologyTreeExplorer();
     /**
      * 
      */
@@ -65,14 +70,14 @@ public class EntryPoint {
 
         //Display the window.
         frame.pack();
-        frame.setBounds(0, 0, 800, 600);
+        //frame.setBounds(0, 0, 800, 600);
         frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        frame.setVisible(true);
 
         try {
 			
 			gc = new GraphController(frame);
 	        FlatGraph fg = (FlatGraph)gc.getGraph();
-	        frame.setVisible(true);
 
 	        gc.getModel().owlOntology = EntryPoint.ontology;
 			//LayoutAction layoutAction = ((AbstractGraph)gc.getGraph()).getLayout(LayoutConstants.LAYOUT_SPRING);
@@ -82,13 +87,6 @@ public class EntryPoint {
 	        for (OWLClass cls : ontology.getClassesInSignature()) {
 	        	Set<OWLClassExpression> subClasses;
 	        	subClasses = cls.getSubClasses(ontology);
-	        	if(subClasses == null || subClasses.size() == 0){
-	        		//continue;
-	        	}
-	        	//((ProtegeGraphModel)(gc.getModel())).addNode((OWLEntity)cls);
-	        	//then the model have all nodes, so we can generate tree information
-	        	
-	        	//gc.showOWLClass(cls);
 	        	gc.getModel().generateNodesAndArcs(cls, ((AbstractGraph) gc.getGraph()).getFilterManager());
 	        }
  
@@ -96,11 +94,12 @@ public class EntryPoint {
 	        TreeInfoManager treeInfoManager = TreeInfoManager.getTreeManager();
 	        treeInfoManager.generateTreeInfo(nodes);
         	
-        	MutableTree tree = treeInfoManager.getTreeRoot();
+	        ontologyTree = treeInfoManager.getTreeRoot();
         	
+        	ontologyTreeExplorer.updateTree();
         	TopView topView = gc.getView();
         	
-        	topView.initialize(tree);
+        	//topView.initialize(tree);
 
 			StyleManager.initStyleManager(treeInfoManager.getBranchNodes().size(), 3);
         	
@@ -111,13 +110,12 @@ public class EntryPoint {
 	        }
 	        
 	        for (OWLClass cls : ontology.getClassesInSignature()) {
-	        	Set<OWLClassExpression> subClasses;
-	        	subClasses = cls.getSubClasses(ontology);
-	        	if(treeInfoManager.getLevel(cls) <= 2){
+	        	if(treeInfoManager.getLevel(cls) >= 3){
 	        		//((ProtegeGraphModel)(gc.getModel())).addNode((OWLEntity)cls);
 	        	//then the model have all nodes, so we can generate tree information
 	        	
 	        		//gc.showOWLClass(cls);
+	        		gc.getModel().removeNode(cls);
 	        	}
 	        }
 	        
@@ -147,6 +145,8 @@ public class EntryPoint {
                 start();
             }
         });
+    	
+    	//start();
 
 	}
 

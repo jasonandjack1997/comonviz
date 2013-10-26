@@ -23,8 +23,8 @@ import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
 import org.protege.ontograf.ui.OntologyTreeExplorer;
-import org.protege.ontograf.ui.TreeExplorer;
 
+import test.TreeExplorer;
 import ca.uvic.cs.chisel.cajun.actions.CajunAction;
 import ca.uvic.cs.chisel.cajun.actions.LayoutAction;
 import ca.uvic.cs.chisel.cajun.actions.NoZoomAction;

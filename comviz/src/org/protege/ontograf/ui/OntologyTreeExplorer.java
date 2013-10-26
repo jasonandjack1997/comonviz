@@ -1,24 +1,44 @@
 package org.protege.ontograf.ui;
 
-import java.awt.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
 
-import javax.swing.*;
-import javax.swing.tree.*;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 
-import comonviz.ExitListener;
+import uk.ac.manchester.cs.bhig.util.MutableTree;
+import comonviz.EntryPoint;
 import comonviz.WindowUtilities;
 
 public class OntologyTreeExplorer extends JPanel {
+	
 
-	public static void main(String[] args) {
-		new OntologyTreeExplorer();
-	}
+	JTree tree;
+	
+
 
 	public OntologyTreeExplorer() {
 		WindowUtilities.setNativeLookAndFeel();
 		Container content = this;
+		
+		MutableTree t1 = new MutableTree("1");
+		MutableTree t11 = new MutableTree("11");
+		MutableTree t12 = new MutableTree("12");
+
+		MutableTree t111 = new MutableTree("111");
+		MutableTree t112 = new MutableTree("112");
+		MutableTree t1111 = new MutableTree("111");
+		
+		t1.addChild(t11);
+		t1.addChild(t12);
+		t11.addChild(t111);
+		t11.addChild(t112);
+		t111.addChild(t1111);
+				
 		Object[] hierarchy = {
 				"javax.swing",
 				"javax.swing.border",
@@ -34,9 +54,18 @@ public class OntologyTreeExplorer extends JPanel {
 								"javax.swing.text.html.parser" },
 						"javax.swing.text.rtf" }, "javax.swing.tree",
 				"javax.swing.undo" };
-		DefaultMutableTreeNode root = processHierarchy(hierarchy);
-		JTree tree = new JTree(root);
-		content.add(new JScrollPane(tree), BorderLayout.CENTER);
+		//DefaultMutableTreeNode root = processHierarchy(hierarchy);
+		
+	}
+	
+	public void updateTree(){
+		
+		DefaultMutableTreeNode root = null ;
+		if(EntryPoint.ontologyTree != null){
+			 root = convertFromManchesterToUITreeNode(EntryPoint.ontologyTree);
+		}
+		tree = new JTree(root);
+		this.add(new JScrollPane(tree), BorderLayout.CENTER);
 		setSize(275, 300);
 		setVisible(true);
 
@@ -90,6 +119,23 @@ public class OntologyTreeExplorer extends JPanel {
 				child = processHierarchy((Object[]) nodeSpecifier);
 			else
 				child = new DefaultMutableTreeNode(nodeSpecifier); // Ie Leaf
+			node.add(child);
+		}
+		return (node);
+	}
+	
+	private DefaultMutableTreeNode convertFromManchesterToUITreeNode(MutableTree manchesterMutableTree){
+		
+		DefaultMutableTreeNode node = new DefaultMutableTreeNode(manchesterMutableTree.getUserObject());
+		DefaultMutableTreeNode child;
+		
+		java.util.List<MutableTree> childrenList  = manchesterMutableTree.getChildren();
+		for (int i = 0; i < childrenList.size(); i++) {
+			MutableTree nodeSpecifier = childrenList.get(i);
+			if (nodeSpecifier.getChildCount() != 0) // Ie node with children
+				child = convertFromManchesterToUITreeNode(nodeSpecifier);
+			else
+				child = new DefaultMutableTreeNode(nodeSpecifier.getUserObject()); // Ie Leaf
 			node.add(child);
 		}
 		return (node);

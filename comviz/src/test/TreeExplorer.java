@@ -1,4 +1,4 @@
-package org.protege.ontograf.ui;
+package test;
 
 
 import java.awt.*;

@@ -315,7 +315,7 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 			if (createdArc != null) {
 				newGraphNodes.add(createdArc.getSource());
 				newGraphNodes.add(createdArc.getDestination());
-				createdArc.setInverted(arc.isInverted());
+				//createdArc.setInverted(arc.isInverted());
 				
 				//PNode n = (PNode)createdArc.getDestination();
 				//System.out.println(n.getRoot().getClass());
@@ -388,7 +388,7 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 		DefaultGraphArc arc = (DefaultGraphArc) addArc(key, srcNode, destNode, relType, icon);
 		//arc.setType(relType);
 		// for this sample the arc types work backworks (is_a, etc)
-		arc.setInverted(true);
+		//arc.setInverted(true);
 		return arc;
 	}
 	
