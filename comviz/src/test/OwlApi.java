@@ -53,7 +53,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import main.test.HierarchyProvider;
+import test.HierarchyProvider;
 
 import org.coode.owlapi.manchesterowlsyntax.ManchesterOWLSyntaxOntologyFormat;
 import org.coode.owlapi.turtle.TurtleOntologyFormat;

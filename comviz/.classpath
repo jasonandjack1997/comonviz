@@ -2,31 +2,38 @@
 <classpath>
 	<classpathentry excluding="org/protege/ontograf/common/CopyOfProtegeGraphModel.java|org/protege/ontograf/test/|resources/" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/org.protege.editor.core.application"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/org.protege.editor.owl"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/layouts-1.0.0.jar" sourcepath="F:/lib_src_doc/src/org.eclipse.zest.layouts.source_1.1.0.201308190730.jar"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/org.coode.owlviz.jar"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/org.protege.editor.owl.jar"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/org.protege.ontograf.jar"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/org.semanticweb.owl.owlapi.jar" sourcepath="F:/lib_src_doc/src/owlapi-src.jar"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/piccolox.jar"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/protege-owlapi-extensions-3.2.4.jar"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/org.eclipse.draw2d_3.2.100.v20070522.jar"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/piccolo/piccolo2d-core-1.3.1.jar"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/piccolo/piccolo2d-core-1.3.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/piccolo/piccolo2d-core-1.3.1-sources.jar"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/piccolo/piccolo2d-examples-1.3.1.jar"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/piccolo/piccolo2d-examples-1.3.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/piccolo/piccolo2d-examples-1.3.1-sources.jar"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/piccolo/piccolo2d-extras-1.3.1.jar"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/piccolo/piccolo2d-extras-1.3.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/piccolo/piccolo2d-extras-1.3.1-sources.jar"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/piccolo/piccolo2d-swt-1.3.1.jar"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/piccolo/piccolo2d-swt-1.3.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/piccolo/piccolo2d-swt-1.3.1-sources.jar"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/piccolo/piccolo2d-swt-examples-1.3.1.jar"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/piccolo/piccolo2d-swt-examples-1.3.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="F:/lib_src_doc/piccolo/piccolo2d-swt-examples-1.3.1-sources.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/ca.uvic.cs.chisel.cajun.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/draw2d-3.2.100-v20070529.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/layouts.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/log4j.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/looks.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.apache.felix.bundlerepository-1.4.2.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.apache.felix.configadmin.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.apache.felix.scr.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.coode.dlquery.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.coode.owlviz.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.eclipse.draw2d_3.2.100.v20070522.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.eclipse.equinox.common.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.eclipse.equinox.registry.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.eclipse.equinox.supplement.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.protege.common.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.protege.editor.core.application.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.protege.editor.owl.codegeneration.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.protege.editor.owl.diff.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.protege.editor.owl.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.protege.editor.owl.rdf.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.protege.explanation.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.protege.jaxb.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.protege.ontograf.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.protege.owl.diff.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.protege.owl.rdf.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.semanticweb.HermiT.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.semanticweb.owl.owlapi.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/uk.ac.manchester.cs.owl.factplusplus.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/protege-owlapi-extensions.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/piccolo2d-core-1.3.1.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/piccolo2d-extras-1.3.1.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/piccolo2d-swt-1.3.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
