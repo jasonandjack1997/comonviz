@@ -43,8 +43,6 @@ import edu.umd.cs.piccolo.util.PPaintContext;
  * @since  30-Oct-07
  */
 public class ComonVizArcLabel extends PNode implements GraphNode {
-	private static long locationX = 0;
-	private static long locationY = 0;
 	
 	private static final long serialVersionUID = 3223950711940456476L;
 	
@@ -119,9 +117,6 @@ public class ComonVizArcLabel extends PNode implements GraphNode {
 		setIcon(icon);
 		setType(type);
 
-		this.setLocation(locationX, locationY);
-		locationX += 5;
-		locationY += 5;
 	}
 	
 	public void removeChangeListener(ChangeListener l) {
@@ -576,12 +571,13 @@ public class ComonVizArcLabel extends PNode implements GraphNode {
 	@Override
 	protected void paint(PPaintContext paintContext) {
 		
-		//update bounds first
-		double w = getBounds().width;
-		double h = getBounds().height;
-	
-		Point2D middlePoint = ((DefaultGraphArc)this.graphArc).getMiddlePoint();
-		setBounds(middlePoint.getX() - w/2.0 , middlePoint.getY() - h/2.0, w, h);
+//		//update bounds first
+//		double w = getBounds().width;
+//		double h = getBounds().height;
+//	
+//		Point2D middlePoint = ((DefaultGraphArc)this.graphArc).getMiddlePoint();
+//		setBounds(middlePoint.getX() - w/2.0 , middlePoint.getY() - h/2.0, w, h);
+
 		Graphics2D g2 = paintContext.getGraphics();
 
 		PBounds bounds = getBounds();

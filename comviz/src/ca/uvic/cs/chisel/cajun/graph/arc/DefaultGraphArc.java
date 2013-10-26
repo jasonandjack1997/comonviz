@@ -58,7 +58,7 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 	private PImage image;
 	
 	
-	private ComonVizArcLabel arcLable;
+	private ComonVizArcLabel arcLabel;
 	
 	private Point2D middlePoint;
 
@@ -101,9 +101,9 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 		
 		this.style = new DefaultGraphArcStyle();
 		
+		this.arcLabel = new ComonVizArcLabel(this,this.type.toString(),null,null,null);
+		addChild(arcLabel);
 		this.updateArcPath();
-		this.arcLable = new ComonVizArcLabel(this,this.type.toString(),null,null,null);
-		addChild(arcLable);
 	}
 	
 	public void setShowArrowHead(boolean showArrowHead) {
@@ -251,6 +251,13 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 			if (curveFactor == 0) {
 				lineTo((float) endX, (float) endY);
 				arrowHead.setPoint(segment.getArrowPoint());
+				
+				double w = arcLabel.getBounds().width;
+				double h = arcLabel.getBounds().height;
+			
+				Point2D middlePoint = getMiddlePoint();
+				arcLabel.setBounds(middlePoint.getX() - w/2.0 , middlePoint.getY() - h/2.0, w, h);
+
 			} else {
 				// the distance that the ctrl point should be offset in the y direction
 				double lineLength = segment.getLineLength();

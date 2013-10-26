@@ -11,6 +11,7 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -87,6 +88,15 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 	private List<ChangeListener> changeListeners;
 	
 	private Collection<GraphArc> arcs;
+
+	private Ellipse2D ellipse;
+	private double ENVELOPE_FACTOR = 1.5;
+
+	// This nodes uses an internal Ellipse2D to define its shape.
+	public Ellipse2D getEllipse() {
+		if (ellipse == null) ellipse = new Ellipse2D.Double();
+		return ellipse;
+	}
 
 	public DefaultGraphNode(Object userObject) {
 		this(userObject, String.valueOf(userObject));
@@ -467,12 +477,19 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 		PBounds textBounds = textNode.getBounds();
 /*		double w = (3 * PADDING_X) + iconWidth + ICON_GAP + textBounds.getWidth();
 		double h = (2 * PADDING_Y) + Math.max(iconHeight, textBounds.getHeight());
-*/		double w = textBounds.getWidth();
-		double h = textBounds.getHeight();
-		setBounds(getX(), getY(), w, h);
+		
+*/		
+		double tw = textBounds.getWidth();
+		double th = textBounds.getHeight();
+		
+		double w = tw * ENVELOPE_FACTOR;
+		double h = th * ENVELOPE_FACTOR;
+		setBounds(getX() - (ENVELOPE_FACTOR/2 + 0.5) * tw , getY() - (ENVELOPE_FACTOR/2 + 0.5) * th, w, h);
+		//setBounds(getCenterX() - w, getCenterY() - h, w, h);
+		
 	}
 
-	@Override
+/*	@Override
 	public boolean setBounds(double x, double y, double width, double height) {
 		// TODO handle maximum width?
 		boolean changed = super.setBounds(x, y, width, height);
@@ -482,14 +499,41 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 				pImage.setBounds(getX() + PADDING_X, getY() + PADDING_Y, iconWidth, iconHeight);
 			}
 //			textNode.setBounds(getX() + PADDING_X + iconWidth + ICON_GAP, getY() + PADDING_Y, textNode.getWidth(), textNode.getHeight());
-			textNode.setBounds(getX(), getY(), textNode.getWidth(), textNode.getHeight());
+			//textNode.setBounds(getX(), getY(), textNode.getWidth(), textNode.getHeight());
+			textNode.setBounds(getX() + getWidth()/4, getY() + getHeight()/4, textNode.getWidth(), textNode.getHeight());
 			updateArcLocations();
 			invalidatePaint();
 			
 			fireChangeListeners();
 		}
 		return changed;
+	}*/
+	
+	// This method is important to override so that the geometry of 
+	// the ellipse stays consistent with the bounds geometry.
+	public boolean setBounds(double x, double y, double width, double height) {
+		if(super.setBounds(x, y, width, height)) {
+			getEllipse().setFrame(x + 2, y + 2, width - 4, height - 4);
+			double tw = textNode.getWidth();
+			double th = textNode.getHeight();
+			textNode.setBounds(getX() + (ENVELOPE_FACTOR/2 - 0.5) * tw, getY() + (ENVELOPE_FACTOR/2 - 0.5) * th, tw, th);
+			updateArcLocations();
+			invalidatePaint();
+			
+			fireChangeListeners();
+			return true;
+		}
+		return false;
 	}
+
+	// Non rectangular subclasses need to override this method so
+	// that they will be picked correctly and will receive the
+	// correct mouse events.
+	public boolean intersects(Rectangle2D aBounds) {
+		return getEllipse().intersects(aBounds);
+	}
+
+	
 
 	public boolean setLocation(double x, double y) {
 		setHighlighted(false);
@@ -587,35 +631,24 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 	protected void paint(PPaintContext paintContext) {
 		Graphics2D g2 = paintContext.getGraphics();
 
-		PBounds bounds = getBounds();
 		
 		//this.setB
 		// shrink the bounds slightly to avoid painting outside the bounds
-		bounds.setFrame(bounds.x + 1, bounds.y + 1, bounds.width - 2, bounds.height - 2);
 
 		// can't be null
-		Shape shape = style.getNodeShape(this, bounds);
 
 		// these can be null
+
 		Paint bg = style.getBackgroundPaint(this);
 		Paint borderPaint = style.getBorderPaint(this);
 		Stroke borderStroke = style.getBorderStroke(this);
-
-		// gradients need to have the correct control points
-		if (bg instanceof GradientPaint) {
-			bg = updateGradientPaintPoints((GradientPaint) bg);
-		}
-		if (borderPaint instanceof GradientPaint) {
-			borderPaint = updateGradientPaintPoints((GradientPaint) borderPaint);
-		}
-
 		
 		//stroke
 		
 		Stroke stroke = new PFixedWidthStroke(3f);
 
 		
-		//different shapes
+/*		//different shapes
 		Rectangle r = shape.getBounds();
 		
 		//round
@@ -623,12 +656,12 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 		int h = Math.min(r.width, r.height);
 		
 		//circle
-		int ovalR = Math.max(r.width, r.height)/2 + 10;
+		int ovalR = Math.max(r.width, r.height)/4 - 10 ;
 		int ovalD = ovalR*2;
 		
 		Ellipse2D round = new Ellipse2D.Double(r.x + r.width/2 - ovalR, r.y + r.height/2 - ovalR, ovalD, ovalD);
-		
-		Shape drawShape = round;
+*/		
+		Shape drawShape = getEllipse();
 		
 		// 1. paint the background shape
 		if (bg != null) {
@@ -646,6 +679,62 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 		//addOverlayIcons(style.getOverlayIcons(this));
 	}
 
+	/**@depriate
+	 * @param paintContext
+	 */
+	protected void paint2(PPaintContext paintContext) {
+		Graphics2D g2 = paintContext.getGraphics();
+
+		PBounds bounds = getBounds();
+		
+		//this.setB
+		// shrink the bounds slightly to avoid painting outside the bounds
+		bounds.setFrame(bounds.x + 1, bounds.y + 1, bounds.width - 2, bounds.height - 2);
+
+		// can't be null
+		Shape shape = style.getNodeShape(this, bounds);
+
+		// these can be null
+		Paint bg = style.getBackgroundPaint(this);
+		Paint borderPaint = style.getBorderPaint(this);
+		Stroke borderStroke = style.getBorderStroke(this);
+
+		
+		//stroke
+		
+		Stroke stroke = new PFixedWidthStroke(3f);
+
+		
+		//different shapes
+		Rectangle r = shape.getBounds();
+		
+		//round
+		int w = Math.min(r.width, r.height);
+		int h = Math.min(r.width, r.height);
+		
+		//circle
+		int ovalR = Math.max(r.width, r.height)/4 - 10 ;
+		int ovalD = ovalR*2;
+		
+		Ellipse2D round = new Ellipse2D.Double(r.x + r.width/2 - ovalR, r.y + r.height/2 - ovalR, ovalD, ovalD);
+		
+		Shape drawShape = getEllipse();
+		
+		// 1. paint the background shape
+		if (bg != null) {
+			g2.setPaint(bg);
+			g2.fill(drawShape);
+		}
+
+		// 2. paint the border
+		if ((borderPaint != null) && (borderStroke != null)) {
+			g2.setPaint(borderPaint);
+			g2.setStroke(stroke);
+			g2.draw(drawShape);
+		}
+
+		//addOverlayIcons(style.getOverlayIcons(this));
+	}
 	/**
 	 * If necessary, creates the overlay icons as PImage's and adds them to this node as a child
 	 * object. If it is already created, the overlayIcon is repositioned.
@@ -701,6 +790,8 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 			}
 			return font;
 		}
+		
+		
 
 		@Override
 		public Paint getTextPaint() {
