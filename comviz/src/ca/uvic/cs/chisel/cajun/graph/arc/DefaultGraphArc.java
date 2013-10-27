@@ -58,7 +58,7 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 	private PImage image;
 	
 	
-	private ComonVizArcLabel arcLabel;
+	private ArcLabel arcLabel;
 	
 	private Point2D middlePoint;
 
@@ -101,7 +101,7 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 		
 		this.style = new DefaultGraphArcStyle();
 		
-		this.arcLabel = new ComonVizArcLabel(this,this.type.toString(),null,null,null);
+		this.arcLabel = new ArcLabel(this,this.type.toString());
 		addChild(arcLabel);
 		this.updateArcPath();
 	}
