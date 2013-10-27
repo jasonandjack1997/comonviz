@@ -51,5 +51,9 @@ public class ArcLabel extends PText {
 			super.invalidatePaint();
 		}
 	}
+	
+	public String toString(){
+		return this.getText();
+	}
 
 }

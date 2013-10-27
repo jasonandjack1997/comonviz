@@ -85,6 +85,9 @@ public class TreeInfoManager {
                                 DefaultGraphNode jNode = (DefaultGraphNode) treeNodeList.get(j).getUserObject();
                                 
                                 for(GraphArc arc: jNode.getArcs()){
+                                	if(!arc.getType().equals("has subclass")){
+                                		continue;
+                                	}
                                         if(arc.getSource() == iNode){// source is parent
                                                 if(!treeNodeList.get(i).getChildren().contains(treeNodeList.get(j)))
                                                         treeNodeList.get(i).addChild(treeNodeList.get(j));

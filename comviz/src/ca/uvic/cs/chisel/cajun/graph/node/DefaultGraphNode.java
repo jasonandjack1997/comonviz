@@ -260,8 +260,13 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 		if (s == null) {
 			s = "";
 		}
+		
+		if(s.contains("#")){
+			s = s.substring(s.lastIndexOf('#') + 1);
+		}
 		this.fullText = s;
 		// TODO let user choose between eliding the label and splitting into lines?
+		
 		textNode.setText(splitTextIntoLines(s, MAX_LINES, MAX_TEXT_CHARS));
 		updateBounds();
 	}
@@ -337,7 +342,12 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 
 	@Override
 	public String toString() {
-		return getText();
+		
+		String temp = getText();
+		temp = temp.substring(temp.lastIndexOf("#") + 1);
+		
+		return temp;
+
 	}
 
 	public String getTooltip() {

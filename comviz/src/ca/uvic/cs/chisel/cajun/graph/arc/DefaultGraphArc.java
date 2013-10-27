@@ -103,7 +103,7 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 		
 		this.arcLabel = new ArcLabel(this,this.type.toString());
 		addChild(arcLabel);
-		this.updateArcPath();
+		//this.updateArcPath();
 	}
 	
 	public void setShowArrowHead(boolean showArrowHead) {
@@ -181,7 +181,8 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 	public String toString() {
 		GraphNode src = (isInverted() ? getDestination() : getSource());
 		GraphNode dest = (isInverted() ? getSource() : getDestination());
-		return src + " -- " + getType() + " --> " + dest;
+		//return src + " -- " + getType() + " --> " + dest;
+		return "\nSRC: " + src + "\n" + getType() + "\n" + "DST: " + dest + "\n";
 	}
 
 	public String getTooltip() {
@@ -269,6 +270,15 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 				Point2D ctrlPoint = new Point2D.Double(lineLength / 2.0, yOffset);
 				Point2D ctrlPointT = segment.getLineTransform().transform(ctrlPoint, new Point2D.Double());
 				quadTo((float) ctrlPointT.getX(), (float) ctrlPointT.getY(), (float) endX, (float) endY);
+
+			
+				double w = arcLabel.getBounds().width;
+				double h = arcLabel.getBounds().height;
+			
+				Point2D labelPoint = new Point2D.Double(lineLength / 2.0, yOffset / 2.0);
+				Point2D labelPointT = segment.getLineTransform().transform(labelPoint, new Point2D.Double());
+				arcLabel.setBounds(labelPointT.getX() - w/2.0 , labelPointT.getY() - h/2.0, w, h);
+			
 			}
 		}
 		arrowHead.setPointRight(endX >= startX);

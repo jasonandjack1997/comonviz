@@ -38,9 +38,11 @@ public class EntryPoint {
 	//private static String ontologyURI = "CoMOn-281111.owl";
 	
 	//private static String ontologyURI = "pizza.owl";
-	//private static String ontologyURI = "COMON_v3_rels.owl";
-	private static String ontologyURI = "COMON_v2.owl";
+	private static String ontologyURI = "COMON_v3_rels.owl";
+	//private static String ontologyURI = "COMON_v2.owl";
 	//private static String ontologyURI = "CoMOnv0.4.owl";
+	//private static String ontologyURI = "comonTest.owl";
+	
 	
 	private static GraphController gc;
 	
@@ -99,10 +101,9 @@ public class EntryPoint {
         	
 	        ontologyTree = treeInfoManager.getTreeRoot();
         	
-        	ontologyTreeExplorer.updateTree();
+        	//ontologyTreeExplorer.updateTree();
         	TopView topView = gc.getView();
         	
-        	//topView.initialize(tree);
 
 			StyleManager.initStyleManager(treeInfoManager.getBranchNodes().size(), 3);
         	

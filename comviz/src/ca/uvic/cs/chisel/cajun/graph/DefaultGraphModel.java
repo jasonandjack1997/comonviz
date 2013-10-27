@@ -20,6 +20,7 @@ public class DefaultGraphModel implements GraphModel {
 	private Collection<GraphModelListener> listeners;
 
 	private Map<Object, GraphNode> nodes;
+
 	public Map<Object, GraphNode> getNodes() {
 		return nodes;
 	}
@@ -32,7 +33,7 @@ public class DefaultGraphModel implements GraphModel {
 
 	private Set<Object> nodeTypes;
 	private Set<Object> arcTypes;
-	
+
 	public DefaultGraphModel() {
 		this.listeners = new ArrayList<GraphModelListener>();
 		this.nodes = new HashMap<Object, GraphNode>();
@@ -63,25 +64,28 @@ public class DefaultGraphModel implements GraphModel {
 
 	protected void fireGraphClearedEvent() {
 		if (listeners.size() > 0) {
-			ArrayList<GraphModelListener> clonedListeners = new ArrayList<GraphModelListener>(listeners);
+			ArrayList<GraphModelListener> clonedListeners = new ArrayList<GraphModelListener>(
+					listeners);
 			for (GraphModelListener gml : clonedListeners) {
 				gml.graphCleared();
 			}
 		}
 	}
-	
+
 	protected void fireNodeTypeAddedEvent(Object nodeType) {
 		if (listeners.size() > 0) {
-			ArrayList<GraphModelListener> clonedListeners = new ArrayList<GraphModelListener>(listeners);
+			ArrayList<GraphModelListener> clonedListeners = new ArrayList<GraphModelListener>(
+					listeners);
 			for (GraphModelListener gml : clonedListeners) {
 				gml.graphNodeTypeAdded(nodeType);
 			}
 		}
 	}
-	
+
 	protected void fireNodeAddedEvent(GraphNode node) {
 		if (listeners.size() > 0) {
-			ArrayList<GraphModelListener> clonedListeners = new ArrayList<GraphModelListener>(listeners);
+			ArrayList<GraphModelListener> clonedListeners = new ArrayList<GraphModelListener>(
+					listeners);
 			for (GraphModelListener gml : clonedListeners) {
 				gml.graphNodeAdded(node);
 			}
@@ -90,7 +94,8 @@ public class DefaultGraphModel implements GraphModel {
 
 	protected void fireNodeRemovedEvent(GraphNode node) {
 		if (listeners.size() > 0) {
-			ArrayList<GraphModelListener> clonedListeners = new ArrayList<GraphModelListener>(listeners);
+			ArrayList<GraphModelListener> clonedListeners = new ArrayList<GraphModelListener>(
+					listeners);
 			for (GraphModelListener gml : clonedListeners) {
 				gml.graphNodeRemoved(node);
 			}
@@ -99,16 +104,18 @@ public class DefaultGraphModel implements GraphModel {
 
 	protected void fireArcTypeAddedEvent(Object arcType) {
 		if (listeners.size() > 0) {
-			ArrayList<GraphModelListener> clonedListeners = new ArrayList<GraphModelListener>(listeners);
+			ArrayList<GraphModelListener> clonedListeners = new ArrayList<GraphModelListener>(
+					listeners);
 			for (GraphModelListener gml : clonedListeners) {
 				gml.graphArcTypeAdded(arcType);
 			}
 		}
 	}
-	
+
 	protected void fireArcAddedEvent(GraphArc arc) {
 		if (listeners.size() > 0) {
-			ArrayList<GraphModelListener> clonedListeners = new ArrayList<GraphModelListener>(listeners);
+			ArrayList<GraphModelListener> clonedListeners = new ArrayList<GraphModelListener>(
+					listeners);
 			for (GraphModelListener gml : clonedListeners) {
 				gml.graphArcAdded(arc);
 			}
@@ -117,7 +124,8 @@ public class DefaultGraphModel implements GraphModel {
 
 	protected void fireArcRemovedEvent(GraphArc arc) {
 		if (listeners.size() > 0) {
-			ArrayList<GraphModelListener> clonedListeners = new ArrayList<GraphModelListener>(listeners);
+			ArrayList<GraphModelListener> clonedListeners = new ArrayList<GraphModelListener>(
+					listeners);
 			for (GraphModelListener gml : clonedListeners) {
 				gml.graphArcRemoved(arc);
 			}
@@ -127,7 +135,7 @@ public class DefaultGraphModel implements GraphModel {
 	public Collection<GraphNode> getAllNodes() {
 		return nodes.values();
 	}
-	
+
 	public Collection<GraphNode> getVisibleNodes() {
 		ArrayList<GraphNode> visibleNodes = new ArrayList<GraphNode>();
 		for (GraphNode node : nodes.values()) {
@@ -182,11 +190,11 @@ public class DefaultGraphModel implements GraphModel {
 		// return null or empty list?
 		return Collections.emptyList();
 	}
-	
+
 	public Collection<Object> getNodeTypes() {
 		return new HashSet<Object>(nodeTypes);
 	}
-	
+
 	// ARCS
 
 	public Collection<GraphArc> getAllArcs() {
@@ -202,7 +210,7 @@ public class DefaultGraphModel implements GraphModel {
 		}
 		return visibleArcs;
 	}
-	
+
 	public GraphArc getArc(Object userObject) {
 		if (userObject != null) {
 			return arcs.get(userObject);
@@ -250,7 +258,7 @@ public class DefaultGraphModel implements GraphModel {
 
 		return null;
 	}
-	
+
 	public Collection<Object> getArcTypes() {
 		return new HashSet<Object>(arcTypes);
 	}
@@ -281,15 +289,18 @@ public class DefaultGraphModel implements GraphModel {
 		return addNode(userObject, text, icon, null);
 	}
 
-	public GraphNode addNode(Object userObject, String text, Icon icon, Object type) {
+	public GraphNode addNode(Object userObject, String text, Icon icon,
+			Object type) {
 		if (userObject == null) {
-			throw new NullPointerException("All graph nodes must have a user object.");
+			throw new NullPointerException(
+					"All graph nodes must have a user object.");
 		}
 		if (!nodes.containsKey(userObject)) {
 			if (type == null) {
 				type = GraphItem.UNKNOWN_TYPE;
 			}
-			DefaultGraphNode node = new DefaultGraphNode(userObject, text, icon, type);
+			DefaultGraphNode node = new DefaultGraphNode(userObject, text,
+					icon, type);
 			addNodeInternal(node);
 		}
 		return nodes.get(userObject);
@@ -298,7 +309,8 @@ public class DefaultGraphModel implements GraphModel {
 	protected void removeNodeInternal(GraphNode node) {
 		if (nodes.containsKey(node.getUserObject())) {
 			// remove the arcs for this node first
-			GraphArc[] arcs = node.getArcs().toArray(new GraphArc[node.getArcs().size()]);
+			GraphArc[] arcs = node.getArcs().toArray(
+					new GraphArc[node.getArcs().size()]);
 
 			for (GraphArc arc : arcs) {
 				removeArc(arc.getUserObject());
@@ -330,14 +342,14 @@ public class DefaultGraphModel implements GraphModel {
 			}
 		}
 	}
-	
+
 	/**
-	 * Clears the arc types, then iterates through all the arcs and adds the
-	 * arc types back in.
+	 * Clears the arc types, then iterates through all the arcs and adds the arc
+	 * types back in.
 	 */
 	public void recalculateArcTypes() {
 		arcTypes.clear();
-		for (GraphArc arc: arcs.values()) {
+		for (GraphArc arc : arcs.values()) {
 			Object arcType = arc.getType();
 			if (!arcTypes.contains(arcType)) {
 				arcTypes.add(arcType);
@@ -345,13 +357,13 @@ public class DefaultGraphModel implements GraphModel {
 			}
 		}
 	}
-	
+
 	public void recalculateArcStyles() {
-		for (GraphArc arc: arcs.values()) {
+		for (GraphArc arc : arcs.values()) {
 			arc.getArcStyle().setTypes(arcTypes);
 		}
 	}
-	
+
 	protected void addArcInternal(DefaultGraphArc arc) {
 		// this is the ONLY place where arcs are added
 		arcs.put(arc.getUserObject(), arc);
@@ -366,22 +378,32 @@ public class DefaultGraphModel implements GraphModel {
 
 		fireArcAddedEvent(arc);
 	}
-	
+
 	public GraphArc addArc(Object userObject, GraphNode src, GraphNode dest, Object type, Icon icon) {
-		if (userObject == null) {
-			throw new NullPointerException("All graph arcs must have a user object.");
+		try {
+			if (userObject == null) {
+				throw new NullPointerException(
+						"All graph arcs must have a user object.");
+			}
+			if (!arcs.containsKey(userObject)) {
+				addNodeInternal(src);
+				addNodeInternal(dest);
+				DefaultGraphArc arc = new DefaultGraphArc(userObject, src,
+						dest, icon, type);
+				addArcInternal(arc);
+				arrangeArcs(arc.getSource(), arc.getDestination());
+			}
+			GraphArc returnArc = arcs.get(userObject);
+			return returnArc;
+		} catch (StackOverflowError e) {
+			int a = 1;
 		}
-		if (!arcs.containsKey(userObject)) {
-			addNodeInternal(src);
-			addNodeInternal(dest);
-			DefaultGraphArc arc = new DefaultGraphArc(userObject, src, dest, icon, type);
-			addArcInternal(arc);
-			arrangeArcs(arc.getSource(), arc.getDestination());
-		}
-		return arcs.get(userObject);
+		
+		return null;
 	}
-	
-	public GraphArc addArc(Object userObject, GraphNode src, GraphNode dest, Object type) {
+
+	public GraphArc addArc(Object userObject, GraphNode src, GraphNode dest,
+			Object type) {
 		return addArc(userObject, src, dest, type, null);
 	}
 
@@ -403,12 +425,14 @@ public class DefaultGraphModel implements GraphModel {
 	}
 
 	/**
-	 * Arranges all arcs going between the source and destination nodes so that they do not overlap.
-	 * Sets the curve factor on each arc.
+	 * Arranges all arcs going between the source and destination nodes so that
+	 * they do not overlap. Sets the curve factor on each arc.
 	 * 
 	 * @see GraphArc#setCurveFactor(int)
-	 * @param src the source node
-	 * @param dest the destination node
+	 * @param src
+	 *            the source node
+	 * @param dest
+	 *            the destination node
 	 */
 	public void arrangeArcs(GraphNode src, GraphNode dest) {
 		ArrayList<GraphArc> srcToDestArcs = new ArrayList<GraphArc>();
@@ -416,13 +440,15 @@ public class DefaultGraphModel implements GraphModel {
 		for (GraphArc arc : src.getArcs()) {
 			if ((src == arc.getSource()) && (dest == arc.getDestination())) {
 				srcToDestArcs.add(arc);
-			} else if ((src == arc.getDestination()) && ((dest == arc.getSource()))) {
+			} else if ((src == arc.getDestination())
+					&& ((dest == arc.getSource()))) {
 				destToSrcArcs.add(arc);
 			}
 		}
 
 		// the initial curve factor
-		// if arcs are only in one direction then we use a straight line for the first arc
+		// if arcs are only in one direction then we use a straight line for the
+		// first arc
 		int startingCurve = 1;
 		if ((srcToDestArcs.size() == 0) || (destToSrcArcs.size() == 0)) {
 			startingCurve = 0;

@@ -1,4 +1,4 @@
-package ca.uvic.cs.chisel.cajun.graph.arc;
+package unused;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -25,6 +25,7 @@ import org.eclipse.zest.layouts.constraints.BasicEntityConstraint;
 import org.eclipse.zest.layouts.constraints.LabelLayoutConstraint;
 import org.eclipse.zest.layouts.constraints.LayoutConstraint;
 
+import ca.uvic.cs.chisel.cajun.graph.arc.DefaultArcLabelStyle;
 import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNodeStyle;
