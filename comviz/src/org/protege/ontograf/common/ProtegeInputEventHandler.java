@@ -102,7 +102,8 @@ public class ProtegeInputEventHandler extends PBasicInputEventHandler {
 		graphNode.moveToFront();
 
 		if (graphModel.isExpanded(graphNode)) {
-			graphModel.collapseNode(graphNode);
+			//graphModel.collapseNode(graphNode);
+			graphModel.collapseNode2(entity);
 			//graphModel.hideAllDesendants(graphNode);
 		} else {
 			graphModel.expandNode(graphNode);

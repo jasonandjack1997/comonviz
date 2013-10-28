@@ -168,6 +168,7 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 
 	@Override
 	public void setVisible(boolean visible) {
+		
 		if (!visible) {
 			// hide the arc
 			super.setVisible(false);

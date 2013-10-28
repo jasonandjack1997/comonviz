@@ -5,7 +5,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/ca.uvic.cs.chisel.cajun.jar"/>
 	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/draw2d-3.2.100-v20070529.jar"/>
-	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/layouts.jar"/>
+	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/layouts.jar" sourcepath="F:/Git/comonviz/comviz/build/lib/org.eclipse.zest.layouts.source_1.1.0.201308190730.jar"/>
 	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/log4j.jar"/>
 	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/looks.jar"/>
 	<classpathentry kind="lib" path="F:/Git/comonviz/comviz/build/lib/org.apache.felix.bundlerepository-1.4.2.jar"/>

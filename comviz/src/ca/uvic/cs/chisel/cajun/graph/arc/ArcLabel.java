@@ -6,9 +6,6 @@ import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 
-
-
-
 import edu.umd.cs.piccolo.nodes.PText;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
@@ -25,6 +22,12 @@ public class ArcLabel extends PText {
 		setTextPaint(Color.black);
 
 	}
+	
+	public void setText(String text){
+		String sb = new String(text);
+		sb = sb.substring(sb.lastIndexOf("#")+1).replaceAll(">", "").replaceAll("_", "");
+		super.setText(sb);
+	}
 
 	@Override
 	protected void paint(PPaintContext paintContext) {
@@ -39,7 +42,7 @@ public class ArcLabel extends PText {
 		paintContext.getGraphics().setFont(getFont());
 		Shape backgroundShape = new RoundRectangle2D.Double(getX(), getY(), getWidth(), getHeight(), 5f, 5f);		//super.paint(paintContext);
 		Graphics2D g2 = paintContext.getGraphics();
-		g2.setPaint(Color.yellow);
+		g2.setPaint(Color.white);
 		g2.fill(backgroundShape);
 		super.paintText(paintContext);
 

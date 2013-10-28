@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -39,7 +40,6 @@ import org.semanticweb.owlapi.model.OWLQuantifiedRestriction;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 
 import uk.ac.manchester.cs.owl.owlapi.OWLDeclarationAxiomImpl;
-import comonviz.HierarchyProvider;
 import ca.uvic.cs.chisel.cajun.filter.FilterManager;
 import ca.uvic.cs.chisel.cajun.graph.DefaultGraphModel;
 import ca.uvic.cs.chisel.cajun.graph.arc.DefaultGraphArc;
@@ -48,6 +48,8 @@ import ca.uvic.cs.chisel.cajun.graph.node.DefaultGraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 //import org.protege.editor.owl.OWLEditorKit;
 //import org.protege.editor.owl.model.hierarchy.AssertedClassHierarchyProvider;
+
+import comonviz.HierarchyProvider;
 
 /**
  * Graph model representation of Protege OWL API. Converts OWL relationships and
@@ -76,7 +78,8 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 	protected static final String DIRECT_SUBCLASS_SLOT_TYPE = "has subclass";
 	protected static final String DIRECT_INDIVIDUAL_SLOT_TYPE = "has individual";
 	protected static final String SUFFIX_DOMAIN_RANGE = " (Domain>Range2)";
-	protected static final String SUB_CLASS_SOME_VALUE_OF = "(Subclass some)";
+	//protected static final String SUB_CLASS_SOME_VALUE_OF = "(Subclass some)";
+	protected static final String SUB_CLASS_SOME_VALUE_OF = "";
 	protected static final String SUB_CLASS_ALL_VALUES = "(Subclass all)";
 	protected static final String EQUIVALENT_CLASS_SOME_VALUE_OF = "(Equivalent class some)";
 	protected static final String EQUIVALENT_CLASS_ALL_VALUES = "(Equivalent class all2)";
@@ -212,6 +215,19 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 		List<GraphArc> arcs = new ArrayList<GraphArc>();
 		arcs.addAll(createIncomingRelationships(entity, false));
 		arcs.addAll(createOutgoingRelationships(entity, false));
+		
+/*		for(GraphArc arc: arcs){// only want sub class relationship
+			if(!arc.getType().toString().contains("has subclass")){
+				arcs.remove(arc);
+			}
+		}
+*/		
+		Iterator<GraphArc> it = arcs.iterator();
+		while(it.hasNext()){
+			if(!it.next().getTooltip().toString().contains("has subclass")){
+				it.remove();
+			}
+		}
 
 		if (addArcs == true) {
 			addArcsToModel(arcs, false);
@@ -470,7 +486,7 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 			OWLEntity entityOfInterest, boolean mustBeVisible) {
 		Set<GraphArc> outgoingRels = new HashSet<GraphArc>();
 
-		outgoingRels.addAll(loadChildren(entityOfInterest, mustBeVisible));
+		outgoingRels.addAll(loadChildren2(entityOfInterest, mustBeVisible));
 		outgoingRels.addAll(loadDomainRangeRels(entityOfInterest, true,
 				mustBeVisible));
 		outgoingRels.addAll(findOutgoingIndividualRelationships(
@@ -812,6 +828,32 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 		if (!filterManager.isArcTypeVisible(DIRECT_SUBCLASS_SLOT_TYPE))
 			return children;
 
+		OWLClass clsOfInterest = (OWLClass) entityOfInterest;
+
+		HierarchyProvider provider = new HierarchyProvider(owlOntology);
+
+		// for(OWLClass childCls :
+		// owlEditorKit.getOWLModelManager().getOWLHierarchyManager().getOWLClassHierarchyProvider().getChildren(clsOfInterest))
+		// {
+		for (OWLClass childCls : provider.getChildren(clsOfInterest)) {
+			if (isDisplayableNode(childCls, mustBeVisible)) {
+				GraphArc arc = createArc(clsOfInterest, childCls,
+						DIRECT_SUBCLASS_SLOT_TYPE);
+				children.add(arc);
+			}
+		}
+
+		return children;
+	}
+	protected Set<GraphArc> loadChildren2(OWLEntity entityOfInterest,
+			boolean mustBeVisible) {
+		Set<GraphArc> children = new HashSet<GraphArc>();
+
+		if (!(entityOfInterest instanceof OWLClass))
+			return children;
+/*		if (!filterManager.isArcTypeVisible(DIRECT_SUBCLASS_SLOT_TYPE))
+			return children;
+*/
 		OWLClass clsOfInterest = (OWLClass) entityOfInterest;
 
 		HierarchyProvider provider = new HierarchyProvider(owlOntology);
@@ -1205,6 +1247,14 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 	 *            The list of recursively visited items, need this to avoid
 	 *            cycles
 	 */
+	
+	
+	public void collapseNode2(OWLEntity owlEntity){
+		List<OWLEntity> desendantList = getDesendantList(owlEntity, false);
+		for(OWLEntity d: desendantList){
+			removeNode(d);
+		}
+	}
 	private void collapseNode(GraphNode graphNode, Set<IRI> seen) {
 		GraphArc[] arcs = graphNode.getArcs().toArray(
 				new GraphArc[graphNode.getArcs().size()]); // createOutgoingRelationships((Frame)
@@ -1215,7 +1265,7 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 		for (GraphArc arc : arcs) {
 			Object userObject = arc.getDestination().getUserObject();
 			if (!arc.toString().contains("has subclass")) {
-				continue;
+				//continue;
 			}
 			GraphNode node = getNode(userObject);
 
@@ -1227,9 +1277,9 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 					collapseNode(node, seen);
 				}
 
-				// if (isRemovable(node)) {
-				removeNode(userObject);
-				// }
+				 if (isRemovable(node)) {
+					 removeNode(userObject);
+				 }
 			}
 		}
 	}

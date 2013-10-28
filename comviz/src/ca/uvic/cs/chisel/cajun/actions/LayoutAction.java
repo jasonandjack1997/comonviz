@@ -85,6 +85,15 @@ public class LayoutAction extends CajunAction {
 		// run the layout only on the visible nodes?  Or all nodes?
 		Collection<GraphNode> nodes = graph.getModel().getVisibleNodes();
 		Collection<GraphArc> arcs = graph.getModel().getVisibleArcs();
+		
+		Collection<GraphArc> revertArcs = new ArrayList(arcs.size());
+		for(GraphArc arc: arcs){
+			GraphArc revertArc = new DefaultGraphArc(arc.getUserObject(),arc.getDestination(),arc.getSource());
+			revertArcs.add(revertArc);
+		}
+
+		arcs.addAll(revertArcs);
+		
 		DefaultGraphNode[] entities = nodes.toArray(new DefaultGraphNode[nodes.size()]);
 		
 		Collection<GraphArc> filteredArcs;
@@ -101,6 +110,8 @@ public class LayoutAction extends CajunAction {
 			}
 		}
 		DefaultGraphArc[] rels = filteredArcs.toArray(new DefaultGraphArc[filteredArcs.size()]);
+		
+		
 
 		PCanvas canvas = graph.getCanvas();
 
