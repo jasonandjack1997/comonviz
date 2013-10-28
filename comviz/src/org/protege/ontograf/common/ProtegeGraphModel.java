@@ -620,10 +620,7 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 			if(axiom instanceof OWLDeclarationAxiomImpl){
 				continue;
 			}
-			if (true || axiom.getAxiomType().equals(AxiomType.SUBCLASS_OF)) {
-				if(!axiom.getAxiomType().equals(AxiomType.SUBCLASS_OF)){
-					int a = 1;
-				}
+			if (axiom.getAxiomType().equals(AxiomType.SUBCLASS_OF)) {
 
 				try {
 					OWLSubClassOfAxiom subClassAxiom = (OWLSubClassOfAxiom) axiom;
@@ -638,15 +635,13 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 							if (restriction.getFiller() instanceof OWLClass) {
 								// String relType =
 								// owlModelManager.getRendering(restriction.getProperty());
-								// String temp =
-								// restriction.getProperty().toString();
-								String temp = axiom.getAxiomType().toString();
-								if (temp.contains("#")) {
+								String temp = restriction.getProperty().toString();
+/*								if (temp.contains("#")) {
 									temp = temp.substring(
-											temp.lastIndexOf("#"),
+											temp.lastIndexOf("#") + 1,
 											temp.length() - 1);
 								}
-								String relType = temp;
+*/								String relType = temp;
 
 								// String relType =
 								// owlModelManager.getRendering(restriction.getProperty());
@@ -743,7 +738,7 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 					// String relType =
 					// owlModelManager.getRendering(restriction.getProperty());
 					String relType = restriction.getProperty().toString();
-					relType = relType.substring(relType.lastIndexOf("#") + 1);
+					//relType = relType.substring(relType.lastIndexOf("#") + 1);
 
 					if (isSubClass) {
 						if (restriction instanceof OWLObjectSomeValuesFrom)
@@ -880,7 +875,7 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 				GraphNode destNode = new DefaultGraphNode(rangeClass);
 				String temp = property.toString();
 				String relType = temp;
-				temp = temp.substring(temp.lastIndexOf("#") + 1);
+				//temp = temp.substring(temp.lastIndexOf("#") + 1);
 
 				GraphArc arc = createArc(srcNode, destNode, relType, null);
 				if (!domainRangeRelsBuffer.contains(arc)) {

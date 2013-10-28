@@ -263,7 +263,7 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 				// the distance that the ctrl point should be offset in the y direction
 				double lineLength = segment.getLineLength();
 				double yOffset = (curveFactor + 1) * lineLength / CURVE_FACTOR_BASE_OFFSET;
-				Point2D.Double arrowHeadPoint = new Point2D.Double(lineLength / 2.0, yOffset / 2.0);
+				Point2D.Double arrowHeadPoint = new Point2D.Double(lineLength / 3.0, yOffset / 3.0);
 				Point2D arrowHeadPointT = segment.getLineTransform().transform(arrowHeadPoint, new Point2D.Double());
 				arrowHead.setPoint(arrowHeadPointT);
 
