@@ -23,9 +23,9 @@ import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
 import comonviz.EntryPoint;
-
 import uk.ac.manchester.cs.bhig.util.MutableTree;
 import ca.uvic.cs.chisel.cajun.actions.CajunAction;
+import ca.uvic.cs.chisel.cajun.actions.ClearOrphansAction;
 import ca.uvic.cs.chisel.cajun.actions.LayoutAction;
 import ca.uvic.cs.chisel.cajun.actions.NoZoomAction;
 import ca.uvic.cs.chisel.cajun.actions.ZoomInAction;
@@ -114,7 +114,7 @@ public class TopView extends JPanel {
 	private void initializeToolBar() {
 		// Home
 		//addToolBarAction(new FocusOnHomeAction(graph.getAnimationHandler()));
-		//addToolBarAction(new ClearOrphansAction(graph.getModel(), graph));
+		addToolBarAction(new ClearOrphansAction(graph.getModel(), graph));
 
 		//getToolBar().addSeparator();
 

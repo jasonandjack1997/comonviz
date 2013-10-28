@@ -293,22 +293,8 @@
         <Class IRI="#Business_Process_Management"/>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="#Business_Process"/>
-        <ObjectSomeValuesFrom>
-            <ObjectProperty IRI="#associated_with"/>
-            <Class IRI="#Business_Process_Management"/>
-        </ObjectSomeValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
         <Class IRI="#Business_Process_Management"/>
         <Class IRI="#Compliance_Management"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#Business_Process_Management"/>
-        <ObjectSomeValuesFrom>
-            <ObjectProperty IRI="#associated_with"/>
-            <Class IRI="#Compliance_Management"/>
-        </ObjectSomeValuesFrom>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Change_Management"/>
@@ -345,6 +331,55 @@
     <SubClassOf>
         <Class IRI="#Compliance_Driver"/>
         <Class IRI="#Organizational_Commitment"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Compliance_Management"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#associated_with"/>
+            <Class IRI="#Business_Process_Management"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Compliance_Management"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#associated_with"/>
+            <Class IRI="#Culture"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Compliance_Management"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#associated_with"/>
+            <Class IRI="#Obligation_Concepts"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Compliance_Management"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#associated_with"/>
+            <Class IRI="#Program"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Compliance_Management"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#associated_with"/>
+            <Class IRI="#Resource"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Compliance_Management"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#associated_with"/>
+            <Class IRI="#Risk_Management"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Compliance_Management"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#associated_with"/>
+            <Class IRI="#Solution"/>
+        </ObjectSomeValuesFrom>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Context_Establishment"/>
@@ -385,13 +420,6 @@
     <SubClassOf>
         <Class IRI="#Culture"/>
         <Class IRI="#Compliance_Management"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#Culture"/>
-        <ObjectSomeValuesFrom>
-            <ObjectProperty IRI="#associated_with"/>
-            <Class IRI="#Compliance_Management"/>
-        </ObjectSomeValuesFrom>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Culture_Measurement"/>
@@ -454,13 +482,6 @@
         <Class IRI="#Compliance_Management"/>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="#Obligation_Concepts"/>
-        <ObjectSomeValuesFrom>
-            <ObjectProperty IRI="#associated_with"/>
-            <Class IRI="#Compliance_Management"/>
-        </ObjectSomeValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
         <Class IRI="#Obligation_Identification_&amp;_Assessment"/>
         <Class IRI="#Program"/>
     </SubClassOf>
@@ -501,22 +522,8 @@
         <Class IRI="#Business_Process_Management"/>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="#Process_Improvement"/>
-        <ObjectSomeValuesFrom>
-            <ObjectProperty IRI="#associated_with"/>
-            <Class IRI="#Business_Process_Management"/>
-        </ObjectSomeValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
         <Class IRI="#Process_Monitoring"/>
         <Class IRI="#Business_Process_Management"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#Process_Monitoring"/>
-        <ObjectSomeValuesFrom>
-            <ObjectProperty IRI="#associated_with"/>
-            <Class IRI="#Business_Process_Management"/>
-        </ObjectSomeValuesFrom>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Process_Objective"/>
@@ -529,13 +536,6 @@
     <SubClassOf>
         <Class IRI="#Program"/>
         <Class IRI="#Compliance_Management"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#Program"/>
-        <ObjectSomeValuesFrom>
-            <ObjectProperty IRI="#associated_with"/>
-            <Class IRI="#Compliance_Management"/>
-        </ObjectSomeValuesFrom>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Record_Keeping_&amp;_Reporting"/>
@@ -566,13 +566,6 @@
         <Class IRI="#Compliance_Management"/>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="#Resource"/>
-        <ObjectSomeValuesFrom>
-            <ObjectProperty IRI="#associated_with"/>
-            <Class IRI="#Compliance_Management"/>
-        </ObjectSomeValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
         <Class IRI="#Review"/>
         <Class IRI="#Program"/>
     </SubClassOf>
@@ -601,13 +594,6 @@
         <Class IRI="#Compliance_Management"/>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="#Risk_Management"/>
-        <ObjectSomeValuesFrom>
-            <ObjectProperty IRI="#associated_with"/>
-            <Class IRI="#Compliance_Management"/>
-        </ObjectSomeValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
         <Class IRI="#Risk_Management_Framework"/>
         <Class IRI="#Risk_Management"/>
     </SubClassOf>
@@ -634,13 +620,6 @@
     <SubClassOf>
         <Class IRI="#Solution"/>
         <Class IRI="#Compliance_Management"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#Solution"/>
-        <ObjectSomeValuesFrom>
-            <ObjectProperty IRI="#associated_with"/>
-            <Class IRI="#Compliance_Management"/>
-        </ObjectSomeValuesFrom>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Stakeholder"/>

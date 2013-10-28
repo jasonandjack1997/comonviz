@@ -214,7 +214,7 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 		List childrenList = new ArrayList();
 		List<GraphArc> arcs = new ArrayList<GraphArc>();
 		arcs.addAll(createIncomingRelationships(entity, false));
-		arcs.addAll(createOutgoingRelationships(entity, false));
+		arcs.addAll(createOutgoingRelationships2(entity, false));
 		
 /*		for(GraphArc arc: arcs){// only want sub class relationship
 			if(!arc.getType().toString().contains("has subclass")){
@@ -486,7 +486,7 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 			OWLEntity entityOfInterest, boolean mustBeVisible) {
 		Set<GraphArc> outgoingRels = new HashSet<GraphArc>();
 
-		outgoingRels.addAll(loadChildren2(entityOfInterest, mustBeVisible));
+		outgoingRels.addAll(loadChildren(entityOfInterest, mustBeVisible));
 		outgoingRels.addAll(loadDomainRangeRels(entityOfInterest, true,
 				mustBeVisible));
 		outgoingRels.addAll(findOutgoingIndividualRelationships(
@@ -497,7 +497,20 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 		return outgoingRels;
 	}
 
-	/**
+	public Set<GraphArc> createOutgoingRelationships2(
+			OWLEntity entityOfInterest, boolean mustBeVisible) {
+		Set<GraphArc> outgoingRels = new HashSet<GraphArc>();
+
+		outgoingRels.addAll(loadChildren2(entityOfInterest, mustBeVisible));
+		outgoingRels.addAll(loadDomainRangeRels(entityOfInterest, true,
+				mustBeVisible));
+		outgoingRels.addAll(findOutgoingIndividualRelationships(
+				entityOfInterest, mustBeVisible));
+		outgoingRels.addAll(findOutgoingConditionsRelationships(
+				entityOfInterest, mustBeVisible));
+
+		return outgoingRels;
+	}	/**
 	 * Finds relationships between an artifact as a item in the domain, and the
 	 * ranges of its properties
 	 */
@@ -845,7 +858,7 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 
 		return children;
 	}
-	protected Set<GraphArc> loadChildren2(OWLEntity entityOfInterest,
+	public Set<GraphArc> loadChildren2(OWLEntity entityOfInterest,
 			boolean mustBeVisible) {
 		Set<GraphArc> children = new HashSet<GraphArc>();
 
@@ -977,9 +990,22 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 
 	protected GraphArc createArc(OWLEntity srcCls, OWLEntity targetCls,
 			String relType, Icon icon) {
-		GraphNode srcNode = new DefaultGraphNode(srcCls);
-		GraphNode destNode = new DefaultGraphNode(targetCls);
 
+//		GraphNode srcNode = new DefaultGraphNode(srcCls);
+//		GraphNode destNode = new DefaultGraphNode(targetCls);
+		
+		GraphNode srcNode;
+		GraphNode destNode;
+
+		srcNode = this.getNodes().get(srcCls);
+		destNode = this.getNodes().get(targetCls);
+		if(srcNode == null){
+			srcNode = new DefaultGraphNode(srcCls);
+		}
+
+		if(destNode == null){
+			destNode = new DefaultGraphNode(targetCls);
+		}
 		return createArc(srcNode, destNode, relType, icon);
 	}
 

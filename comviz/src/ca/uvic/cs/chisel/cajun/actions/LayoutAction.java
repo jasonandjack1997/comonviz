@@ -6,13 +6,17 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.Icon;
 
 import org.eclipse.zest.layouts.InvalidLayoutConfiguration;
 import org.eclipse.zest.layouts.LayoutAlgorithm;
 import org.eclipse.zest.layouts.progress.ProgressListener;
+import org.protege.ontograf.common.ProtegeGraphModel;
+import org.semanticweb.owlapi.model.OWLEntity;
 
 import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;
 import ca.uvic.cs.chisel.cajun.graph.Graph;
@@ -81,18 +85,35 @@ public class LayoutAction extends CajunAction {
 		runLayout();
 	}
 	
+	@SuppressWarnings("unused")
 	public void runLayout() {
 		// run the layout only on the visible nodes?  Or all nodes?
 		Collection<GraphNode> nodes = graph.getModel().getVisibleNodes();
 		Collection<GraphArc> arcs = graph.getModel().getVisibleArcs();
 		
-		Collection<GraphArc> revertArcs = new ArrayList(arcs.size());
-		for(GraphArc arc: arcs){
-			GraphArc revertArc = new DefaultGraphArc(arc.getUserObject(),arc.getDestination(),arc.getSource());
-			revertArcs.add(revertArc);
+		Collection<GraphArc> possibleArcs = new ArrayList<GraphArc>();
+		
+		
+		for(GraphNode graphNode : nodes){
+			ProtegeGraphModel graphModel = (ProtegeGraphModel)graph.getModel();
+			possibleArcs.addAll(graphModel.loadChildren2((OWLEntity) graphNode.getUserObject(), false));
+		}
+		
+
+		Collection<GraphArc> subclassArcs = new ArrayList<GraphArc>();
+		for(GraphArc arc: possibleArcs){
+			if(arc.getType().toString().contains("has subclass")){
+				GraphNode srcNode = arc.getSource();
+				GraphNode dstNode = arc.getDestination();
+				
+				if(nodes.contains(srcNode) && nodes.contains(dstNode)){
+					subclassArcs.add(arc);
+
+				}
+			}
 		}
 
-		arcs.addAll(revertArcs);
+		arcs = subclassArcs;
 		
 		DefaultGraphNode[] entities = nodes.toArray(new DefaultGraphNode[nodes.size()]);
 		
@@ -109,6 +130,8 @@ public class LayoutAction extends CajunAction {
 				}
 			}
 		}
+		
+		
 		DefaultGraphArc[] rels = filteredArcs.toArray(new DefaultGraphArc[filteredArcs.size()]);
 		
 		

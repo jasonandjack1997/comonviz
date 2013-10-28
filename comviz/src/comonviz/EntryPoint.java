@@ -21,6 +21,7 @@ import org.protege.ontograf.common.GraphController;
 import org.protege.ontograf.common.ProtegeGraphModel;
 import org.protege.ontograf.common.StyleManager;
 
+import ca.uvic.cs.chisel.cajun.actions.ClearOrphansAction;
 import ca.uvic.cs.chisel.cajun.actions.LayoutAction;
 import ca.uvic.cs.chisel.cajun.constants.LayoutConstants;
 
@@ -110,9 +111,6 @@ public class EntryPoint {
         	
 
 			
-			for (OWLClass cls : ontology.getClassesInSignature()) {
-	        	//gc.getModel().removeNode(cls);
-	        }
 	        
 	        for (OWLClass cls : ontology.getClassesInSignature()) {
 	        	if(treeInfoManager.getLevel(cls) >= 3){
@@ -123,7 +121,7 @@ public class EntryPoint {
 	        		gc.getModel().removeNode(cls);
 	        	}
 	        }
-	        
+	       // new ClearOrphansAction(gc.getGraph().getModel(), gc.getGraph()).doAction();;
 		
 			layoutAction.doAction();
 
