@@ -72,7 +72,7 @@ public class GraphController {
 	private FlatGraph graph;
 
 	/** the model representation of the graph, nodes and edges */
-	private ProtegeGraphModel model;
+	public static ProtegeGraphModel model;
 	
 	/** the panel that renders the graph view */
 	private TopView view;

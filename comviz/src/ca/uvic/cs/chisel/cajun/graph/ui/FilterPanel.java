@@ -281,7 +281,7 @@ public abstract class FilterPanel extends JPanel implements FilterChangedListene
 				Icon icon = style.getThumbnail(type, ICON_WIDTH, ICON_HEIGHT);
 				checkbox.setIcon(icon);
 				if(type.toString().contains("has subclass")){
-					//checkbox.setSelected(false);
+					checkbox.setSelected(false);
 				}
 
 				getTypesPanel().add(checkbox);

@@ -757,6 +757,7 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 			if (font == null) {
 				font = DEFAULT_FONT;
 			}
+			font = font.deriveFont(15f);
 			return font;
 		}
 

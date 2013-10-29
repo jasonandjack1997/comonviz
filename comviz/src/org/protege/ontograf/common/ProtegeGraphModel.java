@@ -78,7 +78,8 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 	protected static final String DIRECT_SUBCLASS_SLOT_TYPE = "has subclass";
 	protected static final String DIRECT_INDIVIDUAL_SLOT_TYPE = "has individual";
 	protected static final String SUFFIX_DOMAIN_RANGE = " (Domain>Range2)";
-	//protected static final String SUB_CLASS_SOME_VALUE_OF = "(Subclass some)";
+	// protected static final String SUB_CLASS_SOME_VALUE_OF =
+	// "(Subclass some)";
 	protected static final String SUB_CLASS_SOME_VALUE_OF = "";
 	protected static final String SUB_CLASS_ALL_VALUES = "(Subclass all)";
 	protected static final String EQUIVALENT_CLASS_SOME_VALUE_OF = "(Equivalent class some)";
@@ -162,11 +163,44 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 
 		this.filterManager = filterManager;
 		List<GraphArc> arcs = new ArrayList<GraphArc>();
-
 		addNode(entity);
+		OWLEntity entityOfInterest = entity;
+		
+		
+		boolean mustBeVisible = false;
+		Set<GraphArc> incomingArcs = new HashSet<GraphArc>();
 
-		arcs.addAll(createIncomingRelationships(entity, false));
-		arcs.addAll(createOutgoingRelationships(entity, false));
+		incomingArcs.addAll(loadParents2(entityOfInterest, mustBeVisible));
+		incomingArcs.addAll(loadDomainRangeRels(entityOfInterest, false,
+				mustBeVisible));
+		incomingArcs.addAll(findIncomingIndividualRelationships(
+				entityOfInterest, mustBeVisible));
+		incomingArcs.addAll(loadUnreifiedRelations(entityOfInterest,
+				mustBeVisible));
+		incomingArcs.addAll(findIncomingConditionsRelationships(
+				entityOfInterest, mustBeVisible));
+
+		arcs.addAll(incomingArcs);
+		
+		
+		
+		
+		Set<GraphArc> outgoingRels = new HashSet<GraphArc>();
+
+		outgoingRels.addAll(loadChildren2(entityOfInterest, mustBeVisible));
+		outgoingRels.addAll(loadDomainRangeRels(entityOfInterest, true,
+				mustBeVisible));
+		outgoingRels.addAll(findOutgoingIndividualRelationships(
+				entityOfInterest, mustBeVisible));
+		outgoingRels.addAll(findOutgoingConditionsRelationships(
+				entityOfInterest, mustBeVisible));
+
+		
+		
+		//arcs.addAll(createOutgoingRelationships(entity, false));
+		arcs.addAll(outgoingRels);
+		
+		
 		addArcsToModel(arcs, false);
 		recalculateArcStyles();
 	}
@@ -215,16 +249,15 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 		List<GraphArc> arcs = new ArrayList<GraphArc>();
 		arcs.addAll(createIncomingRelationships(entity, false));
 		arcs.addAll(createOutgoingRelationships2(entity, false));
-		
-/*		for(GraphArc arc: arcs){// only want sub class relationship
-			if(!arc.getType().toString().contains("has subclass")){
-				arcs.remove(arc);
-			}
-		}
-*/		
+
+		/*
+		 * for(GraphArc arc: arcs){// only want sub class relationship
+		 * if(!arc.getType().toString().contains("has subclass")){
+		 * arcs.remove(arc); } }
+		 */
 		Iterator<GraphArc> it = arcs.iterator();
-		while(it.hasNext()){
-			if(!it.next().getTooltip().toString().contains("has subclass")){
+		while (it.hasNext()) {
+			if (!it.next().getType().toString().contains("has subclass")) {
 				it.remove();
 			}
 		}
@@ -510,7 +543,9 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 				entityOfInterest, mustBeVisible));
 
 		return outgoingRels;
-	}	/**
+	}
+
+	/**
 	 * Finds relationships between an artifact as a item in the domain, and the
 	 * ranges of its properties
 	 */
@@ -646,7 +681,7 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 		OWLClass owlClass = (OWLClass) entityOfInterest;
 		Set<OWLAxiom> axioms = owlClass.getReferencingAxioms(owlOntology);
 		for (OWLAxiom axiom : axioms) {
-			if(axiom instanceof OWLDeclarationAxiomImpl){
+			if (axiom instanceof OWLDeclarationAxiomImpl) {
 				continue;
 			}
 			if (axiom.getAxiomType().equals(AxiomType.SUBCLASS_OF)) {
@@ -664,13 +699,13 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 							if (restriction.getFiller() instanceof OWLClass) {
 								// String relType =
 								// owlModelManager.getRendering(restriction.getProperty());
-								String temp = restriction.getProperty().toString();
-/*								if (temp.contains("#")) {
-									temp = temp.substring(
-											temp.lastIndexOf("#") + 1,
-											temp.length() - 1);
-								}
-*/								String relType = temp;
+								String temp = restriction.getProperty()
+										.toString();
+								/*
+								 * if (temp.contains("#")) { temp =
+								 * temp.substring( temp.lastIndexOf("#") + 1,
+								 * temp.length() - 1); }
+								 */String relType = temp;
 
 								// String relType =
 								// owlModelManager.getRendering(restriction.getProperty());
@@ -767,7 +802,8 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 					// String relType =
 					// owlModelManager.getRendering(restriction.getProperty());
 					String relType = restriction.getProperty().toString();
-					//relType = relType.substring(relType.lastIndexOf("#") + 1);
+					// relType = relType.substring(relType.lastIndexOf("#") +
+					// 1);
 
 					if (isSubClass) {
 						if (restriction instanceof OWLObjectSomeValuesFrom)
@@ -827,6 +863,30 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 		return parents;
 	}
 
+	protected Set<GraphArc> loadParents2(OWLEntity entityOfInterest,
+			boolean mustBeVisible) {
+		Set<GraphArc> parents = new HashSet<GraphArc>();
+
+		if (!(entityOfInterest instanceof OWLClass))
+			return parents;
+		OWLClass clsOfInterest = (OWLClass) entityOfInterest;
+
+		// for(OWLClass parentCls :
+		// owlEditorKit.getOWLModelManager().getOWLHierarchyManager().getOWLClassHierarchyProvider().getParents(clsOfInterest))
+		// {
+		for (OWLClass parentCls : provider.getParents(clsOfInterest)) {
+			if (isDisplayableNode(parentCls, mustBeVisible)) {
+				GraphArc arc = createArc(parentCls, clsOfInterest,
+						DIRECT_SUBCLASS_SLOT_TYPE);
+				arc.setInverted(false);
+				parents.add(arc);
+				System.out.println("****getParentWorked");
+			}
+		}
+
+		return parents;
+	}
+
 	/**
 	 * Creates relationships between entityOfInterest and its' direct children.
 	 * 
@@ -858,15 +918,13 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 
 		return children;
 	}
+
 	public Set<GraphArc> loadChildren2(OWLEntity entityOfInterest,
 			boolean mustBeVisible) {
 		Set<GraphArc> children = new HashSet<GraphArc>();
 
 		if (!(entityOfInterest instanceof OWLClass))
 			return children;
-/*		if (!filterManager.isArcTypeVisible(DIRECT_SUBCLASS_SLOT_TYPE))
-			return children;
-*/
 		OWLClass clsOfInterest = (OWLClass) entityOfInterest;
 
 		HierarchyProvider provider = new HierarchyProvider(owlOntology);
@@ -930,7 +988,7 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 				GraphNode destNode = new DefaultGraphNode(rangeClass);
 				String temp = property.toString();
 				String relType = temp;
-				//temp = temp.substring(temp.lastIndexOf("#") + 1);
+				// temp = temp.substring(temp.lastIndexOf("#") + 1);
 
 				GraphArc arc = createArc(srcNode, destNode, relType, null);
 				if (!domainRangeRelsBuffer.contains(arc)) {
@@ -991,19 +1049,19 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 	protected GraphArc createArc(OWLEntity srcCls, OWLEntity targetCls,
 			String relType, Icon icon) {
 
-//		GraphNode srcNode = new DefaultGraphNode(srcCls);
-//		GraphNode destNode = new DefaultGraphNode(targetCls);
-		
+		// GraphNode srcNode = new DefaultGraphNode(srcCls);
+		// GraphNode destNode = new DefaultGraphNode(targetCls);
+
 		GraphNode srcNode;
 		GraphNode destNode;
 
 		srcNode = this.getNodes().get(srcCls);
 		destNode = this.getNodes().get(targetCls);
-		if(srcNode == null){
+		if (srcNode == null) {
 			srcNode = new DefaultGraphNode(srcCls);
 		}
 
-		if(destNode == null){
+		if (destNode == null) {
 			destNode = new DefaultGraphNode(targetCls);
 		}
 		return createArc(srcNode, destNode, relType, icon);
@@ -1273,14 +1331,14 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 	 *            The list of recursively visited items, need this to avoid
 	 *            cycles
 	 */
-	
-	
-	public void collapseNode2(OWLEntity owlEntity){
+
+	public void collapseNode2(OWLEntity owlEntity) {
 		List<OWLEntity> desendantList = getDesendantList(owlEntity, false);
-		for(OWLEntity d: desendantList){
+		for (OWLEntity d : desendantList) {
 			removeNode(d);
 		}
 	}
+
 	private void collapseNode(GraphNode graphNode, Set<IRI> seen) {
 		GraphArc[] arcs = graphNode.getArcs().toArray(
 				new GraphArc[graphNode.getArcs().size()]); // createOutgoingRelationships((Frame)
@@ -1291,7 +1349,7 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 		for (GraphArc arc : arcs) {
 			Object userObject = arc.getDestination().getUserObject();
 			if (!arc.toString().contains("has subclass")) {
-				//continue;
+				// continue;
 			}
 			GraphNode node = getNode(userObject);
 
@@ -1303,9 +1361,9 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 					collapseNode(node, seen);
 				}
 
-				 if (isRemovable(node)) {
-					 removeNode(userObject);
-				 }
+				if (isRemovable(node)) {
+					removeNode(userObject);
+				}
 			}
 		}
 	}

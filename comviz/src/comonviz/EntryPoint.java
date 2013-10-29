@@ -32,38 +32,36 @@ import org.protege.ontograf.ui.TopView;
 import uk.ac.manchester.cs.bhig.util.MutableTree;
 
 public class EntryPoint {
-	
+
 	public static OWLOntology ontology = null;
-	
-	
-	//private static String ontologyURI = "CoMOn-281111.owl";
-	
-	//private static String ontologyURI = "pizza.owl";
-	//private static String ontologyURI = "COMON_v3_rels.owl";
+
+	// private static String ontologyURI = "CoMOn-281111.owl";
+
+	// private static String ontologyURI = "pizza.owl";
+	// private static String ontologyURI = "COMON_v3_rels.owl";
 	private static String ontologyURI = "COMON_v4_full_rel.owl";
-	//private static String ontologyURI = "COMON_v2.owl";
-	//private static String ontologyURI = "CoMOnv0.4.owl";
-	//private static String ontologyURI = "comonTest.owl";
-	
-	
+	// private static String ontologyURI = "COMON_v2.owl";
+	// private static String ontologyURI = "CoMOnv0.4.owl";
+	// private static String ontologyURI = "comonTest.owl";
+
 	private static GraphController gc;
-	
+
 	public static MutableTree ontologyTree;
-	
+
 	public static OntologyTreeExplorer ontologyTreeExplorer = new OntologyTreeExplorer();
-    /**
+
+	/**
      * 
      */
-    @SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	private static void start() {
-    	
-    	ontologyURI = "file:///" + (new File(ontologyURI)).getAbsolutePath();
-    	ontologyURI = ontologyURI.replace("\\","/");
-    	
+
+		ontologyURI = "file:///" + (new File(ontologyURI)).getAbsolutePath();
+		ontologyURI = ontologyURI.replace("\\", "/");
 
 		OwlApi owlapi = new OwlApi();
 
-    	try {
+		try {
 			ontology = owlapi.openOntology(ontologyURI);
 
 		} catch (OWLOntologyCreationException | OWLOntologyStorageException
@@ -71,60 +69,59 @@ public class EntryPoint {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-        //Create and set up the window.
-        JFrame frame = new JFrame("CoMOnViz");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// Create and set up the window.
+		JFrame frame = new JFrame("CoMOnViz");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //Display the window.
-        frame.pack();
-        //frame.setBounds(0, 0, 800, 600);
-        frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-        frame.setVisible(true);
+		// Display the window.
+		frame.pack();
+		// frame.setBounds(0, 0, 800, 600);
+		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		frame.setVisible(true);
 
-        try {
-			
+		try {
+
 			gc = new GraphController(frame);
-	        FlatGraph fg = (FlatGraph)gc.getGraph();
+			FlatGraph fg = (FlatGraph) gc.getGraph();
 
-	        gc.getModel().owlOntology = EntryPoint.ontology;
-			//LayoutAction layoutAction = ((AbstractGraph)gc.getGraph()).getLayout(LayoutConstants.LAYOUT_SPRING);
-			LayoutAction layoutAction = ((AbstractGraph)gc.getGraph()).getLayout(LayoutConstants.LAYOUT_RADIAL);
-			
-			
-	        for (OWLClass cls : ontology.getClassesInSignature()) {
-	        	Set<OWLClassExpression> subClasses;
-	        	subClasses = cls.getSubClasses(ontology);
-	        	gc.getModel().generateNodesAndArcs(cls, ((AbstractGraph) gc.getGraph()).getFilterManager());
-	        }
- 
-	        Collection nodes = gc.getModel().getVisibleNodes();
-	        TreeInfoManager treeInfoManager = TreeInfoManager.getTreeManager();
-	        treeInfoManager.generateTreeInfo(nodes);
-        	
-	        ontologyTree = treeInfoManager.getTreeRoot();
-        	
-        	//ontologyTreeExplorer.updateTree();
-        	TopView topView = gc.getView();
-        	
+			gc.getModel().owlOntology = EntryPoint.ontology;
+			// LayoutAction layoutAction =
+			// ((AbstractGraph)gc.getGraph()).getLayout(LayoutConstants.LAYOUT_SPRING);
+			LayoutAction layoutAction = ((AbstractGraph) gc.getGraph())
+					.getLayout(LayoutConstants.LAYOUT_RADIAL);
 
-			StyleManager.initStyleManager(treeInfoManager.getBranchNodes().size(), 3);
-        	
+			for (OWLClass cls : ontology.getClassesInSignature()) {
+				Set<OWLClassExpression> subClasses;
+				subClasses = cls.getSubClasses(ontology);
+				gc.getModel().generateNodesAndArcs(cls,
+						((AbstractGraph) gc.getGraph()).getFilterManager());
+			}
 
-			
-	        
-	        for (OWLClass cls : ontology.getClassesInSignature()) {
-	        	if(treeInfoManager.getLevel(cls) >= 3){
-	        		//((ProtegeGraphModel)(gc.getModel())).addNode((OWLEntity)cls);
-	        	//then the model have all nodes, so we can generate tree information
-	        	
-	        		//gc.showOWLClass(cls);
-	        		gc.getModel().removeNode(cls);
-	        	}
-	        }
-	       // new ClearOrphansAction(gc.getGraph().getModel(), gc.getGraph()).doAction();;
-		
+			Collection nodes = null;
+			nodes = gc.getModel().getAllNodes();
+			TreeInfoManager treeInfoManager = TreeInfoManager.getTreeManager();
+			treeInfoManager.generateTreeInfo(nodes);
+
+			ontologyTree = treeInfoManager.getTreeRoot();
+
+			// ontologyTreeExplorer.updateTree();
+			TopView topView = gc.getView();
+
+			StyleManager.initStyleManager(treeInfoManager.getBranchNodes()
+					.size(), 3);
+
+			for (OWLClass cls : ontology.getClassesInSignature()) {
+				gc.getModel().removeNode(cls);
+			}
+
+			for (OWLClass cls : ontology.getClassesInSignature()) {
+				if (treeInfoManager.getLevel(cls) <= 1) {
+
+					gc.getModel().show(cls, ((AbstractGraph) gc.getGraph()).getFilterManager());
+				}
+			}
+
 			layoutAction.doAction();
-
 
 		} catch (OWLOntologyCreationException e) {
 			// TODO Auto-generated catch block
@@ -137,19 +134,19 @@ public class EntryPoint {
 			e.printStackTrace();
 		}
 
-    }
+	}
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                start();
-            }
-        });
-    	
-    	//start();
+		// Schedule a job for the event-dispatching thread:
+		// creating and showing this application's GUI.
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				start();
+			}
+		});
+
+		// start();
 
 	}
 
