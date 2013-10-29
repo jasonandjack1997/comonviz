@@ -1060,10 +1060,11 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 		if (srcNode == null) {
 			srcNode = new DefaultGraphNode(srcCls);
 		}
-
+		
 		if (destNode == null) {
 			destNode = new DefaultGraphNode(targetCls);
 		}
+		//((DefaultGraphNode)srcNode).setBounds(destNode.getBounds());
 		return createArc(srcNode, destNode, relType, icon);
 	}
 

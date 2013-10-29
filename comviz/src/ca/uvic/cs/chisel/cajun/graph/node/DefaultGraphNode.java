@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Paint;
-import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Ellipse2D;
@@ -89,7 +88,10 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 	private Collection<GraphArc> arcs;
 
 	private Ellipse2D ellipse;
-	private double ENVELOPE_FACTOR = 1.5;
+	private double ENVELOPE_FACTOR = 2.0; // the bound is bigger than the text
+											// size so we can draw a ellipse in
+	private int ELLIPSE_DECRESEMENT = 5; // the distance eclipse is within each
+											// side of the bounds
 
 	private ChildrenCountIcon childrenCountIcon;
 
@@ -131,23 +133,20 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 		this.setPickable(true);
 		this.setChildrenPickable(false);
 
-
-
 		textNode = new GraphTextNode();
 		textNode.setHorizontalAlignment(Component.CENTER_ALIGNMENT);
 		// make this node match the text size
 		textNode.setConstrainWidthToTextWidth(true);
 		textNode.setConstrainHeightToTextHeight(true);
 		textNode.setPickable(false);
-		
-		
-		childrenCountIcon = new ChildrenCountIcon(this,"1");
+
+		childrenCountIcon = new ChildrenCountIcon(this, "1");
 		childrenCountIcon.setHorizontalAlignment(Component.CENTER_ALIGNMENT);
 		// make this node match the text size
 		childrenCountIcon.setConstrainWidthToTextWidth(true);
 		childrenCountIcon.setConstrainHeightToTextHeight(true);
 		childrenCountIcon.setPickable(false);
-		
+
 		addChild(textNode);
 		addChild(childrenCountIcon);
 
@@ -281,7 +280,7 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 		// lines?
 
 		textNode.setText(splitTextIntoLines(s, MAX_LINES, MAX_TEXT_CHARS));
-		//updateBounds();
+		// updateBounds();
 	}
 
 	/**
@@ -521,22 +520,23 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 
 	}
 
-
 	// This method is important to override so that the geometry of
 	// the ellipse stays consistent with the bounds geometry.
 	public boolean setBounds(double x, double y, double width, double height) {
 		if (super.setBounds(x, y, width, height)) {
-			getEllipse().setFrame(x + 2, y + 2, width - 4, height - 4);
+			getEllipse().setFrame(x + ELLIPSE_DECRESEMENT,
+					y + ELLIPSE_DECRESEMENT, width - 2 * ELLIPSE_DECRESEMENT,
+					height - 2 * ELLIPSE_DECRESEMENT);
 			double tw = textNode.getWidth();
 			double th = textNode.getHeight();
 			textNode.setBounds(getX() + (ENVELOPE_FACTOR / 2 - 0.5) * tw,
 					getY() + (ENVELOPE_FACTOR / 2 - 0.5) * th, tw, th);
-			
+
 			double cw = childrenCountIcon.getWidth();
 			double ch = childrenCountIcon.getHeight();
 			double d = Math.max(cw, ch);
 			childrenCountIcon.setBounds(getX(), getY(), d, d);
-		
+
 			updateArcLocations();
 			invalidatePaint();
 
@@ -664,18 +664,6 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 
 		Stroke stroke = new PFixedWidthStroke(3f);
 
-		/*
-		 * //different shapes Rectangle r = shape.getBounds();
-		 * 
-		 * //round int w = Math.min(r.width, r.height); int h =
-		 * Math.min(r.width, r.height);
-		 * 
-		 * //circle int ovalR = Math.max(r.width, r.height)/4 - 10 ; int ovalD =
-		 * ovalR*2;
-		 * 
-		 * Ellipse2D round = new Ellipse2D.Double(r.x + r.width/2 - ovalR, r.y +
-		 * r.height/2 - ovalR, ovalD, ovalD);
-		 */
 		Shape drawShape = getEllipse();
 
 		// 1. paint the background shape
@@ -690,6 +678,9 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 			g2.setStroke(stroke);
 			g2.draw(drawShape);
 		}
+
+		childrenCountIcon.setBounds(getEllipse().getX(), getEllipse().getY(),
+				childrenCountIcon.getWidth(), childrenCountIcon.getHeight());
 
 		super.paint(paintContext);
 		// addOverlayIcons(style.getOverlayIcons(this));
