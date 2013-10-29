@@ -10,115 +10,142 @@ import org.protege.ontograf.tree.TreeInfoManager;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 /**
- * @author uqwwan10
- * manage the size, font, color, pound of  border, background, line, label,etc
+ * @author uqwwan10 manage the size, font, color, pound of border, background,
+ *         line, label,etc
  */
 public class StyleManager {
-	
-	private static StyleManager instance;
-	
 
-	private static List<Color> 	nodeBackgroundColors;
-	private static List<Color>	arcColors;
-	
-	private static Map<Object, Color> 	nodeBackgroundColorMap;
-	private static Map<Object, Color>	arcColorMap;
-	
+	private static StyleManager instance;
+
+	private static List<Color> nodeBackgroundColors;
+	private static List<Color> arcColors;
+
+	private static Map<Object, Color> nodeBackgroundColorMap;
+	private static Map<Object, Color> arcColorMap;
+
 	final private static float NODE_BACKGROUND_SATUATION = 0.2F;
 	final private static float NODE_BACKGROUND_BRIGHTNESS = 1F;
 	final private static float NODE_HUE_START = 0F;
 	final private static float NODE_HUE_END = 1F;
-	
+
 	/**
 	 * border is simply darker than the background
 	 */
 	final private static float NODE_BORDER_BRIGHTNESS_GAIN = 0.2F;
-	
+
 	final private static float ARC_SATUATION = 0.1F;
 	final private static float ARC_BRIGHTNESS = 0F;
 	final private static float ARC_HUE_START = 0F;
 	final private static float ARC_HUE_END = 1F;
-	
-	private StyleManager(){
-		
+
+	private static int MAX_ALPHA = 255;
+	private static int MIN_ALPHA = 50;
+
+	private StyleManager() {
+
 	}
-	
-	public static void initStyleManager(int numBranches, int numArcTypes){
+
+	public static void initStyleManager(int numBranches, int numArcTypes) {
 		generateNodeColors(numBranches);
 		generateArcColors(numArcTypes);
-		
+
 	}
-	
-	public static StyleManager getStyleManager(){
-		if(instance == null){
+
+	public static StyleManager getStyleManager() {
+		if (instance == null) {
 			instance = new StyleManager();
 		}
 		return instance;
 	}
+
 	/**
 	 * generate colors apply for each branch
-	 * @param numBranches, the number of branches
+	 * 
+	 * @param numBranches
+	 *            , the number of branches
 	 */
-	private static void generateNodeColors(int numBranches){
-		
-		
+	private static void generateNodeColors(int numBranches) {
+
 		nodeBackgroundColorMap = new HashMap();
 		int numColors = numBranches + 1;
 		nodeBackgroundColors = new ArrayList<Color>(numColors);
-		float hueDistance = (NODE_HUE_END - NODE_HUE_START)/numColors;
-		
-		for(int i = 0; i< numColors; i++){
-			Color color = Color.getHSBColor(NODE_HUE_START + 100 + hueDistance * i, NODE_BACKGROUND_SATUATION, NODE_BACKGROUND_BRIGHTNESS);
+		float hueDistance = (NODE_HUE_END - NODE_HUE_START) / numColors;
+
+		for (int i = 0; i < numColors; i++) {
+			Color color = Color.getHSBColor(NODE_HUE_START + 100 + hueDistance
+					* i, NODE_BACKGROUND_SATUATION, NODE_BACKGROUND_BRIGHTNESS);
 			nodeBackgroundColors.add(color);
 		}
-				
+
 		return;
 	}
-	
-	private static void generateArcColors(int numArcTypes){
+
+	private static void generateArcColors(int numArcTypes) {
 		arcColorMap = new HashMap();
 		arcColors = new ArrayList<Color>(numArcTypes);
-		float hueDistance = (ARC_HUE_END - ARC_HUE_START)/numArcTypes;
-		
-		for(int i = 0; i< numArcTypes; i++){
-			Color color = Color.getHSBColor(ARC_HUE_START + hueDistance * i, ARC_SATUATION, ARC_BRIGHTNESS);
+		float hueDistance = (ARC_HUE_END - ARC_HUE_START) / numArcTypes;
+
+		for (int i = 0; i < numArcTypes; i++) {
+			Color color = Color.getHSBColor(ARC_HUE_START + hueDistance * i,
+					ARC_SATUATION, ARC_BRIGHTNESS);
 			arcColors.add(color);
 		}
 	}
-	
-	public  Color getNodeBackgroundColor(OWLEntity node){
-		
-		
+
+	public Color getNodeBackgroundColor(OWLEntity node) {
+
 		TreeInfoManager treeInfoManager = TreeInfoManager.getTreeManager();
-		
+
 		Object branchEntity = treeInfoManager.getBranchEntity(node);
-		
-		if(nodeBackgroundColorMap.get(branchEntity) == null){
-			try{
-			nodeBackgroundColorMap.put(branchEntity, nodeBackgroundColors.get(0));
-			nodeBackgroundColors.remove(0);
-			}catch (IndexOutOfBoundsException e){
+
+		if (nodeBackgroundColorMap.get(branchEntity) == null) {
+			try {
+				nodeBackgroundColorMap.put(branchEntity,
+						nodeBackgroundColors.get(0));
+				nodeBackgroundColors.remove(0);
+			} catch (IndexOutOfBoundsException e) {
 				int a = 1;
 			}
 		}
-		
-		return nodeBackgroundColorMap.get(branchEntity);
+
+		Color branchColor = nodeBackgroundColorMap.get(branchEntity);
+		int level = treeInfoManager.getLevel(node);
+		int maxLevel = treeInfoManager.getTreeRoot().getMaxDepth();
+
+		Color nodeColor = null;
+		try {
+			 nodeColor = new Color(branchColor.getRed(),
+			 branchColor.getGreen(), branchColor.getBlue(), MAX_ALPHA
+			 - (MAX_ALPHA - MIN_ALPHA) * (level - 1)
+			 / (maxLevel - 1));
+
+//			float[] hsbValue;
+//			hsbValue = Color.RGBtoHSB(branchColor.getRed(),
+//					branchColor.getGreen(), branchColor.getBlue(), null);
+//			
+//			nodeColor = Color.getHSBColor(hsbValue[0], hsbValue[1]  - (NODE_BACKGROUND_SATUATION - 0.1f) * (level - 1f)/(maxLevel -1f), hsbValue[2]);
+			
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		}
+
+		return nodeColor;
 	}
 
-	public  Color getNodeBorderColor(OWLEntity branchEntity){
+	public Color getNodeBorderColor(OWLEntity branchEntity) {
 		Color backgroundColor = getNodeBackgroundColor(branchEntity);
-		
-		//ColorSpace colorSpace = new ColorSpace(ColorSpace.TYPE_HSV, 3);
+
+		// ColorSpace colorSpace = new ColorSpace(ColorSpace.TYPE_HSV, 3);
 		return backgroundColor.darker();
 	}
 
-	public  Color getArcColor(Object arc){
-		
-		if(arcColorMap.get(arc) == null){
+	public Color getArcColor(Object arc) {
+
+		if (arcColorMap.get(arc) == null) {
 			arcColorMap.put(arc, arcColors.get(0));
 			arcColors.remove(0);
 		}
-		
+
 		return arcColorMap.get(arc);
 	}
 }

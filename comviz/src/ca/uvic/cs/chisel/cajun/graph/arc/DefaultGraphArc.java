@@ -18,6 +18,7 @@ import org.eclipse.zest.layouts.LayoutBendPoint;
 import org.eclipse.zest.layouts.LayoutEntity;
 import org.eclipse.zest.layouts.constraints.LayoutConstraint;
 
+import ca.uvic.cs.chisel.cajun.graph.node.ChildrenCountIcon;
 import ca.uvic.cs.chisel.cajun.graph.node.DefaultGraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import edu.umd.cs.piccolo.nodes.PImage;
@@ -62,6 +63,7 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 	
 	private Point2D middlePoint;
 
+
 	public Point2D getMiddlePoint() {
 		return middlePoint;
 	}
@@ -103,6 +105,7 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 		
 		this.arcLabel = new ArcLabel(this,this.type.toString());
 		addChild(arcLabel);
+		
 		//this.updateArcPath();
 	}
 	
@@ -187,10 +190,11 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 	}
 
 	public String getTooltip() {
-		if (tooltip == null) {
-			return toString();
-		}
-		return tooltip;
+//		if (tooltip == null) {
+//			return toString();
+//		}
+//		return tooltip;
+		return null;
 	}
 
 	public void setTooltip(String tooltip) {
@@ -202,11 +206,11 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 	}
 	
 	public void setSelected(boolean selected) {
-		if (this.selected != selected) {
-			this.selected = selected;
-			arrowHead.setSelected(selected);
-			invalidatePaint();
-		}
+//		if (this.selected != selected) {
+//			this.selected = selected;
+//			arrowHead.setSelected(selected);
+//			invalidatePaint();
+//		}
 	}
 
 	public boolean isHighlighted() {
@@ -214,11 +218,11 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 	}
 
 	public void setHighlighted(boolean highlighted) {
-		if (this.highlighted != highlighted) {
-			this.highlighted = highlighted;
-			arrowHead.setHighlighted(highlighted);
-			invalidatePaint();
-		}
+//		if (this.highlighted != highlighted) {
+//			this.highlighted = highlighted;
+//			arrowHead.setHighlighted(highlighted);
+//			invalidatePaint();
+//		}
 	}
 
 	public void updateArcPath() {
@@ -260,6 +264,11 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 				Point2D middlePoint = getMiddlePoint();
 				arcLabel.setBounds(middlePoint.getX() - w/2.0 , middlePoint.getY() - h/2.0, w, h);
 
+	
+				
+				//childrenCountIcon.setBounds(middlePoint.getX() - w/2.0 , middlePoint.getY() - h/2.0, w, h);
+				
+				//childrenCountIcon.setBounds(0,0,0,0);
 			} else {
 				// the distance that the ctrl point should be offset in the y direction
 				double lineLength = segment.getLineLength();
@@ -279,6 +288,10 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 				Point2D labelPoint = new Point2D.Double(lineLength / 2.0, yOffset / 2.0);
 				Point2D labelPointT = segment.getLineTransform().transform(labelPoint, new Point2D.Double());
 				arcLabel.setBounds(labelPointT.getX() - w/2.0 , labelPointT.getY() - h/2.0, w, h);
+
+				//childrenCountIcon.setBounds(labelPointT.getX() - w/2.0 , labelPointT.getY() - h/2.0, w, h);
+				
+				
 			
 			}
 		}

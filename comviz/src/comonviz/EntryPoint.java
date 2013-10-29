@@ -40,7 +40,7 @@ public class EntryPoint {
 	
 	//private static String ontologyURI = "pizza.owl";
 	//private static String ontologyURI = "COMON_v3_rels.owl";
-	private static String ontologyURI = "COMON_relTest.owl";
+	private static String ontologyURI = "COMON_v4_full_rel.owl";
 	//private static String ontologyURI = "COMON_v2.owl";
 	//private static String ontologyURI = "CoMOnv0.4.owl";
 	//private static String ontologyURI = "comonTest.owl";

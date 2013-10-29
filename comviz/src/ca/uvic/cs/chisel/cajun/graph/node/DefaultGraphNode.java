@@ -39,17 +39,16 @@ import edu.umd.cs.piccolo.util.PPaintContext;
 import edu.umd.cs.piccolox.util.PFixedWidthStroke;
 
 /**
- * Default graph node implementation. Displays some text and possible an image/icon.
+ * Default graph node implementation. Displays some text and possible an
+ * image/icon.
  * 
  * @author Chris Callendar
- * @since  30-Oct-07
+ * @since 30-Oct-07
  */
 public class DefaultGraphNode extends PNode implements GraphNode {
-	private static long locationX = 0;
-	private static long locationY = 0;
-	
+
 	private static final long serialVersionUID = 3223950711940456476L;
-	
+
 	private static final int ICON_GAP = 4;
 	private static final int PADDING_X = 12;
 	private static final int PADDING_Y = 6;
@@ -81,20 +80,23 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 	protected double wInLayout = 0;
 	protected double hInLayout = 0;
 	private Object layoutInformation;
-	
+
 	private double xFactor, yFactor;
 	private Object graphData;
-	
+
 	private List<ChangeListener> changeListeners;
-	
+
 	private Collection<GraphArc> arcs;
 
 	private Ellipse2D ellipse;
 	private double ENVELOPE_FACTOR = 1.5;
 
+	private ChildrenCountIcon childrenCountIcon;
+
 	// This nodes uses an internal Ellipse2D to define its shape.
 	public Ellipse2D getEllipse() {
-		if (ellipse == null) ellipse = new Ellipse2D.Double();
+		if (ellipse == null)
+			ellipse = new Ellipse2D.Double();
 		return ellipse;
 	}
 
@@ -110,15 +112,15 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 		this(userObject, text, icon, null);
 	}
 
-	public DefaultGraphNode(Object userObject, String text, Icon icon, Object type) {
+	public DefaultGraphNode(Object userObject, String text, Icon icon,
+			Object type) {
 		super();
 
-		
 		this.userObject = userObject;
-		
+
 		this.changeListeners = new ArrayList<ChangeListener>();
 
-		//this.style = new DefaultGraphNodeStyle();
+		// this.style = new DefaultGraphNodeStyle();
 		this.style = new CustomGraphNodeStyle1();
 		this.selected = false;
 		this.highlighted = false;
@@ -129,26 +131,36 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 		this.setPickable(true);
 		this.setChildrenPickable(false);
 
+
+
 		textNode = new GraphTextNode();
-		textNode.setHorizontalAlignment(Component.CENTER_ALIGNMENT);;
+		textNode.setHorizontalAlignment(Component.CENTER_ALIGNMENT);
 		// make this node match the text size
 		textNode.setConstrainWidthToTextWidth(true);
 		textNode.setConstrainHeightToTextHeight(true);
 		textNode.setPickable(false);
+		
+		
+		childrenCountIcon = new ChildrenCountIcon(this,"1");
+		childrenCountIcon.setHorizontalAlignment(Component.CENTER_ALIGNMENT);
+		// make this node match the text size
+		childrenCountIcon.setConstrainWidthToTextWidth(true);
+		childrenCountIcon.setConstrainHeightToTextHeight(true);
+		childrenCountIcon.setPickable(false);
+		
 		addChild(textNode);
+		addChild(childrenCountIcon);
+
 		setText(text);
 		setIcon(icon);
 		setType(type);
 
-		this.setLocation(locationX, locationY);
-		locationX += 5;
-		locationY += 5;
 	}
-	
+
 	public void removeChangeListener(ChangeListener l) {
 		changeListeners.remove(l);
 	}
-	
+
 	public void addChangeListener(ChangeListener l) {
 		changeListeners.add(l);
 	}
@@ -163,7 +175,7 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 
 	public void setNodeStyle(GraphNodeStyle style) {
 		if ((style != null) && (this.style != style)) {
-			//this.style = style;
+			// this.style = style;
 			invalidateFullBounds();
 			invalidatePaint();
 		}
@@ -260,23 +272,26 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 		if (s == null) {
 			s = "";
 		}
-		
-		if(s.contains("#")){
+
+		if (s.contains("#")) {
 			s = s.substring(s.lastIndexOf('#') + 1);
 		}
 		this.fullText = s;
-		// TODO let user choose between eliding the label and splitting into lines?
-		
+		// TODO let user choose between eliding the label and splitting into
+		// lines?
+
 		textNode.setText(splitTextIntoLines(s, MAX_LINES, MAX_TEXT_CHARS));
-		updateBounds();
+		//updateBounds();
 	}
 
 	/**
-	 * Restricts the number of characters in the text node. If the string is too long it is chopped
-	 * and appended with "...".
+	 * Restricts the number of characters in the text node. If the string is too
+	 * long it is chopped and appended with "...".
 	 * 
-	 * @param text the string to possibly elide
-	 * @return the elided string, or the original if text isn't longer than the max allowed chars
+	 * @param text
+	 *            the string to possibly elide
+	 * @return the elided string, or the original if text isn't longer than the
+	 *         max allowed chars
 	 */
 	protected String elideText(String text, int maxCharsPerLine) {
 		if (text.length() > maxCharsPerLine) {
@@ -286,10 +301,11 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 	}
 
 	/**
-	 * Splits the text into lines. Attempts to split at word breaks if possible. Also puts a cap on
-	 * the max number of lines.
+	 * Splits the text into lines. Attempts to split at word breaks if possible.
+	 * Also puts a cap on the max number of lines.
 	 */
-	protected String splitTextIntoLines(String text, int maxLines, int maxCharsPerLine) {
+	protected String splitTextIntoLines(String text, int maxLines,
+			int maxCharsPerLine) {
 		text = text.replace('_', ' ').trim();
 		StringBuffer buffer = new StringBuffer(text.length() + 10);
 		if (text.length() > maxCharsPerLine) {
@@ -302,7 +318,8 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 				}
 				// base case #2 - added max lines
 				if ((lines + 1) == maxLines) {
-					// elide the remaining text (s) instead of just the current line
+					// elide the remaining text (s) instead of just the current
+					// line
 					buffer.append(elideText(text, maxCharsPerLine));
 					break;
 				}
@@ -342,10 +359,10 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 
 	@Override
 	public String toString() {
-		
+
 		String temp = getText();
 		temp = temp.substring(temp.lastIndexOf("#") + 1);
-		
+
 		return temp;
 
 	}
@@ -387,6 +404,7 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 			this.selected = selected;
 			updateArcs();
 			textNode.invalidatePaint();
+			childrenCountIcon.invalidatePaint();
 			invalidatePaint();
 		}
 	}
@@ -400,6 +418,7 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 			this.highlighted = highlighted;
 			bubbleNode();
 			textNode.invalidatePaint();
+			childrenCountIcon.invalidatePaint();
 			invalidatePaint();
 		}
 	}
@@ -416,29 +435,30 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 	}
 
 	/**
-	 * Scales the node back to normal size if the canvas is currently scaled below the regular size.
+	 * Scales the node back to normal size if the canvas is currently scaled
+	 * below the regular size.
 	 */
 	protected void bubbleNode() {
 		PCamera camera = ((PLayer) this.getParent()).getCamera(0);
 		double viewScale = camera.getViewScale();
-		
+
 		if (highlighted) {
 			if (viewScale < 1.0) {
 				double scaleFactor = 1.0 / viewScale;
-				
+
 				double unscaledWidth = this.getGlobalBounds().width;
 				double unscaledHeight = this.getGlobalBounds().height;
 				double scaledWidth = this.getGlobalBounds().width * viewScale;
 				double scaledHeight = this.getGlobalBounds().height * viewScale;
-				
+
 				this.scaleAboutPoint(scaleFactor, getX(), getY());
-				
+
 				xFactor = (unscaledWidth - scaledWidth) / 2;
 				yFactor = (unscaledHeight - scaledHeight) / 2;
 				this.translate(-1 * xFactor, -1 * yFactor);
 			}
 		} else {
-			if(xFactor > 0) {
+			if (xFactor > 0) {
 				this.translate(xFactor, yFactor);
 				this.scaleAboutPoint(1.0 / getScale(), getX(), getY());
 			}
@@ -468,11 +488,11 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 
 	private void fireChangeListeners() {
 		ChangeEvent event = new ChangeEvent(this);
-		for(ChangeListener listener: changeListeners) {
+		for (ChangeListener listener : changeListeners) {
 			listener.stateChanged(event);
 		}
 	}
-	
+
 	private void updateArcLocations() {
 		for (GraphArc arc : arcs) {
 			arc.updateArcPath();
@@ -480,56 +500,46 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 	}
 
 	/**
-	 * Sets the bounds of this node based on the icon and text size. Takes into consideration the
-	 * maximum node width too.
+	 * Sets the bounds of this node based on the icon and text size. Takes into
+	 * consideration the maximum node width too.
 	 */
 	private void updateBounds() {
 		PBounds textBounds = textNode.getBounds();
-/*		double w = (3 * PADDING_X) + iconWidth + ICON_GAP + textBounds.getWidth();
-		double h = (2 * PADDING_Y) + Math.max(iconHeight, textBounds.getHeight());
-		
-*/		
+		/*
+		 * double w = (3 * PADDING_X) + iconWidth + ICON_GAP +
+		 * textBounds.getWidth(); double h = (2 * PADDING_Y) +
+		 * Math.max(iconHeight, textBounds.getHeight());
+		 */
 		double tw = textBounds.getWidth();
 		double th = textBounds.getHeight();
-		
+
 		double w = tw * ENVELOPE_FACTOR;
 		double h = th * ENVELOPE_FACTOR;
-		setBounds(getX() - (ENVELOPE_FACTOR/2 + 0.5) * tw , getY() - (ENVELOPE_FACTOR/2 + 0.5) * th, w, h);
-		//setBounds(getCenterX() - w, getCenterY() - h, w, h);
-		
+		setBounds(getX() - (ENVELOPE_FACTOR / 2 + 0.5) * tw, getY()
+				- (ENVELOPE_FACTOR / 2 + 0.5) * th, w, h);
+		// setBounds(getCenterX() - w, getCenterY() - h, w, h);
+
 	}
 
-/*	@Override
-	public boolean setBounds(double x, double y, double width, double height) {
-		// TODO handle maximum width?
-		boolean changed = super.setBounds(x, y, width, height);
 
-		if (changed) {
-			if (pImage != null) {
-				pImage.setBounds(getX() + PADDING_X, getY() + PADDING_Y, iconWidth, iconHeight);
-			}
-//			textNode.setBounds(getX() + PADDING_X + iconWidth + ICON_GAP, getY() + PADDING_Y, textNode.getWidth(), textNode.getHeight());
-			//textNode.setBounds(getX(), getY(), textNode.getWidth(), textNode.getHeight());
-			textNode.setBounds(getX() + getWidth()/4, getY() + getHeight()/4, textNode.getWidth(), textNode.getHeight());
-			updateArcLocations();
-			invalidatePaint();
-			
-			fireChangeListeners();
-		}
-		return changed;
-	}*/
-	
-	// This method is important to override so that the geometry of 
+	// This method is important to override so that the geometry of
 	// the ellipse stays consistent with the bounds geometry.
 	public boolean setBounds(double x, double y, double width, double height) {
-		if(super.setBounds(x, y, width, height)) {
+		if (super.setBounds(x, y, width, height)) {
 			getEllipse().setFrame(x + 2, y + 2, width - 4, height - 4);
 			double tw = textNode.getWidth();
 			double th = textNode.getHeight();
-			textNode.setBounds(getX() + (ENVELOPE_FACTOR/2 - 0.5) * tw, getY() + (ENVELOPE_FACTOR/2 - 0.5) * th, tw, th);
+			textNode.setBounds(getX() + (ENVELOPE_FACTOR / 2 - 0.5) * tw,
+					getY() + (ENVELOPE_FACTOR / 2 - 0.5) * th, tw, th);
+			
+			double cw = childrenCountIcon.getWidth();
+			double ch = childrenCountIcon.getHeight();
+			double d = Math.max(cw, ch);
+			childrenCountIcon.setBounds(getX(), getY(), d, d);
+		
 			updateArcLocations();
 			invalidatePaint();
-			
+
 			fireChangeListeners();
 			return true;
 		}
@@ -543,11 +553,9 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 		return getEllipse().intersects(aBounds);
 	}
 
-	
-
 	public boolean setLocation(double x, double y) {
 		setHighlighted(false);
-		
+
 		return setBounds(x, y, getWidth(), getHeight());
 	}
 
@@ -566,11 +574,11 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 	public Object getGraphData() {
 		return graphData;
 	}
-	
+
 	public void setGraphData(Object data) {
 		this.graphData = data;
 	}
-	
+
 	public double getXInLayout() {
 		return xInLayout;
 	}
@@ -580,12 +588,12 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 	}
 
 	public double getWidthInLayout() {
-		//return wInLayout;
+		// return wInLayout;
 		return getBounds().width;
 	}
 
 	public double getHeightInLayout() {
-		//return hInLayout;
+		// return hInLayout;
 		return getBounds().height;
 	}
 
@@ -641,8 +649,7 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 	protected void paint(PPaintContext paintContext) {
 		Graphics2D g2 = paintContext.getGraphics();
 
-		
-		//this.setB
+		// this.setB
 		// shrink the bounds slightly to avoid painting outside the bounds
 
 		// can't be null
@@ -652,27 +659,25 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 		Paint bg = style.getBackgroundPaint(this);
 		Paint borderPaint = style.getBorderPaint(this);
 		Stroke borderStroke = style.getBorderStroke(this);
-		
-		//stroke
-		
+
+		// stroke
+
 		Stroke stroke = new PFixedWidthStroke(3f);
 
-		
-/*		//different shapes
-		Rectangle r = shape.getBounds();
-		
-		//round
-		int w = Math.min(r.width, r.height);
-		int h = Math.min(r.width, r.height);
-		
-		//circle
-		int ovalR = Math.max(r.width, r.height)/4 - 10 ;
-		int ovalD = ovalR*2;
-		
-		Ellipse2D round = new Ellipse2D.Double(r.x + r.width/2 - ovalR, r.y + r.height/2 - ovalR, ovalD, ovalD);
-*/		
+		/*
+		 * //different shapes Rectangle r = shape.getBounds();
+		 * 
+		 * //round int w = Math.min(r.width, r.height); int h =
+		 * Math.min(r.width, r.height);
+		 * 
+		 * //circle int ovalR = Math.max(r.width, r.height)/4 - 10 ; int ovalD =
+		 * ovalR*2;
+		 * 
+		 * Ellipse2D round = new Ellipse2D.Double(r.x + r.width/2 - ovalR, r.y +
+		 * r.height/2 - ovalR, ovalD, ovalD);
+		 */
 		Shape drawShape = getEllipse();
-		
+
 		// 1. paint the background shape
 		if (bg != null) {
 			g2.setPaint(bg);
@@ -686,70 +691,22 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 			g2.draw(drawShape);
 		}
 
-		//addOverlayIcons(style.getOverlayIcons(this));
+		super.paint(paintContext);
+		// addOverlayIcons(style.getOverlayIcons(this));
 	}
 
-	/**@depriate
+	/**
+	 * @depriate
 	 * @param paintContext
 	 */
-	protected void paint2(PPaintContext paintContext) {
-		Graphics2D g2 = paintContext.getGraphics();
 
-		PBounds bounds = getBounds();
-		
-		//this.setB
-		// shrink the bounds slightly to avoid painting outside the bounds
-		bounds.setFrame(bounds.x + 1, bounds.y + 1, bounds.width - 2, bounds.height - 2);
-
-		// can't be null
-		Shape shape = style.getNodeShape(this, bounds);
-
-		// these can be null
-		Paint bg = style.getBackgroundPaint(this);
-		Paint borderPaint = style.getBorderPaint(this);
-		Stroke borderStroke = style.getBorderStroke(this);
-
-		
-		//stroke
-		
-		Stroke stroke = new PFixedWidthStroke(3f);
-
-		
-		//different shapes
-		Rectangle r = shape.getBounds();
-		
-		//round
-		int w = Math.min(r.width, r.height);
-		int h = Math.min(r.width, r.height);
-		
-		//circle
-		int ovalR = Math.max(r.width, r.height)/4 - 10 ;
-		int ovalD = ovalR*2;
-		
-		Ellipse2D round = new Ellipse2D.Double(r.x + r.width/2 - ovalR, r.y + r.height/2 - ovalR, ovalD, ovalD);
-		
-		Shape drawShape = getEllipse();
-		
-		// 1. paint the background shape
-		if (bg != null) {
-			g2.setPaint(bg);
-			g2.fill(drawShape);
-		}
-
-		// 2. paint the border
-		if ((borderPaint != null) && (borderStroke != null)) {
-			g2.setPaint(borderPaint);
-			g2.setStroke(stroke);
-			g2.draw(drawShape);
-		}
-
-		//addOverlayIcons(style.getOverlayIcons(this));
-	}
 	/**
-	 * If necessary, creates the overlay icons as PImage's and adds them to this node as a child
-	 * object. If it is already created, the overlayIcon is repositioned.
+	 * If necessary, creates the overlay icons as PImage's and adds them to this
+	 * node as a child object. If it is already created, the overlayIcon is
+	 * repositioned.
 	 * 
-	 * @param icon The icon to set as the overlayIcon.
+	 * @param icon
+	 *            The icon to set as the overlayIcon.
 	 */
 	private void addOverlayIcons(Collection<Icon> icons) {
 		if (icons == null || !icons.equals(overlayIcons)) {
@@ -768,8 +725,9 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 					overlayIconMap.put(icon, overlayIcon);
 				}
 
-				if(overlayIcon != null) {
-					Point2D iconPosition = style.getOverlayIconPosition(this, icon);
+				if (overlayIcon != null) {
+					Point2D iconPosition = style.getOverlayIconPosition(this,
+							icon);
 					overlayIcon.setX(iconPosition.getX());
 					overlayIcon.setY(iconPosition.getY());
 				}
@@ -783,13 +741,14 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 		int x = (int) getX();
 		int y = (int) getY();
 		int h = (int) getHeight();
-		GradientPaint gradient = new GradientPaint(x, y, gp.getColor1(), x, y + h, gp.getColor2(), gp.isCyclic());
+		GradientPaint gradient = new GradientPaint(x, y, gp.getColor1(), x, y
+				+ h, gp.getColor2(), gp.isCyclic());
 		return gradient;
 	}
 
 	class GraphTextNode extends PText {
 		private static final long serialVersionUID = -871571524212274580L;
-		
+
 		private boolean ignoreInvalidatePaint = false;
 
 		@Override
@@ -800,8 +759,6 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 			}
 			return font;
 		}
-		
-		
 
 		@Override
 		public Paint getTextPaint() {
@@ -814,7 +771,8 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 
 		@Override
 		protected void paint(PPaintContext paintContext) {
-			// update the text paint - the super paint method doesn't call our getTextPaint() method
+			// update the text paint - the super paint method doesn't call our
+			// getTextPaint() method
 			Paint p = getTextPaint();
 			if (!p.equals(super.getTextPaint())) {
 				ignoreInvalidatePaint = true;

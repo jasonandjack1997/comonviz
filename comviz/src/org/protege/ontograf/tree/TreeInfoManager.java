@@ -36,6 +36,9 @@ public class TreeInfoManager {
         private TreeInfoManager(){
         };
         
+        public int getChildrenCount(Object key){
+        	return getTree(key).getChildCount();
+        }
         
         public static TreeInfoManager getTreeManager(){
         		if(instance == null){
@@ -125,7 +128,7 @@ public class TreeInfoManager {
                         branchNodes = rootList.get(0).getChildren();
                         //branchNodes.add(rootList.get(0));//only one root, the root have to have color
                         OWLEntity entity = (OWLEntity)(((GraphNode) (rootList.get(0).getUserObject())).getUserObject());
-                        EntityTreeInfo entityTreeInfo = new EntityTreeInfo(entity, rootList.get(0), (OWLEntity)((GraphNode) rootList.get(0).getUserObject()).getUserObject(), 0, -1);
+                        EntityTreeInfo entityTreeInfo = new EntityTreeInfo(entity, rootList.get(0), (OWLEntity)((GraphNode) rootList.get(0).getUserObject()).getUserObject(), 1, -1);
                         entityTreeInfoMap.put(entity, entityTreeInfo);
 
                 }
