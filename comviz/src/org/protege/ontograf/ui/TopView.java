@@ -2,6 +2,7 @@ package org.protege.ontograf.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -18,11 +19,14 @@ import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
-import comonviz.EntryPoint;
 import uk.ac.manchester.cs.bhig.util.MutableTree;
 import ca.uvic.cs.chisel.cajun.actions.CajunAction;
 import ca.uvic.cs.chisel.cajun.actions.ClearOrphansAction;
@@ -37,6 +41,9 @@ import ca.uvic.cs.chisel.cajun.graph.GraphModelAdapter;
 import ca.uvic.cs.chisel.cajun.graph.ui.FilterPanel;
 import ca.uvic.cs.chisel.cajun.graph.ui.StatusProgressBar;
 import ca.uvic.cs.chisel.cajun.resources.ResourceHandler;
+
+import comonviz.EntryPoint;
+
 import edu.umd.cs.piccolox.swing.PScrollPane;
 
 public class TopView extends JPanel {
@@ -57,8 +64,8 @@ public class TopView extends JPanel {
 	private JSplitPane horizontalSplitPane;
 	
 	private JSplitPane topHorizontalSplitPane;
+	private DefaultTreeModel treeModel;
 
-	private JSplitPane leftPanel;
 
 	public TopView(FlatGraph graph) {
 		super(new BorderLayout());
@@ -74,16 +81,25 @@ public class TopView extends JPanel {
 		
 		this.add(getStatusBar(), BorderLayout.SOUTH);
 		
-		topHorizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+		treeModel = new DefaultTreeModel(null);
+		
+		JTree jTree = new JTree(treeModel);
+		
+		JScrollPane leftJScrollPane = new JScrollPane(jTree);
+		
+		leftJScrollPane.setMinimumSize(new Dimension(200,200));
+		
 		
 		horizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		horizontalSplitPane.add(getMainPanel());
 		horizontalSplitPane.add(getRightPanel());
 		
-		topHorizontalSplitPane.add(getLeftPanel());
+		topHorizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+		topHorizontalSplitPane.add(leftJScrollPane);
 		topHorizontalSplitPane.add(horizontalSplitPane);
-		getLeftPanel().add(EntryPoint.ontologyTreeExplorer);
-		
+		topHorizontalSplitPane.setOneTouchExpandable(true);
+		topHorizontalSplitPane.setDividerLocation(300);
+
 		this.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
@@ -109,6 +125,10 @@ public class TopView extends JPanel {
 		//this.add(getRightPanel(), BorderLayout.EAST);
 
 		initializeToolBar();
+	}
+
+	public DefaultTreeModel getTreeModel() {
+		return treeModel;
 	}
 
 	private void initializeToolBar() {
@@ -180,22 +200,6 @@ public class TopView extends JPanel {
 		return status;
 	}
 
-	public JSplitPane getLeftPanel() {
-		if (leftPanel == null) {
-			leftPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT); //new GradientPanel();
-			leftPanel.setBorder(BorderFactory.createEmptyBorder(1, 1, 40, 1));
-			leftPanel.addContainerListener(new ContainerListener() {
-				public void componentAdded(ContainerEvent e) {
-					//refeshLeftPanel();
-				}
-
-				public void componentRemoved(ContainerEvent e) {
-					//refeshLeftPanel();
-				}
-			});
-		}
-		return leftPanel;
-	}
 	
 	public JSplitPane getRightPanel() {
 		if (rightPanel == null) {

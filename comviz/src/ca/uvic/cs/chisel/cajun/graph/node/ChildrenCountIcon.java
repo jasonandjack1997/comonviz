@@ -6,7 +6,7 @@ import java.awt.Paint;
 import java.awt.geom.Ellipse2D;
 
 import org.protege.ontograf.common.GraphController;
-import org.protege.ontograf.tree.TreeInfoManager;
+import org.protege.ontograf.treeUtils.TreeInfoManager;
 
 import edu.umd.cs.piccolo.nodes.PText;
 import edu.umd.cs.piccolo.util.PPaintContext;

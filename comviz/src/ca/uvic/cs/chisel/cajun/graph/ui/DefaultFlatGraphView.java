@@ -22,9 +22,8 @@ import javax.swing.JSplitPane;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
-import org.protege.ontograf.ui.OntologyTreeExplorer;
-
 import test.TreeExplorer;
+import unused.OntologyTreeExplorer;
 import ca.uvic.cs.chisel.cajun.actions.CajunAction;
 import ca.uvic.cs.chisel.cajun.actions.LayoutAction;
 import ca.uvic.cs.chisel.cajun.actions.NoZoomAction;
@@ -76,7 +75,7 @@ public class DefaultFlatGraphView extends JPanel {
 		
 		topHorizontalSplitPane.add(getLeftPanel());
 		topHorizontalSplitPane.add(horizontalSplitPane);
-		getLeftPanel().add(new OntologyTreeExplorer());
+		//getLeftPanel().add(new OntologyTreeExplorer());
 		
 		this.addComponentListener(new ComponentAdapter() {
 			@Override

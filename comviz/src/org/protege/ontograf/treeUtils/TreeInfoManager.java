@@ -1,4 +1,4 @@
-package org.protege.ontograf.tree;
+package org.protege.ontograf.treeUtils;
 
 import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
 import ca.uvic.cs.chisel.cajun.graph.node.DefaultGraphNode;
@@ -9,6 +9,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.semanticweb.owlapi.model.OWLEntity;
 
@@ -71,7 +73,7 @@ public class TreeInfoManager {
                 List<GraphNode> localNodeList = new ArrayList();
                 localNodeList.addAll(nodes);
                 
-                //ç”Ÿæˆ�ä¸€ä¸ªtreeList
+                //ç�?Ÿæˆ�ä¸€ä¸ªtreeList
                 List<MutableTree> treeNodeList = new ArrayList();
                 
                 
@@ -172,7 +174,23 @@ public class TreeInfoManager {
 			return treeRoot;
 		}
         
-        
+		public static DefaultMutableTreeNode convertFromManchesterToUITreeNode(MutableTree manchesterMutableTree){
+			
+			DefaultMutableTreeNode node = new DefaultMutableTreeNode(manchesterMutableTree.getUserObject());
+			DefaultMutableTreeNode child;
+			
+			java.util.List<MutableTree> childrenList  = manchesterMutableTree.getChildren();
+			for (int i = 0; i < childrenList.size(); i++) {
+				MutableTree nodeSpecifier = childrenList.get(i);
+				if (nodeSpecifier.getChildCount() != 0) // Ie node with children
+					child = convertFromManchesterToUITreeNode(nodeSpecifier);
+				else
+					child = new DefaultMutableTreeNode(nodeSpecifier.getUserObject()); // Ie Leaf
+				node.add(child);
+			}
+			return (node);
+		}
+
         
 
 }

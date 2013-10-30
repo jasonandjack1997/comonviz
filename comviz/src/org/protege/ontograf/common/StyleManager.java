@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.protege.ontograf.tree.TreeInfoManager;
+import org.protege.ontograf.treeUtils.TreeInfoManager;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 /**

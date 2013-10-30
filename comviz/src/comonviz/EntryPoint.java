@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.Set;
 
 import javax.swing.JFrame;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
@@ -25,11 +26,11 @@ import ca.uvic.cs.chisel.cajun.actions.ClearOrphansAction;
 import ca.uvic.cs.chisel.cajun.actions.LayoutAction;
 import ca.uvic.cs.chisel.cajun.constants.LayoutConstants;
 
-import org.protege.ontograf.tree.TreeInfoManager;
-import org.protege.ontograf.ui.OntologyTreeExplorer;
+import org.protege.ontograf.treeUtils.TreeInfoManager;
 import org.protege.ontograf.ui.TopView;
 
 import uk.ac.manchester.cs.bhig.util.MutableTree;
+import unused.OntologyTreeExplorer;
 
 public class EntryPoint {
 
@@ -48,7 +49,7 @@ public class EntryPoint {
 
 	public static MutableTree ontologyTree;
 
-	public static OntologyTreeExplorer ontologyTreeExplorer = new OntologyTreeExplorer();
+	//public static OntologyTreeExplorer ontologyTreeExplorer = new OntologyTreeExplorer();
 
 	/**
      * 
@@ -103,9 +104,13 @@ public class EntryPoint {
 			treeInfoManager.generateTreeInfo(nodes);
 
 			ontologyTree = treeInfoManager.getTreeRoot();
-
-			// ontologyTreeExplorer.updateTree();
+			DefaultMutableTreeNode root = null;
+			root = TreeInfoManager.convertFromManchesterToUITreeNode(ontologyTree);
 			TopView topView = gc.getView();
+			topView.getTreeModel().setRoot(root);
+			
+		
+
 
 			StyleManager.initStyleManager(treeInfoManager.getBranchNodes()
 					.size(), 3);

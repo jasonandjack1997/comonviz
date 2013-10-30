@@ -334,10 +334,6 @@ public class GraphController {
 		return view;
 	}
 
-	public void setView(TopView view) {
-		this.view = view;
-	}
-
 	/**
 	 * Initializes the menu for the right-click operation on a graph node.
 	 * 

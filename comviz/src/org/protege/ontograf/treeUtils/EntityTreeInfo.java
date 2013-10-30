@@ -1,4 +1,4 @@
-package org.protege.ontograf.tree;
+package org.protege.ontograf.treeUtils;
 
 import java.util.List;
 
