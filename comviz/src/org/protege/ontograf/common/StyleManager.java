@@ -1,6 +1,7 @@
 package org.protege.ontograf.common;
 
 import java.awt.Color;
+import java.awt.Paint;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -148,4 +149,5 @@ public class StyleManager {
 
 		return arcColorMap.get(arc);
 	}
+
 }

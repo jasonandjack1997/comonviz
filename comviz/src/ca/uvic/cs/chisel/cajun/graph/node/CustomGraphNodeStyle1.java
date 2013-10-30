@@ -209,17 +209,25 @@ public class CustomGraphNodeStyle1 implements GraphNodeStyle {
 	 */
 	public Paint getBackgroundPaint(GraphNode node) {
 		
+		Paint normalPaint = StyleManager.getStyleManager().getNodeBackgroundColor((OWLEntity) node.getUserObject());
 		
-		return StyleManager.getStyleManager().getNodeBackgroundColor((OWLEntity) node.getUserObject());
+		
+		return (node.isSelected()? ((Color)normalPaint).darker(): normalPaint);
 		
 		
 		//return getTypePaint(node.getType());
 	}
 
 	public Paint getBorderPaint(GraphNode node) {
+		
+		Paint normalPaint = StyleManager.getStyleManager().getNodeBorderColor((OWLEntity) node.getUserObject());
+		
+		if(node.isSelected()){
+			return ((Color)normalPaint).darker().darker();
+		}else{
 
-		return StyleManager.getStyleManager().getNodeBorderColor((OWLEntity) node.getUserObject());
-	
+			return  normalPaint;
+		}
 		//		return (node.isMatching() ? borderMatchingPaint : (node.isSelected() ? borderSelectionPaint : (node.isHighlighted() ? borderHighlightPaint : borderPaint)));
 	}
 

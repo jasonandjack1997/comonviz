@@ -33,7 +33,7 @@ public class NodeCollection {
 		return listeners.remove(nsl);
 	}
 	
-	protected void fireCollectionChange(Collection<GraphNode> oldNodes, Collection<GraphNode> newNodes) {
+	public void fireCollectionChange(Collection<GraphNode> oldNodes, Collection<GraphNode> newNodes) {
 		List<GraphNodeCollectionListener> nsls = new ArrayList<GraphNodeCollectionListener>(listeners);
 		GraphNodeCollectionEvent evt = new GraphNodeCollectionEvent(this, oldNodes, newNodes);
 		for (GraphNodeCollectionListener nsl : nsls) {
