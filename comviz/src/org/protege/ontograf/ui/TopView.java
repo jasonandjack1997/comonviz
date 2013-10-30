@@ -24,8 +24,10 @@ import javax.swing.JSplitPane;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.JTree;
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+
+import org.protege.ontograf.treeUtils.MyTreeSelectionListener;
+import org.protege.ontograf.treeUtils.MyTreeWillExpandListener;
 
 import uk.ac.manchester.cs.bhig.util.MutableTree;
 import ca.uvic.cs.chisel.cajun.actions.CajunAction;
@@ -41,9 +43,6 @@ import ca.uvic.cs.chisel.cajun.graph.GraphModelAdapter;
 import ca.uvic.cs.chisel.cajun.graph.ui.FilterPanel;
 import ca.uvic.cs.chisel.cajun.graph.ui.StatusProgressBar;
 import ca.uvic.cs.chisel.cajun.resources.ResourceHandler;
-
-import comonviz.EntryPoint;
-
 import edu.umd.cs.piccolox.swing.PScrollPane;
 
 public class TopView extends JPanel {
@@ -85,9 +84,13 @@ public class TopView extends JPanel {
 		
 		JTree jTree = new JTree(treeModel);
 		
+		jTree.addTreeSelectionListener(new MyTreeSelectionListener());
+		jTree.addTreeWillExpandListener(new MyTreeWillExpandListener());
+
 		JScrollPane leftJScrollPane = new JScrollPane(jTree);
 		
 		leftJScrollPane.setMinimumSize(new Dimension(200,200));
+		
 		
 		
 		horizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
