@@ -5,7 +5,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.swing.Icon;
@@ -327,7 +329,25 @@ public class DefaultGraphModel implements GraphModel {
 			removeNodeInternal(nodes.get(userObject));
 		}
 	}
+	
 
+	public void removeSpecificArcType(String arcType){
+		Iterator<Entry<Object, GraphArc>> it = this.arcs.entrySet().iterator();
+		while(it.hasNext()){
+			Map.Entry graphArcEntry = (Map.Entry)it.next();
+			if(((GraphArc)graphArcEntry.getValue()).getType().toString().contains(arcType)){
+				this.removeArcInternal((GraphArc)graphArcEntry);//((GraphArc)graphArcEntry.getValue());
+			}
+		}
+//		for(Map.Entry<Object, GraphArc> graphArcEntry: this.arcs.entrySet()){
+//			if(((GraphArc)graphArcEntry.getValue()).getType().toString().contains(arcType)){
+//				this.removeArcInternal((GraphArc)graphArcEntry.getValue());
+//			}
+//
+//		}
+	}
+	
+	
 	/**
 	 * Clears the node types, then iterates through all the nodes and adds the
 	 * node types back in.

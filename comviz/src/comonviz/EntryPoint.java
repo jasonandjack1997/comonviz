@@ -2,6 +2,7 @@ package comonviz;
 
 import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;
 import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
+import ca.uvic.cs.chisel.cajun.graph.Graph;
 
 import java.awt.Rectangle;
 import java.io.File;
@@ -39,13 +40,20 @@ public class EntryPoint {
 	// private static String ontologyURI = "CoMOn-281111.owl";
 
 	// private static String ontologyURI = "pizza.owl";
-	// private static String ontologyURI = "COMON_v3_rels.owl";
-	private static String ontologyURI = "COMON_v4_full_rel.owl";
+	// private static String ontologyURI = "comonTest.owl";
+	 private static String ontologyURI = "COMON_v4_full_rel.owl";
 	// private static String ontologyURI = "COMON_v2.owl";
 	// private static String ontologyURI = "CoMOnv0.4.owl";
 	// private static String ontologyURI = "comonTest.owl";
 
-	private static GraphController gc;
+	public static GraphController gc;
+	
+	public static Graph graph;
+	
+
+	public static GraphController getGc() {
+		return gc;
+	}
 
 	public static MutableTree ontologyTree;
 
@@ -79,55 +87,8 @@ public class EntryPoint {
 		// frame.setBounds(0, 0, 800, 600);
 		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		frame.setVisible(true);
-
 		try {
-
 			gc = new GraphController(frame);
-			FlatGraph fg = (FlatGraph) gc.getGraph();
-
-			gc.getModel().owlOntology = EntryPoint.ontology;
-			// LayoutAction layoutAction =
-			// ((AbstractGraph)gc.getGraph()).getLayout(LayoutConstants.LAYOUT_SPRING);
-			LayoutAction layoutAction = ((AbstractGraph) gc.getGraph())
-					.getLayout(LayoutConstants.LAYOUT_RADIAL);
-
-			for (OWLClass cls : ontology.getClassesInSignature()) {
-				Set<OWLClassExpression> subClasses;
-				subClasses = cls.getSubClasses(ontology);
-				gc.getModel().generateNodesAndArcs(cls,
-						((AbstractGraph) gc.getGraph()).getFilterManager());
-			}
-
-			Collection nodes = null;
-			nodes = gc.getModel().getAllNodes();
-			TreeInfoManager treeInfoManager = TreeInfoManager.getTreeManager();
-			treeInfoManager.generateTreeInfo(nodes);
-
-			ontologyTree = treeInfoManager.getTreeRoot();
-			DefaultMutableTreeNode root = null;
-			root = TreeInfoManager.convertFromManchesterToUITreeNode(ontologyTree);
-			TopView topView = gc.getView();
-			topView.getTreeModel().setRoot(root);
-			
-		
-
-
-			StyleManager.initStyleManager(treeInfoManager.getBranchNodes()
-					.size(), 3);
-
-			for (OWLClass cls : ontology.getClassesInSignature()) {
-				gc.getModel().removeNode(cls);
-			}
-
-			for (OWLClass cls : ontology.getClassesInSignature()) {
-				if (treeInfoManager.getLevel(cls) <= 1) {
-
-					gc.getModel().show(cls, ((AbstractGraph) gc.getGraph()).getFilterManager());
-				}
-			}
-
-			layoutAction.doAction();
-
 		} catch (OWLOntologyCreationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -138,6 +99,56 @@ public class EntryPoint {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		graph = gc.getGraph();
+		FlatGraph fg = (FlatGraph) gc.getGraph();
+
+		gc.getModel().owlOntology = EntryPoint.ontology;
+		// LayoutAction layoutAction =
+		// ((AbstractGraph)gc.getGraph()).getLayout(LayoutConstants.LAYOUT_SPRING);
+		LayoutAction layoutAction = ((AbstractGraph) gc.getGraph())
+				.getLayout(LayoutConstants.LAYOUT_RADIAL);
+
+		for (OWLClass cls : ontology.getClassesInSignature()) {
+			//Set<OWLClassExpression> subClasses;
+			//subClasses = cls.getSubClasses(ontology);
+			gc.getModel().generateNodesAndArcs(cls,
+					((AbstractGraph) gc.getGraph()).getFilterManager());
+		}
+
+		Collection nodes = null;
+		nodes = gc.getModel().getAllNodes();
+		TreeInfoManager treeInfoManager = TreeInfoManager.getTreeManager();
+		treeInfoManager.generateTreeInfo(nodes);
+
+		ontologyTree = treeInfoManager.getTreeRoot();
+		DefaultMutableTreeNode root = null;
+		root = TreeInfoManager.convertFromManchesterToUITreeNode(ontologyTree);
+		TopView topView = gc.getView();
+		topView.getTreeModel().setRoot(root);
+		
+
+
+
+		StyleManager.initStyleManager(treeInfoManager.getBranchNodes()
+				.size(), 3);
+
+		for (OWLClass cls : ontology.getClassesInSignature()) {
+			//gc.getModel().removeNode(cls);
+		}
+		
+		//gc.getModel().removeSpecificArcType("has subclass");
+		for (OWLClass cls : ontology.getClassesInSignature()) {
+			
+			if (treeInfoManager.getLevel(cls) >= 2) {
+				gc.getModel().removeNode(cls);
+				//gc.getModel().show(cls, ((AbstractGraph) gc.getGraph()).getFilterManager());
+			}else{
+				gc.getModel().hideAllDesendants(gc.getModel().getNode(cls));
+				gc.getModel().show(cls, ((AbstractGraph) graph).getFilterManager());
+			}
+		}
+
+		layoutAction.doAction();
 
 	}
 

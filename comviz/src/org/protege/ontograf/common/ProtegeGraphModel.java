@@ -158,6 +158,23 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 		recalculateArcStyles();
 	}
 
+	public void showWithExsistingNodes(OWLEntity entity, FilterManager filterManager) {
+		this.filterManager = filterManager;
+
+		List<GraphArc> arcs = new ArrayList<GraphArc>();
+
+		addNode(entity);
+
+		/*
+		 * arcs.addAll(createIncomingRelationships(entity, true));
+		 * arcs.addAll(createOutgoingRelationships(entity, true));
+		 */
+		arcs.addAll(createIncomingRelationships(entity, true));
+		arcs.addAll(createOutgoingRelationships(entity, true));
+		addArcsToModel(arcs, false);
+		recalculateArcStyles();
+	}
+
 	public void generateNodesAndArcs(OWLEntity entity,
 			FilterManager filterManager) {
 
@@ -1163,6 +1180,12 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 	}
 
 	private void hideAllDesendants(GraphNode graphNode, Set<IRI> seen) {
+		if(graphNode == null){
+			return;
+		}
+		if(graphNode.getArcs() == null){
+			return;
+		}
 		GraphArc[] arcs = graphNode.getArcs().toArray(
 				new GraphArc[graphNode.getArcs().size()]);
 		seen.add(((OWLEntity) graphNode.getUserObject()).getIRI());

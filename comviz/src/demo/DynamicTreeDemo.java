@@ -77,8 +77,8 @@ public class DynamicTreeDemo extends JPanel
             //Remove button clicked
             treePanel.removeCurrentNode();
         } else if (CLEAR_COMMAND.equals(command)) {
-            //Clear button clicked.
             treePanel.clear();
+            //Clear button clicked.
         }
     }
  

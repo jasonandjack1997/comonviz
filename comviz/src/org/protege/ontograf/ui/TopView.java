@@ -26,8 +26,9 @@ import javax.swing.JToolBar;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
 
+import org.protege.ontograf.treeUtils.MyTreeHirarchyChangeListener;
 import org.protege.ontograf.treeUtils.MyTreeSelectionListener;
-import org.protege.ontograf.treeUtils.MyTreeWillExpandListener;
+import org.protege.ontograf.treeUtils.MyTreeExpansionListener;
 
 import uk.ac.manchester.cs.bhig.util.MutableTree;
 import ca.uvic.cs.chisel.cajun.actions.CajunAction;
@@ -40,6 +41,7 @@ import ca.uvic.cs.chisel.cajun.filter.FilterManager;
 import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
 import ca.uvic.cs.chisel.cajun.graph.Graph;
 import ca.uvic.cs.chisel.cajun.graph.GraphModelAdapter;
+import ca.uvic.cs.chisel.cajun.graph.node.NodeCollection;
 import ca.uvic.cs.chisel.cajun.graph.ui.FilterPanel;
 import ca.uvic.cs.chisel.cajun.graph.ui.StatusProgressBar;
 import ca.uvic.cs.chisel.cajun.resources.ResourceHandler;
@@ -64,12 +66,14 @@ public class TopView extends JPanel {
 	
 	private JSplitPane topHorizontalSplitPane;
 	private DefaultTreeModel treeModel;
+	
+	private NodeCollection selectedNodes;
 
 
 	public TopView(FlatGraph graph) {
 		super(new BorderLayout());
 		this.graph = graph;
-
+		this.selectedNodes = graph.getNodeSelection();
 		initialize();
 	}
 
@@ -84,9 +88,9 @@ public class TopView extends JPanel {
 		
 		JTree jTree = new JTree(treeModel);
 		
-		jTree.addTreeSelectionListener(new MyTreeSelectionListener());
-		jTree.addTreeWillExpandListener(new MyTreeWillExpandListener());
-
+		jTree.addTreeSelectionListener(new MyTreeSelectionListener(selectedNodes));
+		jTree.addTreeExpansionListener(new MyTreeExpansionListener(selectedNodes));
+		jTree.addHierarchyListener(new MyTreeHirarchyChangeListener());
 		JScrollPane leftJScrollPane = new JScrollPane(jTree);
 		
 		leftJScrollPane.setMinimumSize(new Dimension(200,200));

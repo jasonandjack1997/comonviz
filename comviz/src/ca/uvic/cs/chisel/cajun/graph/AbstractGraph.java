@@ -310,7 +310,7 @@ public abstract class AbstractGraph extends PCanvas implements Graph {
 		selectedNodes.setNodes(nodes);
 	}
 
-	protected NodeCollection getNodeSelection() {
+	public NodeCollection getNodeSelection() {
 		return selectedNodes;
 	}
 
