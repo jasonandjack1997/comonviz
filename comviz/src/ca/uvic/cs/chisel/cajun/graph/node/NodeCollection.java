@@ -153,6 +153,25 @@ public class NodeCollection {
 	}
 	
 	/**
+	 * @param node
+	 * @return true if node is added, other situations return false
+	 */
+	public boolean addOrRemoveNode2(GraphNode node) {
+		if (node != null) {
+			List<GraphNode> oldNodes = this.nodes;
+			if (nodes.contains(node)) {
+				nodes.remove(node);
+				fireCollectionChange(oldNodes, this.nodes);
+				return false;
+			} else {
+				nodes.add(0, node);
+				fireCollectionChange(oldNodes, this.nodes);
+				return true;
+			}
+		}
+		return false;
+	}
+	/**
 	 * Adds the node to the front of this collection.
 	 * If the node already exists, it is removed and then added at the
 	 * front of the list and no collection change event is fired.

@@ -19,8 +19,8 @@ import edu.umd.cs.piccolo.event.PInputEvent;
  */
 public class RotationHandler extends PBasicInputEventHandler {
 
-	private double anchorX = -1;
-	private double anchorY = -1;
+	public static double ANCHOR_X = -1;
+	public static double ANCHOR_Y = -1;
 
 	private double currentX;
 	private double currentY;
@@ -39,13 +39,13 @@ public class RotationHandler extends PBasicInputEventHandler {
 	@Override
 	public void mousePressed(PInputEvent event) {
 		// TODO Auto-generated method stub
-		if (event.isMiddleMouseButton()) {
-			if (anchorX >= 0 && anchorY >= 0) {
-				return;
-			}
-			this.anchorX = event.getPosition().getX();
-			this.anchorY = event.getPosition().getY();
-		}
+//		if (event.isMiddleMouseButton()) {
+//			if (ANCHOR_X >= 0 && ANCHOR_Y >= 0) {
+//				return;
+//			}
+//			this.ANCHOR_X = event.getPosition().getX();
+//			this.ANCHOR_Y = event.getPosition().getY();
+//		}
 		super.mousePressed(event);
 	}
 
@@ -55,7 +55,7 @@ public class RotationHandler extends PBasicInputEventHandler {
 		if (!event.isMiddleMouseButton()) {
 			return;
 		}
-		if (this.anchorX != -1l && this.anchorY != -1l) {
+		if (this.ANCHOR_X != -1l && this.ANCHOR_Y != -1l) {
 			currentX = event.getPosition().getX();
 			currentY = event.getPosition().getY();
 			lastX = currentX - event.getDelta().getWidth();
@@ -68,11 +68,14 @@ public class RotationHandler extends PBasicInputEventHandler {
 				//if (graphNode.getText().contains("Compliance")) {
 				{	
 
-					vecCurrentX = (currentX - anchorX);
-					vecCurrentY = (currentY - anchorY);
+					vecCurrentX = (currentX - ANCHOR_X);
+					vecCurrentY = (currentY - ANCHOR_Y);
+					
+					int sign = (vecCurrentX * vecLastY - vecLastX * vecCurrentY)> 0 ? -1: 1;
+					
 
-					vecLastX = lastX - anchorX;
-					vecLastY = lastY - anchorY;
+					vecLastX = lastX - ANCHOR_X;
+					vecLastY = lastY - ANCHOR_Y;
 
 					double currentLengthPower2 = Math.sqrt(vecCurrentX
 							* vecCurrentX + vecCurrentY * vecCurrentY);
@@ -97,15 +100,15 @@ public class RotationHandler extends PBasicInputEventHandler {
 					//deltaRadians = 0.1;
 
 					AffineTransform rotateTransform = AffineTransform
-							.getRotateInstance(deltaRadians, anchorX, anchorY);
+							.getRotateInstance(sign * deltaRadians, ANCHOR_X, ANCHOR_Y);
 					Point2D lastLocation = new Point2D.Double(
-							((DefaultGraphNode) graphNode).getX(),
-							((DefaultGraphNode) graphNode).getY());
+							((DefaultGraphNode) graphNode).getCenterX(),
+							((DefaultGraphNode) graphNode).getCenterY());
 					Point2D newLocation = new Point2D.Double();
 					if (!newLocation.equals(lastLocation)) {
 						rotateTransform.transform(lastLocation, newLocation);
-						graphNode.setLocation(newLocation.getX(),
-								newLocation.getY());
+						graphNode.setLocation(newLocation.getX() - ((DefaultGraphNode)graphNode).getWidth()/2,
+								newLocation.getY() - ((DefaultGraphNode)graphNode).getHeight()/2);
 					}
 				}
 			}
@@ -118,8 +121,8 @@ public class RotationHandler extends PBasicInputEventHandler {
 	@Override
 	public void mouseReleased(PInputEvent event) {
 		// TODO Auto-generated method stub
-		this.anchorX = -1l;
-		this.anchorY = -1l;
+		//this.ANCHOR_X = -1l;
+		//this.ANCHOR_Y = -1l;
 		super.mouseReleased(event);
 	}
 

@@ -9,11 +9,10 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
+import ca.uvic.cs.chisel.cajun.graph.node.DefaultGraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.NodeCollection;
-
 import comonviz.EntryPoint;
-
 import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
@@ -69,8 +68,9 @@ public class SelectionHandler extends PBasicInputEventHandler {
 	}
 
 	private void nodePressed(PInputEvent e, GraphNode displayNode) {
+		boolean nodeAdded = true;
 		if (e.isControlDown()) {
-			selectedNodes.addOrRemoveNode(displayNode);
+			nodeAdded = selectedNodes.addOrRemoveNode2(displayNode);
 		} else if (e.isShiftDown()) {
 			selectedNodes.addNode(displayNode);
 		} else {
@@ -103,6 +103,12 @@ public class SelectionHandler extends PBasicInputEventHandler {
 				}
 
 			}
+		}
+		if (nodeAdded) {
+			RotationHandler.ANCHOR_X = ((DefaultGraphNode) displayNode)
+					.getCenterX();
+			RotationHandler.ANCHOR_Y = ((DefaultGraphNode) displayNode)
+					.getCenterY();
 		}
 	}
 
