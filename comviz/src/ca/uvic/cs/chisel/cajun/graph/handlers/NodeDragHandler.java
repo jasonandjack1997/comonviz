@@ -1,5 +1,6 @@
 package ca.uvic.cs.chisel.cajun.graph.handlers;
 
+import ca.uvic.cs.chisel.cajun.graph.node.DefaultGraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PDragEventHandler;
@@ -10,9 +11,24 @@ import edu.umd.cs.piccolo.util.PDimension;
  * Handles dragging {@link GraphNode}s around the canvas.
  * 
  * @author Chris
- * @since  9-Nov-07
+ * @since 9-Nov-07
  */
 public class NodeDragHandler extends PDragEventHandler {
+	@Override
+	protected void endDrag(PInputEvent event) {
+		// TODO Auto-generated method stub
+		PNode pnode = getDraggedNode();
+		if (pnode instanceof GraphNode) {
+			// MOVE node
+			GraphNode graphNode = (GraphNode) pnode;
+			RotationHandler.ANCHOR_X = ((DefaultGraphNode) graphNode)
+					.getCenterX();
+			RotationHandler.ANCHOR_Y = ((DefaultGraphNode) graphNode)
+					.getCenterY();
+		}
+		super.endDrag(event);
+	}
+
 	public NodeDragHandler() {
 		super();
 		setMoveToFrontOnPress(true);
@@ -33,7 +49,7 @@ public class NodeDragHandler extends PDragEventHandler {
 
 	@Override
 	protected void drag(PInputEvent e) {
-		//super.drag(e);
+		// super.drag(e);
 		PNode pnode = getDraggedNode();
 		if (pnode instanceof GraphNode) {
 			// MOVE node

@@ -301,7 +301,7 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 		return childrenList;
 	}
 
-	private List<OWLEntity> getDesendantList(OWLEntity entity, boolean addArcs) {
+	public List<OWLEntity> getDesendantList(OWLEntity entity, boolean addArcs) {
 		List<OWLEntity> desendantList = new ArrayList();
 		getDesendantsRecursively(entity, desendantList, addArcs);
 		return desendantList;

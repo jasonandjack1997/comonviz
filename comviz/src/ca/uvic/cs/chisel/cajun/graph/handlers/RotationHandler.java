@@ -3,11 +3,19 @@ package ca.uvic.cs.chisel.cajun.graph.handlers;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.util.Collection;
+import java.util.List;
+
+import org.protege.ontograf.common.ProtegeGraphModel;
+import org.protege.ontograf.treeUtils.TreeInfoManager;
+import org.semanticweb.owlapi.model.OWLEntity;
 
 import ca.uvic.cs.chisel.cajun.graph.node.DefaultGraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
+
 import comonviz.EntryPoint;
+
 import edu.umd.cs.piccolo.PCamera;
+import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
 import edu.umd.cs.piccolo.event.PInputEvent;
 
@@ -31,6 +39,7 @@ public class RotationHandler extends PBasicInputEventHandler {
 	private double vecCurrentY;
 	private double vecLastX;
 	private double vecLastY;
+	private GraphNode anchorGraphNode;
 
 	public RotationHandler(PCamera camera) {
 		super();
@@ -38,14 +47,16 @@ public class RotationHandler extends PBasicInputEventHandler {
 
 	@Override
 	public void mousePressed(PInputEvent event) {
+
+
 		// TODO Auto-generated method stub
-//		if (event.isMiddleMouseButton()) {
-//			if (ANCHOR_X >= 0 && ANCHOR_Y >= 0) {
-//				return;
-//			}
-//			this.ANCHOR_X = event.getPosition().getX();
-//			this.ANCHOR_Y = event.getPosition().getY();
-//		}
+		// if (event.isMiddleMouseButton()) {
+		// if (ANCHOR_X >= 0 && ANCHOR_Y >= 0) {
+		// return;
+		// }
+		// this.ANCHOR_X = event.getPosition().getX();
+		// this.ANCHOR_Y = event.getPosition().getY();
+		// }
 		super.mousePressed(event);
 	}
 
@@ -55,60 +66,80 @@ public class RotationHandler extends PBasicInputEventHandler {
 		if (!event.isMiddleMouseButton()) {
 			return;
 		}
+		
+		if (this.ANCHOR_X == -1l && this.ANCHOR_Y == -1l) {
+			
+			GraphNode oldNodeInTreeManager = (GraphNode) TreeInfoManager.getTreeRoot()
+				.getUserObject();
+			anchorGraphNode = ((ProtegeGraphModel)EntryPoint.getGc().getModel()).getNode(oldNodeInTreeManager.getUserObject());
+			ANCHOR_X = ((DefaultGraphNode)anchorGraphNode).getCenterX();
+			ANCHOR_Y = ((DefaultGraphNode)anchorGraphNode).getCenterY();
+		}
+		
 		if (this.ANCHOR_X != -1l && this.ANCHOR_Y != -1l) {
+			PNode node = event.getPickedNode();
+			if (node instanceof GraphNode) {
+				node.moveToFront();
+				anchorGraphNode = (GraphNode) node;
+			} 
 			currentX = event.getPosition().getX();
 			currentY = event.getPosition().getY();
 			lastX = currentX - event.getDelta().getWidth();
 			lastY = currentY - event.getDelta().getHeight();
 
+			vecCurrentX = (currentX - ANCHOR_X);
+			vecCurrentY = (currentY - ANCHOR_Y);
+
+			int sign = (vecCurrentX * vecLastY - vecLastX * vecCurrentY) > 0 ? -1
+					: 1;
+
+			vecLastX = lastX - ANCHOR_X;
+			vecLastY = lastY - ANCHOR_Y;
+
+			double currentLengthPower2 = Math.sqrt(vecCurrentX * vecCurrentX
+					+ vecCurrentY * vecCurrentY);
+			double lastLengthPower2 = Math.sqrt(vecLastX * vecLastX + vecLastY
+					* vecLastY);
+
+			if (currentLengthPower2 == 0 || lastLengthPower2 == 0) {
+				return;
+			}
+
+			double theta = (vecCurrentX * vecLastX + vecCurrentY * vecLastY)
+					/ (currentLengthPower2 * lastLengthPower2);
+			deltaRadians = Math.acos(theta);
+
+			AffineTransform rotateTransform = AffineTransform
+					.getRotateInstance(sign * deltaRadians, ANCHOR_X, ANCHOR_Y);
+
 			// rotate all visible nodes
 			Collection<GraphNode> visibleNodes = EntryPoint.getGc().getModel()
 					.getVisibleNodes();
-			for (GraphNode graphNode : visibleNodes) {
-				//if (graphNode.getText().contains("Compliance")) {
-				{	
-
-					vecCurrentX = (currentX - ANCHOR_X);
-					vecCurrentY = (currentY - ANCHOR_Y);
-					
-					int sign = (vecCurrentX * vecLastY - vecLastX * vecCurrentY)> 0 ? -1: 1;
-					
-
-					vecLastX = lastX - ANCHOR_X;
-					vecLastY = lastY - ANCHOR_Y;
-
-					double currentLengthPower2 = Math.sqrt(vecCurrentX
-							* vecCurrentX + vecCurrentY * vecCurrentY);
-					double lastLengthPower2 = Math.sqrt(vecLastX * vecLastX
-							+ vecLastY * vecLastY);
-
-					if (currentLengthPower2 == 0 || lastLengthPower2 == 0) {
-						return;
+			List<OWLEntity> desendantsNode = ((ProtegeGraphModel) EntryPoint.getGc()
+					.getModel()).getDesendantList(
+					(OWLEntity) anchorGraphNode.getUserObject(), false);
+			
+			for (OWLEntity nodeEntity : desendantsNode) {
+				// if (graphNode.getText().contains("Compliance")) {
+				{
+					GraphNode graphNode = ((ProtegeGraphModel) EntryPoint.getGc()
+							.getModel()).getNode(nodeEntity);
+					if(graphNode == null){
+						continue;
 					}
-
-					
-					double theta = (vecCurrentX * vecLastX + vecCurrentY
-							* vecLastY)
-							/ (currentLengthPower2 * lastLengthPower2);
-					deltaRadians = Math.acos(theta);
-
-					double degree = Math.toDegrees(deltaRadians);
-					if (Math.abs(deltaRadians)>=0.5) {
-						int a = 1;
-					}
-
-					//deltaRadians = 0.1;
-
-					AffineTransform rotateTransform = AffineTransform
-							.getRotateInstance(sign * deltaRadians, ANCHOR_X, ANCHOR_Y);
 					Point2D lastLocation = new Point2D.Double(
 							((DefaultGraphNode) graphNode).getCenterX(),
 							((DefaultGraphNode) graphNode).getCenterY());
 					Point2D newLocation = new Point2D.Double();
 					if (!newLocation.equals(lastLocation)) {
 						rotateTransform.transform(lastLocation, newLocation);
-						graphNode.setLocation(newLocation.getX() - ((DefaultGraphNode)graphNode).getWidth()/2,
-								newLocation.getY() - ((DefaultGraphNode)graphNode).getHeight()/2);
+						graphNode.setLocation(
+								newLocation.getX()
+										- ((DefaultGraphNode) graphNode)
+												.getWidth() / 2,
+								newLocation.getY()
+										- ((DefaultGraphNode) graphNode)
+												.getHeight() / 2);
 					}
 				}
 			}
@@ -121,8 +152,8 @@ public class RotationHandler extends PBasicInputEventHandler {
 	@Override
 	public void mouseReleased(PInputEvent event) {
 		// TODO Auto-generated method stub
-		//this.ANCHOR_X = -1l;
-		//this.ANCHOR_Y = -1l;
+		// this.ANCHOR_X = -1l;
+		// this.ANCHOR_Y = -1l;
 		super.mouseReleased(event);
 	}
 

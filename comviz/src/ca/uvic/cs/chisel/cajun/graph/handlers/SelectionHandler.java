@@ -65,6 +65,8 @@ public class SelectionHandler extends PBasicInputEventHandler {
 	private void cameraPressed(PInputEvent e, PCamera camera) {
 		// clear selection
 		selectedNodes.clear();
+		RotationHandler.ANCHOR_X = -1;
+		RotationHandler.ANCHOR_Y = -1;
 	}
 
 	private void nodePressed(PInputEvent e, GraphNode displayNode) {
