@@ -68,7 +68,13 @@ public class TopView extends JPanel {
 	private DefaultTreeModel treeModel;
 	
 	private NodeCollection selectedNodes;
+	
+	private JTree jTree;
 
+
+	public JTree getjTree() {
+		return jTree;
+	}
 
 	public TopView(FlatGraph graph) {
 		super(new BorderLayout());
@@ -86,7 +92,7 @@ public class TopView extends JPanel {
 		
 		treeModel = new DefaultTreeModel(null);
 		
-		JTree jTree = new JTree(treeModel);
+		 jTree = new JTree(treeModel);
 		
 		jTree.addTreeSelectionListener(new MyTreeSelectionListener(selectedNodes));
 		jTree.addTreeExpansionListener(new MyTreeExpansionListener(selectedNodes));
