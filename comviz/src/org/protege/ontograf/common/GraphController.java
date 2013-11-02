@@ -100,7 +100,6 @@ public class GraphController {
 
 	public GraphController(Container parentContainer) throws OWLOntologyCreationException, OWLOntologyStorageException, IOException {
 		
-		this.treeOntology = treeOntology;
 		model = new ProtegeGraphModel();
 		this.graph = new FlatGraph(model);
 		this.graph.setShowNodeTooltips(false);

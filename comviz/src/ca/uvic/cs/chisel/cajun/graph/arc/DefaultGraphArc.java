@@ -51,6 +51,7 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 
 	private boolean showArrowHead;
 	private ArrowHead arrowHead;
+	private ArrowHead arrowHead2;
 	private String tooltip;
 
 	private boolean inverted;
@@ -92,6 +93,7 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 
 		this.showArrowHead = true;
 		this.arrowHead = new ArrowHead();
+		this.arrowHead2 = new ArrowHead();
 
 		this.inverted = false;
 
@@ -252,11 +254,13 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 			Segment segment = new Segment(startX, startY, endX, endY);
 			this.middlePoint = segment.getMidPoint();
 			arrowHead.setSlope(segment.getSlope());
+			arrowHead2.setSlope(segment.getSlope());
 
 			moveTo((float) startX, (float) startY);
 			if (curveFactor == 0) {
 				lineTo((float) endX, (float) endY);
 				arrowHead.setPoint(segment.getArrowPoint());
+				arrowHead2.setPoint(segment.getArrowPoint2());
 				
 				double w = arcLabel.getBounds().width;
 				double h = arcLabel.getBounds().height;
@@ -296,6 +300,7 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 			}
 		}
 		arrowHead.setPointRight(endX >= startX);
+		arrowHead2.setPointRight(endX <= startX);
 		
 		invalidatePaint();
 		invalidateFullBounds();
@@ -392,16 +397,17 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 			
 			if (showArrowHead) {
 				Shape shape = arrowHead.getShape();
-				// first fill the arrow head in white
-				//g2.setPaint(ArrowHead.FILL);
-				//g2.setPaint(Color.red);
 				g2.fill(shape);
-				// now draw the outline
-				//g2.setPaint(paint);
 				g2.setStroke(ArrowHead.STROKE);
 				g2.draw(shape);
 			}
 			
+			if(this.getType().toString().contains("associate")){
+				Shape shape = arrowHead2.getShape();
+				g2.fill(shape);
+				g2.setStroke(ArrowHead.STROKE);
+				g2.draw(shape);
+			}
 			if(image != null) {
 				Point2D p = getIconLocation(arrowHead.getSlope(), arrowHead.isPointRight(), arrowHead.getPoint());
 				image.setX(p.getX());
@@ -423,9 +429,14 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 		private Point2D destPtT;
 		private AffineTransform lineT;
 		private Point2D arrowPoint;
+		private Point2D arrowPoint2;
 
 		public Point2D getArrowPoint() {
 			return arrowPoint;
+		}
+
+		public Point2D getArrowPoint2() {
+			return arrowPoint2;
 		}
 
 		/**
@@ -454,8 +465,10 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 			Point2D.Double destPt = new Point2D.Double(lineLength, 0);
 			Point2D.Double midPt = new Point2D.Double(lineLength / 2.0, 0);
 			Point2D.Double arrowPt = new Point2D.Double(lineLength * 0.75, 0);
+			Point2D.Double arrowPt2 = new Point2D.Double(lineLength * 0.25, 0);
 			
 			arrowPoint = lineT.transform(arrowPt, new Point2D.Double());
+			arrowPoint2 = lineT.transform(arrowPt2, new Point2D.Double());
 			srcPtT = lineT.transform(srcPt, new Point2D.Double());
 			midPtT = lineT.transform(midPt, new Point2D.Double());//real middle point
 			destPtT = lineT.transform(destPt, new Point2D.Double());

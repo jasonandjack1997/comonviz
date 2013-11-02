@@ -24,6 +24,8 @@ import org.protege.owlapi.model.ProtegeOWLOntologyManager;
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.ClassExpressionType;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAnnotation;
+import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
@@ -697,6 +699,7 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 
 		OWLClass owlClass = (OWLClass) entityOfInterest;
 		Set<OWLAxiom> axioms = owlClass.getReferencingAxioms(owlOntology);
+		
 		for (OWLAxiom axiom : axioms) {
 			if (axiom instanceof OWLDeclarationAxiomImpl) {
 				continue;
