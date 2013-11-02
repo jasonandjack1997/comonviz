@@ -24,7 +24,7 @@ public class ArrowHead {
 	public static final PFixedWidthStroke STROKE = new PFixedWidthStroke(1f);
 	public static final Paint FILL = Color.white;
 
-	private static final int ARROW_SIZE_CONSTANT = 4;
+	private static final int ARROW_SIZE_CONSTANT = 8;
 
 	private double slope;
 	private Point2D point;

@@ -1,37 +1,30 @@
 package comonviz;
 
-import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;
-import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
-import ca.uvic.cs.chisel.cajun.graph.Graph;
-
-import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
 import java.util.Collection;
-import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import org.protege.ontograf.common.GraphController;
+import org.protege.ontograf.common.StyleManager;
+import org.protege.ontograf.treeUtils.TreeInfoManager;
+import org.protege.ontograf.ui.TopView;
 import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLClassExpression;
-import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
-import org.protege.ontograf.common.GraphController;
-import org.protege.ontograf.common.ProtegeGraphModel;
-import org.protege.ontograf.common.StyleManager;
-
-import ca.uvic.cs.chisel.cajun.actions.ClearOrphansAction;
-import ca.uvic.cs.chisel.cajun.actions.LayoutAction;
-import ca.uvic.cs.chisel.cajun.constants.LayoutConstants;
-
-import org.protege.ontograf.treeUtils.TreeInfoManager;
-import org.protege.ontograf.ui.TopView;
 
 import uk.ac.manchester.cs.bhig.util.MutableTree;
-import unused.OntologyTreeExplorer;
+import ca.uvic.cs.chisel.cajun.actions.LayoutAction;
+import ca.uvic.cs.chisel.cajun.constants.LayoutConstants;
+import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;
+import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
+import ca.uvic.cs.chisel.cajun.graph.Graph;
 
 public class EntryPoint {
 
@@ -40,8 +33,8 @@ public class EntryPoint {
 	// private static String ontologyURI = "CoMOn-281111.owl";
 
 	// private static String ontologyURI = "pizza.owl";
-	// private static String ontologyURI = "comonTest.owl";
-	 private static String ontologyURI = "COMON_v4_full_rel.owl";
+	 private static String ontologyFileName = "COMON_relTest.owl";
+	// private static String ontologyFileName = "COMON_v4_full_rel.owl";
 	// private static String ontologyURI = "COMON_v2.owl";
 	// private static String ontologyURI = "CoMOnv0.4.owl";
 	// private static String ontologyURI = "comonTest.owl";
@@ -62,16 +55,25 @@ public class EntryPoint {
 	/**
      * 
      */
-	@SuppressWarnings("unused")
-	private static void start() {
+	@SuppressWarnings({ "unused", "static-access", "static-access" })
+	private void start() {
+		URI ontologyURI = null;
+		URL url = null;
+		try {
+			
+			url = this.getClass().getResource("/COMON_relTest.owl");
+			//ontologyURI =  this.getClass().getResource(ontologyFileName);
+		} catch (NullPointerException e3){
+			e3.printStackTrace();
+		}
 
-		ontologyURI = "file:///" + (new File(ontologyURI)).getAbsolutePath();
-		ontologyURI = ontologyURI.replace("\\", "/");
+		ontologyFileName = "file:///" + (new File(ontologyFileName)).getAbsolutePath();
+		ontologyFileName = ontologyFileName.replace("\\", "/");
 
 		OwlApi owlapi = new OwlApi();
 
 		try {
-			ontology = owlapi.openOntology(ontologyURI);
+			ontology = owlapi.openOntology(url.toString());
 
 		} catch (OWLOntologyCreationException | OWLOntologyStorageException
 				| IOException e1) {
@@ -129,8 +131,7 @@ public class EntryPoint {
 
 
 
-		StyleManager.initStyleManager(treeInfoManager.getBranchNodes()
-				.size(), 3);
+		StyleManager.initStyleManager(treeInfoManager.getBranchNodes(), gc.getModel().getArcTypes());
 
 		for (OWLClass cls : ontology.getClassesInSignature()) {
 			//gc.getModel().removeNode(cls);
@@ -158,7 +159,7 @@ public class EntryPoint {
 		// creating and showing this application's GUI.
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				start();
+				new EntryPoint().start();
 			}
 		});
 

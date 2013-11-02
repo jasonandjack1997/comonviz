@@ -26,6 +26,7 @@ import javax.swing.event.ChangeListener;
 import org.eclipse.zest.layouts.constraints.BasicEntityConstraint;
 import org.eclipse.zest.layouts.constraints.LabelLayoutConstraint;
 import org.eclipse.zest.layouts.constraints.LayoutConstraint;
+import org.protege.ontograf.common.StyleManager;
 
 import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
 import edu.umd.cs.piccolo.PCamera;
@@ -48,9 +49,6 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 
 	private static final long serialVersionUID = 3223950711940456476L;
 
-	private static final int ICON_GAP = 4;
-	private static final int PADDING_X = 12;
-	private static final int PADDING_Y = 6;
 	protected static final int MAX_TEXT_CHARS = 12;
 	protected static final int MAX_LINES = 5;
 
@@ -675,7 +673,7 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 		// 2. paint the border
 		if ((borderPaint != null) && (borderStroke != null)) {
 			g2.setPaint(borderPaint);
-			g2.setStroke(stroke);
+			g2.setStroke(borderStroke);
 			g2.draw(drawShape);
 		}
 
@@ -748,7 +746,7 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 			if (font == null) {
 				font = DEFAULT_FONT;
 			}
-			font = font.deriveFont(15f);
+			font = font.deriveFont(StyleManager.getStyleManager().DEFAULT_NODE_TEXT_FONT_SIZE);
 			return font;
 		}
 

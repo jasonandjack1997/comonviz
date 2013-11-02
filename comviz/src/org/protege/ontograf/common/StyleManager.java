@@ -1,14 +1,19 @@
 package org.protege.ontograf.common;
 
 import java.awt.Color;
-import java.awt.Paint;
+import java.awt.Stroke;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.protege.ontograf.treeUtils.TreeInfoManager;
 import org.semanticweb.owlapi.model.OWLEntity;
+
+import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
+import edu.umd.cs.piccolox.util.PFixedWidthStroke;
 
 /**
  * @author uqwwan10 manage the size, font, color, pound of border, background,
@@ -26,18 +31,25 @@ public class StyleManager {
 
 	final private static float NODE_BACKGROUND_SATUATION = 0.2F;
 	final private static float NODE_BACKGROUND_BRIGHTNESS = 1F;
-	final private static float NODE_HUE_START = 0F;
-	final private static float NODE_HUE_END = 1F;
+	final private static float NODE_HUE_START = 0.2F;
+	final private static float NODE_HUE_END = 0.8F;
+	final private static float MAX_BORDER_STROKE_WIDTH = 5F;
+
+	final private static float BORDER_STROKE_WIDTH_SELECTION_INCREEMENT = 1F;
+	final private static float DEFAULT_ARC_WIDTH = 5F;
 
 	/**
 	 * border is simply darker than the background
 	 */
 	final private static float NODE_BORDER_BRIGHTNESS_GAIN = 0.2F;
 
-	final private static float ARC_SATUATION = 0.1F;
-	final private static float ARC_BRIGHTNESS = 0F;
-	final private static float ARC_HUE_START = 0F;
-	final private static float ARC_HUE_END = 1F;
+	final private static float ARC_SATUATION = 0.5F;
+	final private static float ARC_BRIGHTNESS = 0.6F;
+	final private static float ARC_HUE_START = 0.8F;
+	final private static float ARC_HUE_END = 0.1F;
+
+	public static final float DEFAULT_NODE_TEXT_FONT_SIZE = 15f;
+	public static final float DEFAULT_ARC_LABEL_TEXT_FONT_SIZE = 18f;
 
 	private static int MAX_ALPHA = 255;
 	private static int MIN_ALPHA = 50;
@@ -45,10 +57,14 @@ public class StyleManager {
 	private StyleManager() {
 
 	}
+	
+	public Stroke getArcStroke(Object arc){
+		return new PFixedWidthStroke(DEFAULT_ARC_WIDTH);
+	}
 
-	public static void initStyleManager(int numBranches, int numArcTypes) {
-		generateNodeColors(numBranches);
-		generateArcColors(numArcTypes);
+	public static void initStyleManager(Collection branchesTreeNode, Collection arcTypes) {
+		generateNodeColors(branchesTreeNode.size());
+		generateArcColors(arcTypes);
 
 	}
 
@@ -81,16 +97,31 @@ public class StyleManager {
 		return;
 	}
 
-	private static void generateArcColors(int numArcTypes) {
+	private static void generateArcColors(Collection arcTypes) {
 		arcColorMap = new HashMap();
-		arcColors = new ArrayList<Color>(numArcTypes);
-		float hueDistance = (ARC_HUE_END - ARC_HUE_START) / numArcTypes;
+		arcColors = new ArrayList<Color>(arcTypes.size());
+		float hueDistance = (ARC_HUE_END - ARC_HUE_START) / arcTypes.size();
 
-		for (int i = 0; i < numArcTypes; i++) {
+		for (int i = 0; i < arcTypes.size(); i++) {
 			Color color = Color.getHSBColor(ARC_HUE_START + hueDistance * i,
 					ARC_SATUATION, ARC_BRIGHTNESS);
 			arcColors.add(color);
 		}
+		
+		int i = 0;
+		for(Object o : arcTypes){
+			arcColorMap.put(o, arcColors.get(i++));
+		}
+		
+		
+	}
+	
+	public Stroke getNodeBorderStroke(GraphNode graphNode){
+		int level = TreeInfoManager.getTreeManager().getLevel(graphNode.getUserObject());
+		float normalBorderStrokeWidth = this.MAX_BORDER_STROKE_WIDTH/level;
+		float borderStrokeWidth = graphNode.isSelected()? normalBorderStrokeWidth: normalBorderStrokeWidth + this.BORDER_STROKE_WIDTH_SELECTION_INCREEMENT;
+		return new PFixedWidthStroke(borderStrokeWidth);
+		
 	}
 
 	public Color getNodeBackgroundColor(OWLEntity node) {

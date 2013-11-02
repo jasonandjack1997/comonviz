@@ -21,6 +21,7 @@ import java.util.Map;
 import javax.swing.Icon;
 
 import org.protege.ontograf.common.StyleManager;
+import org.protege.ontograf.treeUtils.TreeInfoManager;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import ca.uvic.cs.chisel.cajun.util.GraphicsUtils;
@@ -232,7 +233,9 @@ public class CustomGraphNodeStyle1 implements GraphNodeStyle {
 	}
 
 	public Stroke getBorderStroke(GraphNode node) {
-		return (node.isSelected() ? borderSelectionStroke : (node.isHighlighted() ? borderHighlightStroke : borderStroke));
+		Stroke stroke = StyleManager.getStyleManager().getNodeBorderStroke(node);
+		return stroke;
+		//return (node.isSelected() ? borderSelectionStroke : (node.isHighlighted() ? borderHighlightStroke : borderStroke));
 	}
 
 	public Font getFont(GraphNode node) {

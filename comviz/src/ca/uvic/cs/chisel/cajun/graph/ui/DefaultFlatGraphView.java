@@ -22,8 +22,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
-import test.TreeExplorer;
-import unused.OntologyTreeExplorer;
 import ca.uvic.cs.chisel.cajun.actions.CajunAction;
 import ca.uvic.cs.chisel.cajun.actions.LayoutAction;
 import ca.uvic.cs.chisel.cajun.actions.NoZoomAction;

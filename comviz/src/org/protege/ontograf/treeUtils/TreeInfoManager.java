@@ -28,7 +28,7 @@ public class TreeInfoManager {
         
         private static List<MutableTree> branchNodes;
         
-        public static List<MutableTree> getBranchNodes() {
+        public static Collection<MutableTree> getBranchNodes() {
 			return branchNodes;
 		}
 

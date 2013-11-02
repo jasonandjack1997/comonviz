@@ -394,10 +394,10 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 				Shape shape = arrowHead.getShape();
 				// first fill the arrow head in white
 				//g2.setPaint(ArrowHead.FILL);
-				g2.setPaint(Color.red);
+				//g2.setPaint(Color.red);
 				g2.fill(shape);
 				// now draw the outline
-				g2.setPaint(paint);
+				//g2.setPaint(paint);
 				g2.setStroke(ArrowHead.STROKE);
 				g2.draw(shape);
 			}

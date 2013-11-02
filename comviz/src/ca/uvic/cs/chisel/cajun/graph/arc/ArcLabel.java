@@ -6,6 +6,8 @@ import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 
+import org.protege.ontograf.common.StyleManager;
+
 import edu.umd.cs.piccolo.nodes.PText;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
@@ -39,11 +41,16 @@ public class ArcLabel extends PText {
 			ignoreInvalidatePaint = false;
 		}
 		// the font is never set in the super paint class?		
-		paintContext.getGraphics().setFont(getFont());
+//		paintContext.getGraphics().setFont(getFont());
+
+		//paintContext.getGraphics().setFont(getFont().deriveFont(StyleManager.DEFAULT_ARC_LABEL_TEXT_FONT_SIZE));
+		this.setFont(getFont().deriveFont(StyleManager.DEFAULT_ARC_LABEL_TEXT_FONT_SIZE));
 		Shape backgroundShape = new RoundRectangle2D.Double(getX(), getY(), getWidth(), getHeight(), 5f, 5f);		//super.paint(paintContext);
 		Graphics2D g2 = paintContext.getGraphics();
 		g2.setPaint(Color.white);
 		g2.fill(backgroundShape);
+		Color color = (Color) ((DefaultGraphArc)this.getParent()).getStrokePaint();
+		this.setTextPaint(color.darker().darker().darker());
 		super.paintText(paintContext);
 
 	}
