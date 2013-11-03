@@ -26,11 +26,11 @@ import edu.umd.cs.piccolo.event.PInputEventFilter;
  * @author Chris
  * @since 8-Nov-07
  */
-public class SelectionHandler extends PBasicInputEventHandler {
+public class NodeSelectionHandler extends PBasicInputEventHandler {
 
 	private NodeCollection selectedNodes;
 
-	public SelectionHandler(NodeCollection selectedNodes) {
+	public NodeSelectionHandler(NodeCollection selectedNodes) {
 		super();
 		this.selectedNodes = selectedNodes;
 		PInputEventFilter filter = new PInputEventFilter();
@@ -107,10 +107,10 @@ public class SelectionHandler extends PBasicInputEventHandler {
 			}
 		}
 		if (nodeAdded) {
-			RotationHandler.ANCHOR_X = ((DefaultGraphNode) displayNode)
-					.getCenterX();
-			RotationHandler.ANCHOR_Y = ((DefaultGraphNode) displayNode)
-					.getCenterY();
+//			RotationHandler.ANCHOR_X = ((DefaultGraphNode) displayNode)
+//					.getCenterX();
+//			RotationHandler.ANCHOR_Y = ((DefaultGraphNode) displayNode)
+//					.getCenterY();
 		}
 	}
 

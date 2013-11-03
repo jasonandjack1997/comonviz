@@ -1,7 +1,5 @@
 package ca.uvic.cs.chisel.cajun.actions;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -16,16 +14,16 @@ import org.eclipse.zest.layouts.progress.ProgressListener;
 import org.protege.ontograf.common.ProtegeGraphModel;
 import org.semanticweb.owlapi.model.OWLEntity;
 
+import comonviz.EntryPoint;
+import comonviz.Parameters;
 import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;
+import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
 import ca.uvic.cs.chisel.cajun.graph.Graph;
 import ca.uvic.cs.chisel.cajun.graph.arc.DefaultGraphArc;
 import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
 import ca.uvic.cs.chisel.cajun.graph.node.DefaultGraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import ca.uvic.cs.chisel.cajun.graph.util.ActivityManager;
-
-import comonviz.Parameters;
-
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.activities.PActivity;
@@ -84,6 +82,7 @@ public class LayoutAction extends CajunAction {
 		// save this action as the last executed action
 		((AbstractGraph) graph).setLastLayout(this);
 		runLayout();
+
 	}
 	
 	@SuppressWarnings("unused")
@@ -104,9 +103,11 @@ public class LayoutAction extends CajunAction {
 		
 		layoutArea = nodesAreaSum * Parameters.LAYOUT_AREA_FACTOR;
 		
-		int layoutWidth = (int) Math.sqrt(layoutArea);
-		int layoutHeight = layoutWidth;
+//		int layoutWidth = (int) Math.sqrt(layoutArea);
+//		int layoutHeight = layoutWidth;
+		int dividerLocation = ((FlatGraph)graph).getGraphController().getView().getTopHorizontalSplitPane().getDividerLocation();
 		
+		//int a = ((FlatGraph)graph).getGraphController().getView().getTopHorizontalSplitPane().getRightComponent().getWidth();
 
 		Collection<GraphArc> subclassArcs = new ArrayList<GraphArc>();
 		for(GraphArc arc: possibleArcs){
@@ -145,10 +146,13 @@ public class LayoutAction extends CajunAction {
 		
 
 		PCanvas canvas = graph.getCanvas();
+		
+		((FlatGraph)graph).getParent();
 
 		double x = 0, y = 0;
-		double w = Math.max(0, canvas.getWidth() - 10);
-		double h = Math.max(0, canvas.getHeight() - 10);
+		//double w = Math.max(0, canvas.getWidth());
+		double w = EntryPoint.frameSize.getWidth() - dividerLocation - 10;
+		double h = Math.max(0, canvas.getHeight());
 
 		// to allow extra room for wide nodes
 		if (w > 400) {
@@ -159,8 +163,8 @@ public class LayoutAction extends CajunAction {
 			h -= 30;
 		}
 		
-		w = layoutWidth;
-		h = layoutHeight;
+//		w = layoutWidth;
+//		h = layoutHeight;
 	
 		try {
 			// define a local version of the layout in order to avoid threading issues
@@ -209,6 +213,9 @@ public class LayoutAction extends CajunAction {
 		} catch (InvalidLayoutConfiguration e) {
 			e.printStackTrace();
 		}
+		
+//		((FlatGraph)graph).getAnimationHandler().focusOnExtents(true);
+
 	}
 
 	protected AffineTransform createTransform(GraphNode node) {

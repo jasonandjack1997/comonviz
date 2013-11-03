@@ -1,5 +1,6 @@
 package comonviz;
 
+import java.awt.Dimension;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -42,6 +43,8 @@ public class EntryPoint {
 	public static MutableTree ontologyTree;
 	
 	private final String internalOWLFilePath = "/COMON_v5_annotation.owl";
+	
+	public static Dimension frameSize;
 
 
 	/**
@@ -52,10 +55,14 @@ public class EntryPoint {
 		frame = new JFrame("CoMOnViz");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		
 		// Display the window.
+		frame.setMinimumSize(new Dimension(800, 600));
 		frame.pack();
 		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		frame.setVisible(true);
+		frameSize = frame.getSize();
+		
 		try {
 			gc = new GraphController(frame);
 		} catch (OWLOntologyCreationException e) {
@@ -85,6 +92,7 @@ public class EntryPoint {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 
 	}
 
@@ -142,6 +150,7 @@ public class EntryPoint {
 			}
 		}
 
+		topView.changeDividerLocation();
 		layoutAction.doAction();
 
 	}
@@ -155,6 +164,7 @@ public class EntryPoint {
 				new EntryPoint().start();
 			}
 		});
+		
 
 
 	}

@@ -5,6 +5,7 @@
 package ca.uvic.cs.chisel.cajun.util;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
@@ -18,6 +19,11 @@ import javax.swing.JToolTip;
  * @author Chris Callendar
  */
 public class CustomToolTip extends JToolTip {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public CustomToolTip() {
 		this(Color.black, Color.white, null);

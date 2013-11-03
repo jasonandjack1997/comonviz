@@ -536,17 +536,19 @@ public abstract class AbstractGraph extends PCanvas implements Graph {
 					ttBackground = node.getNodeStyle().getTooltipBackgroundColor();
 					ttTextColor = node.getNodeStyle().getTooltipTextColor();
 					ttFont = node.getNodeStyle().getTooltipFont();
-				} else if (pnode instanceof GraphArc) {
-					GraphArc arc = (GraphArc) pnode;
-					tooltipText = arc.getTooltip();
-					if (tooltipText == null || tooltipText.equals("")) {
-						tooltipText = arc.getSource().getText() + " ---" + arc.getType() + "---> " + arc.getDestination().getText();
-					}
-
-					ttBackground = arc.getArcStyle().getTooltipBackgroundColor();
-					ttTextColor = arc.getArcStyle().getTooltipTextColor();
-					ttFont = arc.getArcStyle().getTooltipFont();
-				}
+				} 
+				
+//				else if (pnode instanceof GraphArc) {
+//					GraphArc arc = (GraphArc) pnode;
+//					tooltipText = arc.getTooltip();
+//					if (tooltipText == null || tooltipText.equals("")) {
+//						tooltipText = arc.getSource().getText() + " ---" + arc.getType() + "---> " + arc.getDestination().getText();
+//					}
+//
+//					ttBackground = arc.getArcStyle().getTooltipBackgroundColor();
+//					ttTextColor = arc.getArcStyle().getTooltipTextColor();
+//					ttFont = arc.getArcStyle().getTooltipFont();
+//				}
 			}
 		}
 		return (tooltipText.length() > 0 ? " " + tooltipText + " " : "");

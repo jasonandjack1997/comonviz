@@ -3,6 +3,7 @@ package org.protege.ontograf.ui;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -25,17 +26,15 @@ import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.JTree;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 
 import org.protege.ontograf.treeUtils.MyTreeExpansionListener;
 import org.protege.ontograf.treeUtils.MyTreeHirarchyChangeListener;
-import org.protege.ontograf.treeUtils.MyTreeSelectionListener;
+import org.protege.ontograf.treeUtils.MyTreeItemSelectionListener;
 
 import uk.ac.manchester.cs.bhig.util.MutableTree;
 import ca.uvic.cs.chisel.cajun.actions.CajunAction;
-import ca.uvic.cs.chisel.cajun.actions.NoZoomAction;
-import ca.uvic.cs.chisel.cajun.actions.ZoomInAction;
-import ca.uvic.cs.chisel.cajun.actions.ZoomOutAction;
 import ca.uvic.cs.chisel.cajun.filter.FilterManager;
 import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
 import ca.uvic.cs.chisel.cajun.graph.Graph;
@@ -65,6 +64,10 @@ public class TopView extends JPanel {
 
 	private JSplitPane leftVerticalSplitPane;
 	private JSplitPane topHorizontalSplitPane;
+	public JSplitPane getTopHorizontalSplitPane() {
+		return topHorizontalSplitPane;
+	}
+
 	private DefaultTreeModel treeModel;
 
 	private NodeCollection selectedNodes;
@@ -96,23 +99,52 @@ public class TopView extends JPanel {
 
 		this.add(getToolBar(), BorderLayout.NORTH);
 
-		this.add(getStatusBar(), BorderLayout.SOUTH);
+		//this.add(getStatusBar(), BorderLayout.SOUTH);
 
 		treeModel = new DefaultTreeModel(null);
 
 		jTextArea = new JTextArea();
 		jTextArea.setMinimumSize(new Dimension(200, 100));
-		jTextArea.setText("hello");
+		jTextArea.setText("");
 		jTextArea.setEditable(true);
 		jTextArea.setLineWrap(true);
-
+		jTextArea.setWrapStyleWord(true);
+		jTextArea.setMargin(new Insets(10,10,10,10));
 		jTree = new JTree(treeModel);
 
-		jTree.addTreeSelectionListener(new MyTreeSelectionListener(this,
+		jTree.addTreeSelectionListener(new MyTreeItemSelectionListener(this,
 				selectedNodes));
 		jTree.addTreeExpansionListener(new MyTreeExpansionListener(
 				selectedNodes));
 		jTree.addHierarchyListener(new MyTreeHirarchyChangeListener());
+		
+		jTree.setSelectionRow(0);
+		
+		
+		jTree.setCellRenderer(new DefaultTreeCellRenderer() {
+		        /**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
+				@Override
+		        public Component getTreeCellRendererComponent(JTree tree,
+		                Object value, boolean sel, boolean expanded, boolean leaf,
+		                int row, boolean hasFocus) {
+					
+					this.setLeafIcon(null);
+					this.setOpenIcon(null);
+					this.setClosedIcon(null);
+
+
+		            
+//					StringBuffer html = new StringBuffer("<html><b style= \"color: #000000; background-color: #fff3ff\">T</b>  ");
+//					StringBuffer html.append(value.toString());
+//					html.append("</html>");
+		            return super.getTreeCellRendererComponent(
+		                    tree, value.toString(), sel, expanded, leaf, row, hasFocus);
+		        }
+		    });
 		
 		JScrollPane leftTopJScrollPane = new JScrollPane(jTree);
 		leftTopJScrollPane.setMinimumSize(new Dimension(200, 200));
@@ -130,15 +162,19 @@ public class TopView extends JPanel {
 		leftVerticalSplitPane.setDividerLocation(0.7f);
 
 		horizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-		horizontalSplitPane.add(getMainPanel());
-		horizontalSplitPane.add(getRightPanel());
+		horizontalSplitPane.setMinimumSize(new Dimension(500, 500));
 
 		topHorizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		topHorizontalSplitPane.add(leftVerticalSplitPane);
 		topHorizontalSplitPane.add(horizontalSplitPane);
 		topHorizontalSplitPane.setOneTouchExpandable(true);
-		topHorizontalSplitPane.setDividerLocation(300);
+		topHorizontalSplitPane.setDividerLocation(400);
 
+		
+		horizontalSplitPane.add(getMainPanel());
+		horizontalSplitPane.add(getRightPanel());
+		
+		
 		this.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
@@ -167,6 +203,10 @@ public class TopView extends JPanel {
 		initializeToolBar();
 	}
 
+	public void changeDividerLocation(){
+		topHorizontalSplitPane.setDividerLocation(300);
+
+	}
 	public DefaultTreeModel getTreeModel() {
 		return treeModel;
 	}
@@ -176,23 +216,26 @@ public class TopView extends JPanel {
 		addToolBarAction(new OpenOntologyFileAction());
 		// addToolBarAction(new ClearOrphansAction(graph.getModel(), graph));
 		// zoom
-		addToolBarAction(new ZoomInAction(graph.getCamera()));
-		addToolBarAction(new NoZoomAction(graph.getCamera()));
-		addToolBarAction(new ZoomOutAction(graph.getCamera()));
+		//addToolBarAction(new ZoomInAction(graph.getCamera()));
+		//addToolBarAction(new NoZoomAction(graph.getCamera()));
+		//addToolBarAction(new ZoomOutAction(graph.getCamera()));
 
-		getToolBar().addSeparator();
+		//getToolBar().addSeparator();
 
 		// node and arc filter actions
 		// final JToggleButton nodesToggle = addToolBarToggleAction(new
 		// ShowFilterPanelAction(getNodeFilterPanel()));
 		final JToggleButton arcsToggle = addToolBarToggleAction(new ShowFilterPanelAction(
 				getArcFilterPanel()));
+		
+		arcsToggle.setVisible(false);
 		// listen for panel close events - keep the toggle buttons in sync
 		/*
 		 * getNodeFilterPanel().getCloseButton().addActionListener(new
 		 * ActionListener() { public void actionPerformed(ActionEvent e) {
 		 * nodesToggle.setSelected(false); } });
-		 */getArcFilterPanel().getCloseButton().addActionListener(
+		 */
+		getArcFilterPanel().getCloseButton().addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						arcsToggle.setSelected(false);
@@ -246,6 +289,7 @@ public class TopView extends JPanel {
 				}
 			});
 		}
+		rightPanel.setVisible(false);
 		return rightPanel;
 	}
 
@@ -434,7 +478,7 @@ public class TopView extends JPanel {
 				getRightPanel().add(filterPanel);
 				getRightPanel().invalidate();
 
-				horizontalSplitPane.setDividerLocation(0.8);
+				horizontalSplitPane.setDividerLocation(1.0);
 			}
 		}
 	}

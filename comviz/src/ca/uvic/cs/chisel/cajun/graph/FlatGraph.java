@@ -1,13 +1,15 @@
 package ca.uvic.cs.chisel.cajun.graph;
 
+import org.protege.ontograf.common.GraphController;
+
 import ca.uvic.cs.chisel.cajun.filter.FilterManager;
 import ca.uvic.cs.chisel.cajun.graph.handlers.CameraDragPanHandler;
 import ca.uvic.cs.chisel.cajun.graph.handlers.CameraKeyPanHandler;
 import ca.uvic.cs.chisel.cajun.graph.handlers.FocusOnExtentsHandler;
 import ca.uvic.cs.chisel.cajun.graph.handlers.HighlightHandler;
 import ca.uvic.cs.chisel.cajun.graph.handlers.NodeDragHandler;
+import ca.uvic.cs.chisel.cajun.graph.handlers.NodeSelectionHandler;
 import ca.uvic.cs.chisel.cajun.graph.handlers.RotationHandler;
-import ca.uvic.cs.chisel.cajun.graph.handlers.SelectionHandler;
 import ca.uvic.cs.chisel.cajun.graph.handlers.ZoomHandler;
 import ca.uvic.cs.chisel.cajun.graph.util.AnimationHandler;
 import edu.umd.cs.piccolo.PCamera;
@@ -20,20 +22,27 @@ public class FlatGraph extends AbstractGraph {
 	
 	private AnimationHandler animationHandler;
 	
-	public FlatGraph() {
-		this(new DefaultGraphModel());
+	private GraphController graphController;
+	
+	public GraphController getGraphController() {
+		return graphController;
+	}
+
+	public FlatGraph(GraphController graphController) {
+		this(graphController, new DefaultGraphModel());
 		
 		this.showNodeTooltips = true;
 	}
 	
-	public FlatGraph(GraphModel model) {
+	public FlatGraph(GraphController graphController, GraphModel model) {
 		super(model);
-
+		this.graphController = graphController;
+		
 		setDefaultRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
 		setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
 		setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
 
-		this.animationHandler = new AnimationHandler(this);
+		this.setAnimationHandler(new AnimationHandler(this));
 
 		PCamera camera = getCamera();
 
@@ -50,12 +59,12 @@ public class FlatGraph extends AbstractGraph {
         // handles dragging of nodes
 		camera.addInputEventListener(new NodeDragHandler());
 		// handles node selections
-        camera.addInputEventListener(new SelectionHandler(getNodeSelection()));
+        camera.addInputEventListener(new NodeSelectionHandler(getNodeSelection()));
         //  handles highlighting nodes and arcs
         camera.addInputEventListener(new HighlightHandler());
         
         // ensures that all nodes are displayed on the canvas
-        camera.addInputEventListener(new FocusOnExtentsHandler(animationHandler));
+        camera.addInputEventListener(new FocusOnExtentsHandler(getAnimationHandler()));
         //rotate handler
         camera.addInputEventListener(new RotationHandler(camera));
 	}
@@ -74,5 +83,9 @@ public class FlatGraph extends AbstractGraph {
 
 	public void setShowNodeTooltips(boolean showNodeTooltips) {
 		this.showNodeTooltips = showNodeTooltips;
+	}
+
+	public void setAnimationHandler(AnimationHandler animationHandler) {
+		this.animationHandler = animationHandler;
 	}
 }

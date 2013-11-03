@@ -101,8 +101,8 @@ public class GraphController {
 	public GraphController(Container parentContainer) throws OWLOntologyCreationException, OWLOntologyStorageException, IOException {
 		
 		model = new ProtegeGraphModel();
-		this.graph = new FlatGraph(model);
-		this.graph.setShowNodeTooltips(false);
+		this.graph = new FlatGraph(this, model);
+		this.graph.setShowNodeTooltips(true);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = (int) screenSize.getWidth();
 		int height = (int) screenSize.getHeight();

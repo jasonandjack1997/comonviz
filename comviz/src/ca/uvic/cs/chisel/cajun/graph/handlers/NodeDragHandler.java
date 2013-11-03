@@ -21,10 +21,10 @@ public class NodeDragHandler extends PDragEventHandler {
 		if (pnode instanceof GraphNode) {
 			// MOVE node
 			GraphNode graphNode = (GraphNode) pnode;
-			RotationHandler.ANCHOR_X = ((DefaultGraphNode) graphNode)
-					.getCenterX();
-			RotationHandler.ANCHOR_Y = ((DefaultGraphNode) graphNode)
-					.getCenterY();
+//			RotationHandler.ANCHOR_X = ((DefaultGraphNode) graphNode)
+//					.getCenterX();
+//			RotationHandler.ANCHOR_Y = ((DefaultGraphNode) graphNode)
+//					.getCenterY();
 		}
 		super.endDrag(event);
 	}

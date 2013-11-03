@@ -17,11 +17,11 @@ import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.NodeCollection;
 import comonviz.EntryPoint;
 
-public class MyTreeSelectionListener implements TreeSelectionListener {
+public class MyTreeItemSelectionListener implements TreeSelectionListener {
 	private NodeCollection selectedNodes;
 	private JTextArea annotationTextArea;
 	
-	public MyTreeSelectionListener(TopView topView, NodeCollection selectedNodes){
+	public MyTreeItemSelectionListener(TopView topView, NodeCollection selectedNodes){
 		this.selectedNodes = selectedNodes;
 		this.annotationTextArea = topView.getjTextArea();
 	}

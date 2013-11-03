@@ -49,7 +49,7 @@ public class CustomGraphNodeStyle1 implements GraphNodeStyle {
 	protected Paint borderMatchingPaint;
 	protected Paint textPaint;
 	protected Color tooltipTextColor;
-	protected Color tooltipBackground;
+	protected Color tooltipBackground = StyleManager.DEFAULT_TOOLTIP_BACKGROUND_COLOR;
 
 	protected Stroke borderStroke;
 	protected Stroke borderSelectionStroke;
@@ -81,7 +81,6 @@ public class CustomGraphNodeStyle1 implements GraphNodeStyle {
 		borderSelectionPaint = Color.blue;
 		borderMatchingPaint = new Color(0, 224, 0);
 		textPaint = Color.black;
-		tooltipBackground = defaultColors[0];
 		tooltipTextColor = GraphicsUtils.getTextColor(tooltipBackground);
 
 		borderStroke = new PFixedWidthStroke(1f);

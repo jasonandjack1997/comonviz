@@ -1,8 +1,8 @@
 package comonviz;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Stroke;
-import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -23,6 +23,7 @@ public class StyleManager {
 
 	private static StyleManager instance;
 
+	//colors
 	private static List<Color> nodeBackgroundColors;
 	private static List<Color> arcColors;
 
@@ -31,31 +32,54 @@ public class StyleManager {
 
 	final private static float NODE_BACKGROUND_SATUATION = 0.2F;
 	final private static float NODE_BACKGROUND_BRIGHTNESS = 1F;
-	final private static float NODE_HUE_START = 0.2F;
-	final private static float NODE_HUE_END = 0.8F;
-	final private static float MAX_BORDER_STROKE_WIDTH = 5F;
-
-	final private static float BORDER_STROKE_WIDTH_SELECTION_INCREEMENT = 1F;
-	final private static float DEFAULT_ARC_WIDTH = 3F;
-
-	/**
-	 * border is simply darker than the background
-	 */
+	final private static float NODE_HUE_START = 0.0F;
+	final private static float NODE_HUE_END = 1.0F;
+	
 	final private static float NODE_BORDER_BRIGHTNESS_GAIN = 0.2F;
-
-	final private static float ARC_SATUATION = 0.5F;
-	final private static float ARC_BRIGHTNESS = 0.6F;
-	final private static float ARC_HUE_START = 0.8F;
+	final private static float ARC_SATUATION = 179/256F;
+	final private static float ARC_BRIGHTNESS = 0.7F;
+	final private static float ARC_HUE_START = 0.58F;
 	final private static float ARC_HUE_END = 0.1F;
-
-	public static final float DEFAULT_NODE_TEXT_FONT_SIZE = 15f;
-	public static final float DEFAULT_ARC_LABEL_TEXT_FONT_SIZE = 18f;
 
 	private static int MAX_ALPHA = 255;
 	private static int MIN_ALPHA = 50;
+	
+	private final static int defultArcColorCount = 5;
+	private static Color[] defaultArcColors;
+
+	public static final Color DEFAULT_TOOLTIP_BACKGROUND_COLOR = new Color(255, 253, 157);
+	
+	//strokes
+	final private static float MAX_BORDER_STROKE_WIDTH = 2F;
+	final private static float BORDER_STROKE_WIDTH_SELECTION_INCREEMENT = 1F;
+	final public static float DEFAULT_ARC_WIDTH = 1F;
+
+	
+
+	//fonts
+	public static final float DEFAULT_NODE_TEXT_FONT_SIZE = 12f;
+	public static final float DEFAULT_ARC_LABEL_TEXT_FONT_SIZE = 10f;
+	final public static float DEFAULT_HIDDEN_CHILDREN_COUNT_TEXT_FONT_SIZE = 8F;
+	final public static float DEFAULT_TOOLTIP_TEXT_FONT_SIZE = 10F;
+
+	public static Font BASE_FONT = new Font("SansSerif", Font.PLAIN, 12);
+	public static Font TOOLTIP_FONT = BASE_FONT.deriveFont(DEFAULT_TOOLTIP_TEXT_FONT_SIZE);
+	
+	//misc
+	public final static float DEFAULT_ARROW_HEAD_SIZE = 4F;
+	
+
 
 	private StyleManager() {
+		defaultArcColors = new Color[defultArcColorCount];
 
+		defaultArcColors[0] = new Color(253, 9, 2);
+		defaultArcColors[1] = new Color(255, 50, 50);//red
+		defaultArcColors[1] = new Color(11, 166, 150);//green blue
+		defaultArcColors[2] = new Color(37, 234, 15);
+		defaultArcColors[3] = new Color(217, 12, 222);//pink
+		defaultArcColors[4] = new Color(4, 105, 230);//blue
+		
 	}
 	
 	public Stroke getArcStroke(Object arc){
@@ -102,7 +126,10 @@ public class StyleManager {
 		arcColors = new ArrayList<Color>(arcTypes.size());
 		float hueDistance = (ARC_HUE_END - ARC_HUE_START) / arcTypes.size();
 
-		for (int i = 0; i < arcTypes.size(); i++) {
+		for (int i = 0; i < defultArcColorCount; i++){
+			arcColors.add(defaultArcColors[i]);
+		}
+		for (int i = defultArcColorCount; i < arcTypes.size(); i++) {
 			Color color = Color.getHSBColor(ARC_HUE_START + hueDistance * i,
 					ARC_SATUATION, ARC_BRIGHTNESS);
 			arcColors.add(color);
@@ -168,7 +195,7 @@ public class StyleManager {
 		Color backgroundColor = getNodeBackgroundColor(branchEntity);
 
 		// ColorSpace colorSpace = new ColorSpace(ColorSpace.TYPE_HSV, 3);
-		return backgroundColor.darker();
+		return backgroundColor.darker().darker();
 	}
 
 	public Color getArcColor(Object arc) {

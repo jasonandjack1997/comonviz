@@ -11,6 +11,8 @@ import java.awt.Stroke;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 
+import comonviz.StyleManager;
+
 import edu.umd.cs.piccolox.util.PFixedWidthStroke;
 
 /**
@@ -24,11 +26,7 @@ public class ArrowHead {
 	public static final PFixedWidthStroke STROKE = new PFixedWidthStroke(1f);
 	public static final Paint FILL = Color.white;
 
-	private static final int ARROW_SIZE_CONSTANT = 8;
 
-	public static int getArrowSizeConstant() {
-		return ARROW_SIZE_CONSTANT;
-	}
 
 	private double slope;
 	private Point2D point;
@@ -130,7 +128,7 @@ public class ArrowHead {
 	private GeneralPath createArrowHead() {
 		GeneralPath arrowHeadPath = new GeneralPath();
 		double theta1 = Math.atan(slope);
-		double arrowHeight = ARROW_SIZE_CONSTANT / magnification;
+		double arrowHeight = StyleManager.DEFAULT_ARROW_HEAD_SIZE / magnification;
 		if (selected) {
 		    arrowHeight *= 1.5;
 		}
@@ -172,6 +170,11 @@ public class ArrowHead {
 			arrowHeadPath.closePath();
 		}
 		return arrowHeadPath;
+	}
+
+	public static int getArrowSizeConstant() {
+		// TODO Auto-generated method stub
+		return (int) StyleManager.DEFAULT_ARROW_HEAD_SIZE;
 	}
 
 }

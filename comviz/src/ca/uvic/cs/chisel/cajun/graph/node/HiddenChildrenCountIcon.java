@@ -8,22 +8,26 @@ import java.awt.geom.Ellipse2D;
 import org.protege.ontograf.common.GraphController;
 import org.protege.ontograf.treeUtils.TreeInfoManager;
 
+import comonviz.StyleManager;
+
 import edu.umd.cs.piccolo.nodes.PText;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
-public class ChildrenCountIcon extends PText {
+public class HiddenChildrenCountIcon extends PText {
 	private static final long serialVersionUID = -871571524212274580L;
 
 	private boolean ignoreInvalidatePaint = false;
 	private GraphNode graphNode;
 
-	public ChildrenCountIcon(GraphNode GraphNode, String text) {
+	public HiddenChildrenCountIcon(GraphNode GraphNode, String text) {
 		super();
 		this.graphNode = GraphNode;
 
 		// make this node match the text size
 		setText(text);
 		setTextPaint(Color.white);
+		this.setFont(getFont().deriveFont(StyleManager.DEFAULT_HIDDEN_CHILDREN_COUNT_TEXT_FONT_SIZE));
+
 
 	}
 

@@ -48,7 +48,6 @@ public class RotationHandler extends PBasicInputEventHandler {
 	@Override
 	public void mousePressed(PInputEvent event) {
 
-
 		// TODO Auto-generated method stub
 		// if (event.isMiddleMouseButton()) {
 		// if (ANCHOR_X >= 0 && ANCHOR_Y >= 0) {
@@ -66,22 +65,23 @@ public class RotationHandler extends PBasicInputEventHandler {
 		if (!event.isMiddleMouseButton()) {
 			return;
 		}
-		
+
+		GraphNode oldNodeInTreeManager = (GraphNode) TreeInfoManager
+				.getTreeRoot().getUserObject();
+		anchorGraphNode = ((ProtegeGraphModel) EntryPoint.getGc().getModel())
+				.getNode(oldNodeInTreeManager.getUserObject());
+		ANCHOR_X = ((DefaultGraphNode) anchorGraphNode).getCenterX();
+		ANCHOR_Y = ((DefaultGraphNode) anchorGraphNode).getCenterY();
+
 		if (this.ANCHOR_X == -1l && this.ANCHOR_Y == -1l) {
-			
-			GraphNode oldNodeInTreeManager = (GraphNode) TreeInfoManager.getTreeRoot()
-				.getUserObject();
-			anchorGraphNode = ((ProtegeGraphModel)EntryPoint.getGc().getModel()).getNode(oldNodeInTreeManager.getUserObject());
-			ANCHOR_X = ((DefaultGraphNode)anchorGraphNode).getCenterX();
-			ANCHOR_Y = ((DefaultGraphNode)anchorGraphNode).getCenterY();
+
 		}
-		
+
 		if (this.ANCHOR_X != -1l && this.ANCHOR_Y != -1l) {
 			PNode node = event.getPickedNode();
 			if (node instanceof GraphNode) {
 				node.moveToFront();
-				anchorGraphNode = (GraphNode) node;
-			} 
+			}
 			currentX = event.getPosition().getX();
 			currentY = event.getPosition().getY();
 			lastX = currentX - event.getDelta().getWidth();
@@ -115,16 +115,16 @@ public class RotationHandler extends PBasicInputEventHandler {
 			// rotate all visible nodes
 			Collection<GraphNode> visibleNodes = EntryPoint.getGc().getModel()
 					.getVisibleNodes();
-			List<OWLEntity> desendantsNode = ((ProtegeGraphModel) EntryPoint.getGc()
-					.getModel()).getDesendantList(
+			List<OWLEntity> desendantsNode = ((ProtegeGraphModel) EntryPoint
+					.getGc().getModel()).getDesendantList(
 					(OWLEntity) anchorGraphNode.getUserObject(), false);
-			
+
 			for (OWLEntity nodeEntity : desendantsNode) {
 				// if (graphNode.getText().contains("Compliance")) {
 				{
-					GraphNode graphNode = ((ProtegeGraphModel) EntryPoint.getGc()
-							.getModel()).getNode(nodeEntity);
-					if(graphNode == null){
+					GraphNode graphNode = ((ProtegeGraphModel) EntryPoint
+							.getGc().getModel()).getNode(nodeEntity);
+					if (graphNode == null) {
 						continue;
 					}
 					Point2D lastLocation = new Point2D.Double(

@@ -26,9 +26,11 @@ import javax.swing.event.ChangeListener;
 import org.eclipse.zest.layouts.constraints.BasicEntityConstraint;
 import org.eclipse.zest.layouts.constraints.LabelLayoutConstraint;
 import org.eclipse.zest.layouts.constraints.LayoutConstraint;
+import org.semanticweb.owlapi.model.OWLAnnotation;
+import org.semanticweb.owlapi.model.OWLClass;
 
+import comonviz.EntryPoint;
 import comonviz.StyleManager;
-
 import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
 import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.PLayer;
@@ -50,7 +52,8 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 
 	private static final long serialVersionUID = 3223950711940456476L;
 
-	protected static final int MAX_TEXT_CHARS = 12;
+	protected static final int MAX_TEXT_CHARS = 10;
+	protected static final int MAX_TOOLTIP_CHARS_IN_A_LINE = 50;
 	protected static final int MAX_LINES = 5;
 
 	private Object userObject;
@@ -87,12 +90,15 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 	private Collection<GraphArc> arcs;
 
 	private Ellipse2D ellipse;
-	private double ENVELOPE_FACTOR = 2.0; // the bound is bigger than the text
-											// size so we can draw a ellipse in
-	private int ELLIPSE_DECRESEMENT = 5; // the distance eclipse is within each
+	private double BOUNDS_ELLIPSE_FACTOR = 3.0; // the bound is bigger than the
+												// text
+	// size so we can draw a ellipse in
+	private double ELLIPSE_FACTOR = 1.2f; // the distance eclipse is within each
 											// side of the bounds
 
-	private ChildrenCountIcon childrenCountIcon;
+	private HiddenChildrenCountIcon childrenCountIcon;
+
+	private final static int MAX_TOOLTIP_LINES = 20;
 
 	// This nodes uses an internal Ellipse2D to define its shape.
 	public Ellipse2D getEllipse() {
@@ -139,7 +145,7 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 		textNode.setConstrainHeightToTextHeight(true);
 		textNode.setPickable(false);
 
-		childrenCountIcon = new ChildrenCountIcon(this, "1");
+		childrenCountIcon = new HiddenChildrenCountIcon(this, "1");
 		childrenCountIcon.setHorizontalAlignment(Component.CENTER_ALIGNMENT);
 		// make this node match the text size
 		childrenCountIcon.setConstrainWidthToTextWidth(true);
@@ -150,8 +156,8 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 		addChild(childrenCountIcon);
 
 		setText(text);
-		setIcon(icon);
 		setType(type);
+		updateBounds();
 
 	}
 
@@ -367,10 +373,19 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 
 	public String getTooltip() {
 		if (tooltip == null) {
-			// use the full text, not the elided version from getText()
-			return fullText;
+			Collection<OWLAnnotation> owlAnnotationSet = ((OWLClass) userObject)
+					.getAnnotations(EntryPoint.ontology);
+			if (owlAnnotationSet.size() != 0) {
+				String annotation = ((OWLAnnotation) owlAnnotationSet.toArray()[0])
+						.getValue().toString();
+				annotation = annotation.substring(1, annotation.length() - 1);
+
+				return this.splitTextIntoLines(annotation, MAX_TOOLTIP_LINES,
+						MAX_TOOLTIP_CHARS_IN_A_LINE + 1);
+
+			}
 		}
-		return tooltip;
+		return "";
 	}
 
 	public void setTooltip(String tooltip) {
@@ -503,19 +518,30 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 	 */
 	private void updateBounds() {
 		PBounds textBounds = textNode.getBounds();
-		/*
-		 * double w = (3 * PADDING_X) + iconWidth + ICON_GAP +
-		 * textBounds.getWidth(); double h = (2 * PADDING_Y) +
-		 * Math.max(iconHeight, textBounds.getHeight());
-		 */
+
 		double tw = textBounds.getWidth();
 		double th = textBounds.getHeight();
 
-		double w = tw * ENVELOPE_FACTOR;
-		double h = th * ENVELOPE_FACTOR;
-		setBounds(getX() - (ENVELOPE_FACTOR / 2 + 0.5) * tw, getY()
-				- (ENVELOPE_FACTOR / 2 + 0.5) * th, w, h);
-		// setBounds(getCenterX() - w, getCenterY() - h, w, h);
+		if (tw > th) {
+			getEllipse().setFrameFromCenter(textBounds.getCenterX(),
+					textBounds.getCenterY(), textBounds.getX() - 5,
+					textBounds.getY() - (tw - th) / 2 - 5);
+
+		} else {
+			getEllipse().setFrameFromCenter(textBounds.getCenterX(),
+					textBounds.getCenterY(),
+					textBounds.getX() - (th - tw) / 2 - 5,
+					textBounds.getY() - 5);
+
+		}
+
+		double ew = getEllipse().getWidth();
+		double eh = getEllipse().getHeight();
+
+		double bw = ew * BOUNDS_ELLIPSE_FACTOR;
+		double bh = eh * BOUNDS_ELLIPSE_FACTOR;
+
+		this.setSize(bw, bh);
 
 	}
 
@@ -523,19 +549,53 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 	// the ellipse stays consistent with the bounds geometry.
 	public boolean setBounds(double x, double y, double width, double height) {
 		if (super.setBounds(x, y, width, height)) {
-			getEllipse().setFrame(x + ELLIPSE_DECRESEMENT,
-					y + ELLIPSE_DECRESEMENT, width - 2 * ELLIPSE_DECRESEMENT,
-					height - 2 * ELLIPSE_DECRESEMENT);
-			double tw = textNode.getWidth();
-			double th = textNode.getHeight();
-			textNode.setBounds(getX() + (ENVELOPE_FACTOR / 2 - 0.5) * tw,
-					getY() + (ENVELOPE_FACTOR / 2 - 0.5) * th, tw, th);
+			
+			double centerX = this.getCenterX();
+			double centerY = this.getCenterY();
+
+			// PBounds textBounds = textNode.getBounds();
+			// double tw = textBounds.getWidth();
+			// double th = textBounds.getHeight();
+
+			textNode.setBounds(centerX - textNode.getWidth() / 2,
+					centerY - textNode.getHeight() / 2, textNode.getWidth(),
+					textNode.getHeight());
+
+			getEllipse().setFrame(centerX - getEllipse().getWidth() / 2,
+					centerY - getEllipse().getHeight() / 2, getEllipse().getWidth(),
+					getEllipse().getHeight());
+			
+			//this.setBounds(x - getWidth()/2, y - getHeight()/2, getWidth(), getHeight());
+
+//			if (tw > th) {
+//				getEllipse().setFrameFromCenter(textBounds.getCenterX(),
+//						textBounds.getCenterY(), textBounds.getX() - 5,
+//						textBounds.getY() - (tw - th) / 2 - 5);
+//
+//			} else {
+//				getEllipse().setFrameFromCenter(textBounds.getCenterX(),
+//						textBounds.getCenterY(),
+//						textBounds.getX() - (th - tw) / 2 - 5,
+//						textBounds.getY() - 5);
+//
+//			}
+//
+//			double ew = getEllipse().getWidth();
+//			double eh = getEllipse().getHeight();
+//
+//			double w = ew * BOUNDS_ELLIPSE_FACTOR;
+//			double h = eh * BOUNDS_ELLIPSE_FACTOR;
+//
+//			textNode.setBounds(getX() + (BOUNDS_ELLIPSE_FACTOR / 2 - 0.5) * tw,
+//					getY() + (BOUNDS_ELLIPSE_FACTOR / 2 - 0.5) * th, tw, th);
 
 			double cw = childrenCountIcon.getWidth();
 			double ch = childrenCountIcon.getHeight();
 			double d = Math.max(cw, ch);
-			//childrenCountIcon.setBounds(getX(), getY() + getHeight()/2, d, d);
-			childrenCountIcon.setBounds(getEllipse().getX() - d/2, getEllipse().getY() + getEllipse().getHeight()/2 - d/2,
+			// childrenCountIcon.setBounds(getX(), getY() + getHeight()/2, d,
+			// d);
+			childrenCountIcon.setBounds(getEllipse().getX() - d / 2,
+					getEllipse().getY() + getEllipse().getHeight() / 2 - d / 2,
 					d, d);
 
 			updateArcLocations();
@@ -680,7 +740,10 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 			g2.draw(drawShape);
 		}
 
-		childrenCountIcon.setBounds(getEllipse().getX() - childrenCountIcon.getWidth()/2, getEllipse().getY() + getEllipse().getHeight()/2 - childrenCountIcon.getHeight()/2,
+		childrenCountIcon.setBounds(
+				getEllipse().getX() - childrenCountIcon.getWidth() / 2,
+				getEllipse().getY() + getEllipse().getHeight() / 2
+						- childrenCountIcon.getHeight() / 2,
 				childrenCountIcon.getWidth(), childrenCountIcon.getHeight());
 
 		super.paint(paintContext);
@@ -749,7 +812,8 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 			if (font == null) {
 				font = DEFAULT_FONT;
 			}
-			font = font.deriveFont(StyleManager.getStyleManager().DEFAULT_NODE_TEXT_FONT_SIZE);
+			font = font
+					.deriveFont(StyleManager.getStyleManager().DEFAULT_NODE_TEXT_FONT_SIZE);
 			return font;
 		}
 
