@@ -6,9 +6,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.Icon;
 
@@ -25,6 +23,9 @@ import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
 import ca.uvic.cs.chisel.cajun.graph.node.DefaultGraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import ca.uvic.cs.chisel.cajun.graph.util.ActivityManager;
+
+import comonviz.Parameters;
+
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.activities.PActivity;
@@ -93,11 +94,18 @@ public class LayoutAction extends CajunAction {
 		
 		Collection<GraphArc> possibleArcs = new ArrayList<GraphArc>();
 		
-		
+		int nodesAreaSum = 0;
+		int layoutArea = 0;
 		for(GraphNode graphNode : nodes){
+			nodesAreaSum += graphNode.getBounds().getWidth() * graphNode.getBounds().getHeight();
 			ProtegeGraphModel graphModel = (ProtegeGraphModel)graph.getModel();
 			possibleArcs.addAll(graphModel.loadChildren2((OWLEntity) graphNode.getUserObject(), false));
 		}
+		
+		layoutArea = nodesAreaSum * Parameters.LAYOUT_AREA_FACTOR;
+		
+		int layoutWidth = (int) Math.sqrt(layoutArea);
+		int layoutHeight = layoutWidth;
 		
 
 		Collection<GraphArc> subclassArcs = new ArrayList<GraphArc>();
@@ -142,14 +150,6 @@ public class LayoutAction extends CajunAction {
 		double w = Math.max(0, canvas.getWidth() - 10);
 		double h = Math.max(0, canvas.getHeight() - 10);
 
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int width = (int) screenSize.getWidth();
-		int height = (int) screenSize.getHeight();
-
-		w = width;
-		h = height - 100;
-		
-
 		// to allow extra room for wide nodes
 		if (w > 400) {
 			w -= 100;
@@ -158,6 +158,9 @@ public class LayoutAction extends CajunAction {
 		if (h > 300) {
 			h -= 30;
 		}
+		
+		w = layoutWidth;
+		h = layoutHeight;
 	
 		try {
 			// define a local version of the layout in order to avoid threading issues

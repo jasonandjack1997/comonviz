@@ -1,4 +1,4 @@
-package org.protege.ontograf.common;
+package comonviz;
 
 import java.awt.Color;
 import java.awt.Stroke;
@@ -36,7 +36,7 @@ public class StyleManager {
 	final private static float MAX_BORDER_STROKE_WIDTH = 5F;
 
 	final private static float BORDER_STROKE_WIDTH_SELECTION_INCREEMENT = 1F;
-	final private static float DEFAULT_ARC_WIDTH = 5F;
+	final private static float DEFAULT_ARC_WIDTH = 3F;
 
 	/**
 	 * border is simply darker than the background

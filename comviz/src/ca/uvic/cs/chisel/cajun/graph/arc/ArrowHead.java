@@ -26,6 +26,10 @@ public class ArrowHead {
 
 	private static final int ARROW_SIZE_CONSTANT = 8;
 
+	public static int getArrowSizeConstant() {
+		return ARROW_SIZE_CONSTANT;
+	}
+
 	private double slope;
 	private Point2D point;
 	private double magnification;

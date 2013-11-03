@@ -1,24 +1,25 @@
 package ca.uvic.cs.chisel.cajun.graph.arc;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Paint;
+import java.awt.Point;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.zest.layouts.LayoutBendPoint;
 import org.eclipse.zest.layouts.LayoutEntity;
 import org.eclipse.zest.layouts.constraints.LayoutConstraint;
 
-import ca.uvic.cs.chisel.cajun.graph.node.ChildrenCountIcon;
 import ca.uvic.cs.chisel.cajun.graph.node.DefaultGraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import edu.umd.cs.piccolo.nodes.PImage;
@@ -27,7 +28,7 @@ import edu.umd.cs.piccolo.util.PPaintContext;
 
 public class DefaultGraphArc extends PPath implements GraphArc {
 	private static final long serialVersionUID = 1530720146193007435L;
-	
+
 	private static final double CURVE_FACTOR_BASE_OFFSET = 8.0;
 	private static final double SELF_ARC_DIAMETER = 20.0;
 
@@ -35,7 +36,7 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 	private Object type;
 
 	private Object graphData;
-	
+
 	private GraphNode src;
 	private GraphNode dest;
 
@@ -46,24 +47,22 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 
 	private GraphArcStyle style;
 
-	//private GeneralPath path;
+	// private GeneralPath path;
 	private int curveFactor;
 
 	private boolean showArrowHead;
-	private ArrowHead arrowHead;
-	private ArrowHead arrowHead2;
+	private ArrowHead endArrowHead;
+	private ArrowHead startArrowHead;
 	private String tooltip;
 
 	private boolean inverted;
-	
+
 	private Icon icon;
 	private PImage image;
-	
-	
-	private ArcLabel arcLabel;
-	
-	private Point2D middlePoint;
 
+	private ArcLabel arcLabel;
+
+	private Point2D middlePoint;
 
 	public Point2D getMiddlePoint() {
 		return middlePoint;
@@ -72,12 +71,14 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 	public DefaultGraphArc(Object userObject, GraphNode src, GraphNode dest) {
 		this(userObject, src, dest, UNKNOWN_TYPE);
 	}
-	
-	public DefaultGraphArc(Object userObject, GraphNode src, GraphNode dest, Object type) {
+
+	public DefaultGraphArc(Object userObject, GraphNode src, GraphNode dest,
+			Object type) {
 		this(userObject, src, dest, null, type);
 	}
-	
-	public DefaultGraphArc(Object userObject, GraphNode src, GraphNode dest, Icon icon, Object type) {
+
+	public DefaultGraphArc(Object userObject, GraphNode src, GraphNode dest,
+			Icon icon, Object type) {
 		super();
 
 		this.userObject = userObject;
@@ -85,36 +86,36 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 		this.dest = dest;
 		setType(type);
 
-		//this.path = new GeneralPath();
+		// this.path = new GeneralPath();
 		this.curveFactor = 0;
 
 		this.selected = false;
 		this.highlighted = false;
 
 		this.showArrowHead = true;
-		this.arrowHead = new ArrowHead();
-		this.arrowHead2 = new ArrowHead();
+		this.endArrowHead = new ArrowHead();
+		this.startArrowHead = new ArrowHead();
 
 		this.inverted = false;
 
-		if(icon != null) {
+		if (icon != null) {
 			this.icon = icon;
 			image = new PImage(((ImageIcon) icon).getImage());
 			addChild(image);
 		}
-		
+
 		this.style = new DefaultGraphArcStyle();
-		
-		this.arcLabel = new ArcLabel(this,this.type.toString());
+
+		this.arcLabel = new ArcLabel(this, this.type.toString());
 		addChild(arcLabel);
-		
-		//this.updateArcPath();
+
+		// this.updateArcPath();
 	}
-	
+
 	public void setShowArrowHead(boolean showArrowHead) {
 		this.showArrowHead = showArrowHead;
 	}
-	
+
 	public Icon getIcon() {
 		return icon;
 	}
@@ -173,12 +174,14 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 
 	@Override
 	public void setVisible(boolean visible) {
-		
+
 		if (!visible) {
 			// hide the arc
 			super.setVisible(false);
-		} else if (visible && getSource().isVisible() && getDestination().isVisible()) {
-			// only show the arc if both the source and destination nodes are visible
+		} else if (visible && getSource().isVisible()
+				&& getDestination().isVisible()) {
+			// only show the arc if both the source and destination nodes are
+			// visible
 			super.setVisible(true);
 		}
 	}
@@ -187,15 +190,16 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 	public String toString() {
 		GraphNode src = (isInverted() ? getDestination() : getSource());
 		GraphNode dest = (isInverted() ? getSource() : getDestination());
-		//return src + " -- " + getType() + " --> " + dest;
-		return "\nSRC: " + src + "\n" + getType() + "\n" + "DST: " + dest + "\n";
+		// return src + " -- " + getType() + " --> " + dest;
+		return "\nSRC: " + src + "\n" + getType() + "\n" + "DST: " + dest
+				+ "\n";
 	}
 
 	public String getTooltip() {
-//		if (tooltip == null) {
-//			return toString();
-//		}
-//		return tooltip;
+		// if (tooltip == null) {
+		// return toString();
+		// }
+		// return tooltip;
 		return null;
 	}
 
@@ -206,13 +210,13 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 	public boolean isSelected() {
 		return selected;
 	}
-	
+
 	public void setSelected(boolean selected) {
-//		if (this.selected != selected) {
-//			this.selected = selected;
-//			arrowHead.setSelected(selected);
-//			invalidatePaint();
-//		}
+		// if (this.selected != selected) {
+		// this.selected = selected;
+		// arrowHead.setSelected(selected);
+		// invalidatePaint();
+		// }
 	}
 
 	public boolean isHighlighted() {
@@ -220,11 +224,11 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 	}
 
 	public void setHighlighted(boolean highlighted) {
-//		if (this.highlighted != highlighted) {
-//			this.highlighted = highlighted;
-//			arrowHead.setHighlighted(highlighted);
-//			invalidatePaint();
-//		}
+		// if (this.highlighted != highlighted) {
+		// this.highlighted = highlighted;
+		// arrowHead.setHighlighted(highlighted);
+		// invalidatePaint();
+		// }
 	}
 
 	public void updateArcPath() {
@@ -234,8 +238,10 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 		DefaultGraphNode destNode = (DefaultGraphNode) dest;
 
 		// invert the arc path which will invert the arrowhead
-		Rectangle2D srcBounds = (isInverted() ? destNode.getBounds() : srcNode.getBounds());
-		Rectangle2D destBounds = (isInverted() ? srcNode.getBounds() : destNode.getBounds());
+		Rectangle2D srcBounds = (isInverted() ? destNode.getBounds() : srcNode
+				.getBounds());
+		Rectangle2D destBounds = (isInverted() ? srcNode.getBounds() : destNode
+				.getBounds());
 		double startX = srcBounds.getCenterX();
 		double startY = srcBounds.getCenterY();
 		double endX = destBounds.getCenterX();
@@ -246,98 +252,86 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 			startX = (float) (srcBounds.getX() + srcBounds.getWidth() - 1);
 			endX = startX;
 			moveTo((float) startX, (float) startY);
-			append(new Ellipse2D.Double(startX, startY - diam / 2.0, diam, diam), false);
+			append(new Ellipse2D.Double(startX, startY - diam / 2.0, diam, diam),
+					false);
 
-			arrowHead.setPoint(new Point2D.Double(startX + diam, startY));
-			arrowHead.setSlope(-Double.MAX_VALUE);
+			endArrowHead.setPoint(new Point2D.Double(startX + diam, startY));
+			endArrowHead.setSlope(-Double.MAX_VALUE);
 		} else {
 			Segment segment = new Segment(startX, startY, endX, endY);
 			this.middlePoint = segment.getMidPoint();
-			arrowHead.setSlope(segment.getSlope());
-			arrowHead2.setSlope(segment.getSlope());
+			endArrowHead.setSlope(segment.getSlope());
+			startArrowHead.setSlope(segment.getSlope());
 
-			moveTo((float) startX, (float) startY);
+			// moveTo((float) startX, (float) startY);
+			moveTo((float) segment.getStartIntersectionPoint().getX(), (float) segment
+					.getStartIntersectionPoint().getY());
 			if (curveFactor == 0) {
-				lineTo((float) endX, (float) endY);
-				arrowHead.setPoint(segment.getArrowPoint());
-				arrowHead2.setPoint(segment.getArrowPoint2());
-				
+				// lineTo((float) endX, (float) endY);
+				lineTo((float) segment.getEndIntersectionPoint().getX(), (float) segment
+						.getEndIntersectionPoint().getY());
+				// arrowHead.setPoint(segment.getArrowPoint());
+				// arrowHead2.setPoint(segment.getArrowPoint2());
+				endArrowHead.setPoint(segment.getEndArrowPoint());
+				startArrowHead.setPoint(segment.getStartArrowPoint());
+
 				double w = arcLabel.getBounds().width;
 				double h = arcLabel.getBounds().height;
-			
+
 				Point2D middlePoint = getMiddlePoint();
-				arcLabel.setBounds(middlePoint.getX() - w/2.0 , middlePoint.getY() - h/2.0, w, h);
+				arcLabel.setBounds(middlePoint.getX() - w / 2.0,
+						middlePoint.getY() - h / 2.0, w, h);
 
-	
-				
-				//childrenCountIcon.setBounds(middlePoint.getX() - w/2.0 , middlePoint.getY() - h/2.0, w, h);
-				
-				//childrenCountIcon.setBounds(0,0,0,0);
+				// childrenCountIcon.setBounds(middlePoint.getX() - w/2.0 ,
+				// middlePoint.getY() - h/2.0, w, h);
+
+				// childrenCountIcon.setBounds(0,0,0,0);
 			} else {
-				// the distance that the ctrl point should be offset in the y direction
+				// the distance that the ctrl point should be offset in the y
+				// direction
 				double lineLength = segment.getLineLength();
-				double yOffset = (curveFactor + 1) * lineLength / CURVE_FACTOR_BASE_OFFSET;
-				Point2D.Double arrowHeadPoint = new Point2D.Double(lineLength / 3.0, yOffset / 3.0);
-				Point2D arrowHeadPointT = segment.getLineTransform().transform(arrowHeadPoint, new Point2D.Double());
-				arrowHead.setPoint(arrowHeadPointT);
+				double yOffset = (curveFactor + 1) * lineLength
+						/ CURVE_FACTOR_BASE_OFFSET;
+				Point2D.Double arrowHeadPoint = new Point2D.Double(
+						lineLength / 3.0, yOffset / 3.0);
+				Point2D arrowHeadPointT = segment.getLineTransform().transform(
+						arrowHeadPoint, new Point2D.Double());
+				endArrowHead.setPoint(arrowHeadPointT);
 
-				Point2D ctrlPoint = new Point2D.Double(lineLength / 2.0, yOffset);
-				Point2D ctrlPointT = segment.getLineTransform().transform(ctrlPoint, new Point2D.Double());
-				quadTo((float) ctrlPointT.getX(), (float) ctrlPointT.getY(), (float) endX, (float) endY);
+				Point2D ctrlPoint = new Point2D.Double(lineLength / 2.0,
+						yOffset);
+				Point2D ctrlPointT = segment.getLineTransform().transform(
+						ctrlPoint, new Point2D.Double());
+				quadTo((float) ctrlPointT.getX(), (float) ctrlPointT.getY(),
+						(float) endX, (float) endY);
 
-			
 				double w = arcLabel.getBounds().width;
 				double h = arcLabel.getBounds().height;
-			
-				Point2D labelPoint = new Point2D.Double(lineLength / 2.0, yOffset / 2.0);
-				Point2D labelPointT = segment.getLineTransform().transform(labelPoint, new Point2D.Double());
-				arcLabel.setBounds(labelPointT.getX() - w/2.0 , labelPointT.getY() - h/2.0, w, h);
 
-				//childrenCountIcon.setBounds(labelPointT.getX() - w/2.0 , labelPointT.getY() - h/2.0, w, h);
-				
-				
-			
+				Point2D labelPoint = new Point2D.Double(lineLength / 2.0,
+						yOffset / 2.0);
+				Point2D labelPointT = segment.getLineTransform().transform(
+						labelPoint, new Point2D.Double());
+				arcLabel.setBounds(labelPointT.getX() - w / 2.0,
+						labelPointT.getY() - h / 2.0, w, h);
+
+				// childrenCountIcon.setBounds(labelPointT.getX() - w/2.0 ,
+				// labelPointT.getY() - h/2.0, w, h);
+
 			}
 		}
-		arrowHead.setPointRight(endX >= startX);
-		arrowHead2.setPointRight(endX <= startX);
-		
+		endArrowHead.setPointRight(endX >= startX);
+		startArrowHead.setPointRight(endX <= startX);
+
 		invalidatePaint();
 		invalidateFullBounds();
 	}
-	
-	private Point2D getIconLocation(double slope, boolean pointRight, Point2D point) {
-		double theta1 = Math.atan(slope);
-		double iconHeight = 4;
-		double iconWidth = 8;
-		if (selected) {
-		    iconHeight *= 1.5;
-		}
-		if (highlighted) {
-			iconHeight *= 1.5;
-		}
-		iconHeight += 5;
-		double dx = iconHeight * Math.cos(theta1) * 1.25;
-		double dy = iconHeight * Math.sin(theta1) * 1.25;
 
-		double iconX;
-		double iconY;
-		if (pointRight) {
-			iconX = point.getX() + dx - iconWidth;
-			iconY = point.getY() + dy - iconWidth;
-		} else {
-			iconX = point.getX() - dx - iconWidth;
-			iconY = point.getY() - dy - iconWidth;
-		}
-
-		return new Point2D.Double(iconX, iconY);
-	}
-	
 	public boolean equals(Object o) {
-		GraphArc arc = (GraphArc)o;
+		GraphArc arc = (GraphArc) o;
 		return this.getUserObject().equals(arc.getUserObject());
 	}
-	
+
 	public int hashCode() {
 		return this.getUserObject().hashCode();
 	}
@@ -361,16 +355,19 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 	public Object getGraphData() {
 		return graphData;
 	}
-	
+
 	public void setGraphData(Object data) {
 		this.graphData = data;
 	}
-	
-	public void clearBendPoints() {}
 
-	public void setBendPoints(LayoutBendPoint[] bendPoints) {}
+	public void clearBendPoints() {
+	}
 
-	public void populateLayoutConstraint(LayoutConstraint constraint) {}
+	public void setBendPoints(LayoutBendPoint[] bendPoints) {
+	}
+
+	public void populateLayoutConstraint(LayoutConstraint constraint) {
+	}
 
 	@Override
 	public Stroke getStroke() {
@@ -392,26 +389,19 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 			g2.setPaint(paint);
 			g2.setStroke(stroke);
 			g2.draw(getPathReference());
-			
-			
-			
+
 			if (showArrowHead) {
-				Shape shape = arrowHead.getShape();
+				Shape shape = endArrowHead.getShape();
 				g2.fill(shape);
 				g2.setStroke(ArrowHead.STROKE);
 				g2.draw(shape);
 			}
-			
-			if(this.getType().toString().contains("associate")){
-				Shape shape = arrowHead2.getShape();
+
+			if (this.getType().toString().contains("associate")) {
+				Shape shape = startArrowHead.getShape();
 				g2.fill(shape);
 				g2.setStroke(ArrowHead.STROKE);
 				g2.draw(shape);
-			}
-			if(image != null) {
-				Point2D p = getIconLocation(arrowHead.getSlope(), arrowHead.isPointRight(), arrowHead.getPoint());
-				image.setX(p.getX());
-				image.setY(p.getY());
 			}
 		}
 	}
@@ -420,27 +410,37 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 
 		private double lineSlope;
 		private double lineLength;
-		private Point2D	srcPtT;
+		private Point2D srcPtT;
 		private Point2D midPtT;
-		public Point2D getMidPtT() {
-			return midPtT;
-		}
-
 		private Point2D destPtT;
 		private AffineTransform lineT;
-		private Point2D arrowPoint;
-		private Point2D arrowPoint2;
 
-		public Point2D getArrowPoint() {
-			return arrowPoint;
+		private Point2D startArrowPoint;
+		private Point2D endArrowPoint;
+		private Point2D startIntersectionPoint;
+		private Point2D endIntersectionPoint;
+
+		
+		public Point2D getStartIntersectionPoint() {
+			return startIntersectionPoint;
 		}
 
-		public Point2D getArrowPoint2() {
-			return arrowPoint2;
+		public Point2D getEndIntersectionPoint() {
+			return endIntersectionPoint;
 		}
+
+		public Point2D getStartArrowPoint() {
+			return startArrowPoint;
+		}
+
+		public Point2D getEndArrowPoint() {
+			return endArrowPoint;
+		}
+
 
 		/**
-		 * Build a segment from the specified source to the specified destination
+		 * Build a segment from the specified source to the specified
+		 * destination
 		 * 
 		 * @param srcX
 		 * @param srcY
@@ -453,12 +453,84 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 			double lineDy = destY - srcY;
 			this.lineSlope = lineDy / lineDx;
 
+			Rectangle2D srcEllipseFrame = ((DefaultGraphNode) DefaultGraphArc.this
+					.getSource()).getEllipse().getFrame();
+			Rectangle2D dstEllipseFrame = ((DefaultGraphNode) DefaultGraphArc.this
+					.getDestination()).getEllipse().getFrame();
+			
+			
+			Point2D.Double srcIntersectionPoints[] = getIntersectionPoints(srcEllipseFrame, 4);			
+			Point2D.Double dstIntersectionPoints[] = getIntersectionPoints(dstEllipseFrame, 4);
+			
+			Map<Double, Point2D.Double> intersectionPointsMap = new HashMap<Double, Point.Double>();
+			intersectionPointsMap.put(srcIntersectionPoints[0].x, srcIntersectionPoints[0]);
+			intersectionPointsMap.put(srcIntersectionPoints[1].x, srcIntersectionPoints[1]);
+			intersectionPointsMap.put(dstIntersectionPoints[0].x, dstIntersectionPoints[0]);
+			intersectionPointsMap.put(dstIntersectionPoints[1].x, dstIntersectionPoints[1]);
+			
+			double intersectionPointsX[] = new double[] { srcIntersectionPoints[0].x,
+					srcIntersectionPoints[1].x, dstIntersectionPoints[0].x,
+					dstIntersectionPoints[1].x,
+					
+			};
+			
+			Arrays.sort(intersectionPointsX);
+
+			///
+			Point2D.Double srcArrowIntersectionPoints[] = getIntersectionPoints(srcEllipseFrame, 2 * ArrowHead.getArrowSizeConstant());
+			Point2D.Double dstArrowIntersectionPoints[] = getIntersectionPoints(dstEllipseFrame, 2 * ArrowHead.getArrowSizeConstant());
+
+			Map<Double, Point2D.Double> arrowIntersectionPointsMap = new HashMap<Double, Point.Double>();
+			arrowIntersectionPointsMap.put(srcArrowIntersectionPoints[0].x, srcArrowIntersectionPoints[0]);
+			arrowIntersectionPointsMap.put(srcArrowIntersectionPoints[1].x, srcArrowIntersectionPoints[1]);
+			arrowIntersectionPointsMap.put(dstArrowIntersectionPoints[0].x, dstArrowIntersectionPoints[0]);
+			arrowIntersectionPointsMap.put(dstArrowIntersectionPoints[1].x, dstArrowIntersectionPoints[1]);
+
+			double arrowIntersectionPointsX[] = new double[] { srcArrowIntersectionPoints[0].x,
+					srcArrowIntersectionPoints[1].x, dstArrowIntersectionPoints[0].x,
+					dstArrowIntersectionPoints[1].x,
+
+			};
+
+			Arrays.sort(arrowIntersectionPointsX);
+			
+			
+			
+			if (srcEllipseFrame.getCenterX() < dstEllipseFrame.getCenterX()) {
+				this.startArrowPoint = new Point2D.Double(arrowIntersectionPointsX[1],
+						arrowIntersectionPointsMap.get(arrowIntersectionPointsX[1]).y);
+				this.endArrowPoint = new Point2D.Double(arrowIntersectionPointsX[2],
+						arrowIntersectionPointsMap.get(arrowIntersectionPointsX[2]).y);
+				
+				this.startIntersectionPoint = new Point2D.Double(intersectionPointsX[1],
+						intersectionPointsMap.get(intersectionPointsX[1]).y);
+				this.endIntersectionPoint = new Point2D.Double(intersectionPointsX[2],
+						intersectionPointsMap.get(intersectionPointsX[2]).y);
+				
+				
+			} else {
+				this.startArrowPoint = new Point2D.Double(arrowIntersectionPointsX[2],
+						arrowIntersectionPointsMap.get(arrowIntersectionPointsX[2]).y);
+				this.endArrowPoint = new Point2D.Double(arrowIntersectionPointsX[1],
+						arrowIntersectionPointsMap.get(arrowIntersectionPointsX[1]).y);
+				
+				this.startIntersectionPoint = new Point2D.Double(intersectionPointsX[2],
+						intersectionPointsMap.get(intersectionPointsX[2]).y);
+				this.endIntersectionPoint = new Point2D.Double(intersectionPointsX[1],
+						intersectionPointsMap.get(intersectionPointsX[1]).y);
+				
+		}
+			
+			
+
 			double lineTheta = Math.atan(-(1.0 / lineSlope));
-			double lineAngle = (lineDy < 0) ? lineTheta + (3.0 / 2.0) * Math.PI : lineTheta + (1.0 / 2.0) * Math.PI;
+			double lineAngle = (lineDy < 0) ? lineTheta + (3.0 / 2.0) * Math.PI
+					: lineTheta + (1.0 / 2.0) * Math.PI;
 			this.lineLength = Point2D.distance(srcX, srcY, destX, destY);
 
 			lineT = new AffineTransform();
-			lineT.concatenate(AffineTransform.getRotateInstance(lineAngle, srcX, srcY));
+			lineT.concatenate(AffineTransform.getRotateInstance(lineAngle,
+					srcX, srcY));
 			lineT.concatenate(AffineTransform.getTranslateInstance(srcX, srcY));
 
 			Point2D.Double srcPt = new Point2D.Double(0, 0);
@@ -466,12 +538,42 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 			Point2D.Double midPt = new Point2D.Double(lineLength / 2.0, 0);
 			Point2D.Double arrowPt = new Point2D.Double(lineLength * 0.75, 0);
 			Point2D.Double arrowPt2 = new Point2D.Double(lineLength * 0.25, 0);
-			
-			arrowPoint = lineT.transform(arrowPt, new Point2D.Double());
-			arrowPoint2 = lineT.transform(arrowPt2, new Point2D.Double());
+
 			srcPtT = lineT.transform(srcPt, new Point2D.Double());
-			midPtT = lineT.transform(midPt, new Point2D.Double());//real middle point
+			midPtT = lineT.transform(midPt, new Point2D.Double());// real middle
+																	// point
 			destPtT = lineT.transform(destPt, new Point2D.Double());
+		}
+
+		private Point2D.Double[] getIntersectionPoints(Rectangle2D ellipseFrame, double increment) {
+			
+			
+			Point2D.Double intersectionPoint1;
+			Point2D.Double intersectionPoint2;
+
+			double width = ellipseFrame.getWidth() + increment;
+			double height = ellipseFrame.getHeight() + increment;
+
+			double shiftX = ellipseFrame.getCenterX();
+			double shiftY = ellipseFrame.getCenterY();
+
+			double x1 = width
+					* height
+					/ (2 * Math.sqrt((height * height + lineSlope * lineSlope
+							* width * width)));
+			double y1 = x1 * this.lineSlope;
+
+			double x2 = -1 * x1 + shiftX;
+			double y2 = -1 * y1 + shiftY;
+
+			x1 = x1 + shiftX;
+			y1 = y1 + shiftY;
+
+			intersectionPoint1 = new Point2D.Double(x1, y1);
+			intersectionPoint2 = new Point2D.Double(x2, y2);
+
+			return new Point2D.Double[] { intersectionPoint1, intersectionPoint2 };
+
 		}
 
 		public double getSlope() {
@@ -482,16 +584,8 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 			return lineLength;
 		}
 
-		public Point2D getStartPoint() {
-			return srcPtT;
-		}
-
 		public Point2D getMidPoint() {
 			return midPtT;
-		}
-
-		public Point2D getEndPoint() {
-			return destPtT;
 		}
 
 		public AffineTransform getLineTransform() {

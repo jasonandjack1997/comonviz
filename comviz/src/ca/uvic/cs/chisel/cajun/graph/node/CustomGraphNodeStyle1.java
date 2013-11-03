@@ -20,9 +20,10 @@ import java.util.Map;
 
 import javax.swing.Icon;
 
-import org.protege.ontograf.common.StyleManager;
 import org.protege.ontograf.treeUtils.TreeInfoManager;
 import org.semanticweb.owlapi.model.OWLEntity;
+
+import comonviz.StyleManager;
 
 import ca.uvic.cs.chisel.cajun.util.GraphicsUtils;
 import edu.umd.cs.piccolo.nodes.PText;

@@ -26,7 +26,8 @@ import javax.swing.event.ChangeListener;
 import org.eclipse.zest.layouts.constraints.BasicEntityConstraint;
 import org.eclipse.zest.layouts.constraints.LabelLayoutConstraint;
 import org.eclipse.zest.layouts.constraints.LayoutConstraint;
-import org.protege.ontograf.common.StyleManager;
+
+import comonviz.StyleManager;
 
 import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
 import edu.umd.cs.piccolo.PCamera;
@@ -533,7 +534,9 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 			double cw = childrenCountIcon.getWidth();
 			double ch = childrenCountIcon.getHeight();
 			double d = Math.max(cw, ch);
-			childrenCountIcon.setBounds(getX(), getY(), d, d);
+			//childrenCountIcon.setBounds(getX(), getY() + getHeight()/2, d, d);
+			childrenCountIcon.setBounds(getEllipse().getX() - d/2, getEllipse().getY() + getEllipse().getHeight()/2 - d/2,
+					d, d);
 
 			updateArcLocations();
 			invalidatePaint();
@@ -677,7 +680,7 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 			g2.draw(drawShape);
 		}
 
-		childrenCountIcon.setBounds(getEllipse().getX(), getEllipse().getY(),
+		childrenCountIcon.setBounds(getEllipse().getX() - childrenCountIcon.getWidth()/2, getEllipse().getY() + getEllipse().getHeight()/2 - childrenCountIcon.getHeight()/2,
 				childrenCountIcon.getWidth(), childrenCountIcon.getHeight());
 
 		super.paint(paintContext);

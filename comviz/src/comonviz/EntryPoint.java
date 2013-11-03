@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.protege.ontograf.common.GraphController;
-import org.protege.ontograf.common.StyleManager;
 import org.protege.ontograf.treeUtils.TreeInfoManager;
 import org.protege.ontograf.ui.TopView;
 import org.semanticweb.owlapi.model.OWLClass;

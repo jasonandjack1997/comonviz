@@ -1,0 +1,34 @@
+ 
+Business Process:::
+A set of coordinated activities designed to accomplish a particular business objective. 
+Relationships: part of BusinessProcessManagement 
+
+Process Objective:::
+Measurable result or state a particular process is intended/ required to attain. 
+Attributes: ObjectiveName, ObjectiveDescription 
+Relationships: part of BusinessProcess 
+
+Process Activity:::
+A single logical step in a business process. 
+Attributes: ActivityName, ActivityDescription, AssociatedObjective 
+Relationships: part of BusinessProcess 
+
+Process Rules:::
+Constraints and conditions imposed on a particular process. 
+Synonym: ProcessConstraint 
+Attributes: RuleName, RuleDescription, AssociatedActivityName 
+Relationships: part of BusinessProcess 
+
+Process Monitoring:::
+Continual checking, supervising, critically observing or determining the
+status of the process in order to identify the occurrence of changes, errors, 
+irregularities, inefficiencies and bottlenecks. 
+Attributes: MonitoringObjective, Status, AssociatedActivity 
+Relationships: associated with BusinessProcessManagement 
+
+Process Improvement:::
+A systematic approach to help an organization optimize its underlying 
+processes to achieve more efficient business outcomes. 
+Attributes: ImprovementOperation, ImprovementDetails, Status, 
+AssociatedActivity 
+Relationships: associated with BusinessProcessManagement 

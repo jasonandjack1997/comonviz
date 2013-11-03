@@ -6,7 +6,7 @@ import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 
-import org.protege.ontograf.common.StyleManager;
+import comonviz.StyleManager;
 
 import edu.umd.cs.piccolo.nodes.PText;
 import edu.umd.cs.piccolo.util.PPaintContext;

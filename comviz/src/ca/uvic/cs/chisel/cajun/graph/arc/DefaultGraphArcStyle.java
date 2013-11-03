@@ -15,7 +15,7 @@ import java.util.Map;
 
 import javax.swing.Icon;
 
-import org.protege.ontograf.common.StyleManager;
+import comonviz.StyleManager;
 
 import ca.uvic.cs.chisel.cajun.util.GraphicsUtils;
 import edu.umd.cs.piccolo.nodes.PText;
