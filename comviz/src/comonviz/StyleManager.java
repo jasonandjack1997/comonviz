@@ -47,7 +47,7 @@ public class StyleManager {
 	private final static int defultArcColorCount = 5;
 	private static Color[] defaultArcColors;
 
-	public static final Color DEFAULT_TOOLTIP_BACKGROUND_COLOR = new Color(255, 253, 157);
+	public static final Color DEFAULT_TOOLTIP_BACKGROUND_COLOR = new Color(255, 255, 225);//standard tooltip color in eclipse editor
 	
 	//strokes
 	final private static float MAX_BORDER_STROKE_WIDTH = 2F;
@@ -69,7 +69,10 @@ public class StyleManager {
 	public final static float DEFAULT_ARROW_HEAD_SIZE = 4F;
 	
 
-
+	//annotation textpane
+	
+	public static final Color ANNOTATION_CLASS_COLOR = new Color(0,0,192);// standard blue color in eclipse editor
+	public static final String ANNOTATION_CLASS_COLOR_HEX = "\"#0000C0\"";
 	private StyleManager() {
 		defaultArcColors = new Color[defultArcColorCount];
 

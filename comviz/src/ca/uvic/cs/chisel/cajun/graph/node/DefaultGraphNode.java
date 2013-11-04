@@ -380,8 +380,13 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 						.getValue().toString();
 				annotation = annotation.substring(1, annotation.length() - 1);
 
-				return this.splitTextIntoLines(annotation, MAX_TOOLTIP_LINES,
-						MAX_TOOLTIP_CHARS_IN_A_LINE + 1);
+				annotation = EntryPoint.getAnnotationManager()
+						.getStylizedAnnotation(annotation);
+
+				annotation = this.splitTextIntoLines(annotation,
+						MAX_TOOLTIP_LINES, MAX_TOOLTIP_CHARS_IN_A_LINE);
+
+				return annotation;
 
 			}
 		}
@@ -549,7 +554,7 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 	// the ellipse stays consistent with the bounds geometry.
 	public boolean setBounds(double x, double y, double width, double height) {
 		if (super.setBounds(x, y, width, height)) {
-			
+
 			double centerX = this.getCenterX();
 			double centerY = this.getCenterY();
 
@@ -557,37 +562,39 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 			// double tw = textBounds.getWidth();
 			// double th = textBounds.getHeight();
 
-			textNode.setBounds(centerX - textNode.getWidth() / 2,
-					centerY - textNode.getHeight() / 2, textNode.getWidth(),
+			textNode.setBounds(centerX - textNode.getWidth() / 2, centerY
+					- textNode.getHeight() / 2, textNode.getWidth(),
 					textNode.getHeight());
 
 			getEllipse().setFrame(centerX - getEllipse().getWidth() / 2,
-					centerY - getEllipse().getHeight() / 2, getEllipse().getWidth(),
-					getEllipse().getHeight());
-			
-			//this.setBounds(x - getWidth()/2, y - getHeight()/2, getWidth(), getHeight());
+					centerY - getEllipse().getHeight() / 2,
+					getEllipse().getWidth(), getEllipse().getHeight());
 
-//			if (tw > th) {
-//				getEllipse().setFrameFromCenter(textBounds.getCenterX(),
-//						textBounds.getCenterY(), textBounds.getX() - 5,
-//						textBounds.getY() - (tw - th) / 2 - 5);
-//
-//			} else {
-//				getEllipse().setFrameFromCenter(textBounds.getCenterX(),
-//						textBounds.getCenterY(),
-//						textBounds.getX() - (th - tw) / 2 - 5,
-//						textBounds.getY() - 5);
-//
-//			}
-//
-//			double ew = getEllipse().getWidth();
-//			double eh = getEllipse().getHeight();
-//
-//			double w = ew * BOUNDS_ELLIPSE_FACTOR;
-//			double h = eh * BOUNDS_ELLIPSE_FACTOR;
-//
-//			textNode.setBounds(getX() + (BOUNDS_ELLIPSE_FACTOR / 2 - 0.5) * tw,
-//					getY() + (BOUNDS_ELLIPSE_FACTOR / 2 - 0.5) * th, tw, th);
+			// this.setBounds(x - getWidth()/2, y - getHeight()/2, getWidth(),
+			// getHeight());
+
+			// if (tw > th) {
+			// getEllipse().setFrameFromCenter(textBounds.getCenterX(),
+			// textBounds.getCenterY(), textBounds.getX() - 5,
+			// textBounds.getY() - (tw - th) / 2 - 5);
+			//
+			// } else {
+			// getEllipse().setFrameFromCenter(textBounds.getCenterX(),
+			// textBounds.getCenterY(),
+			// textBounds.getX() - (th - tw) / 2 - 5,
+			// textBounds.getY() - 5);
+			//
+			// }
+			//
+			// double ew = getEllipse().getWidth();
+			// double eh = getEllipse().getHeight();
+			//
+			// double w = ew * BOUNDS_ELLIPSE_FACTOR;
+			// double h = eh * BOUNDS_ELLIPSE_FACTOR;
+			//
+			// textNode.setBounds(getX() + (BOUNDS_ELLIPSE_FACTOR / 2 - 0.5) *
+			// tw,
+			// getY() + (BOUNDS_ELLIPSE_FACTOR / 2 - 0.5) * th, tw, th);
 
 			double cw = childrenCountIcon.getWidth();
 			double ch = childrenCountIcon.getHeight();

@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.JTree;
@@ -73,13 +74,13 @@ public class TopView extends JPanel {
 	private NodeCollection selectedNodes;
 
 	private JTree jTree;
-	private JTextArea jTextArea;
+	private JTextPane  jTextArea;
 
-	public JTextArea getjTextArea() {
+	public JTextPane  getjTextArea() {
 		return jTextArea;
 	}
 
-	public void setjTextArea(JTextArea jTextArea) {
+	public void setjTextArea(JTextPane  jTextArea) {
 		this.jTextArea = jTextArea;
 	}
 
@@ -103,12 +104,13 @@ public class TopView extends JPanel {
 
 		treeModel = new DefaultTreeModel(null);
 
-		jTextArea = new JTextArea();
+		jTextArea = new JTextPane ();
+		jTextArea.setContentType("text/html");
 		jTextArea.setMinimumSize(new Dimension(200, 100));
 		jTextArea.setText("");
 		jTextArea.setEditable(true);
-		jTextArea.setLineWrap(true);
-		jTextArea.setWrapStyleWord(true);
+		//jTextArea.setLineWrap(true);
+		//jTextArea.setWrapStyleWord(true);
 		jTextArea.setMargin(new Insets(10,10,10,10));
 		jTree = new JTree(treeModel);
 

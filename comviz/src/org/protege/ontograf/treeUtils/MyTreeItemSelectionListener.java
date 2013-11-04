@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Set;
 
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -19,7 +20,7 @@ import comonviz.EntryPoint;
 
 public class MyTreeItemSelectionListener implements TreeSelectionListener {
 	private NodeCollection selectedNodes;
-	private JTextArea annotationTextArea;
+	private JTextPane  annotationTextArea;
 	
 	public MyTreeItemSelectionListener(TopView topView, NodeCollection selectedNodes){
 		this.selectedNodes = selectedNodes;
@@ -40,6 +41,7 @@ public class MyTreeItemSelectionListener implements TreeSelectionListener {
 			if(owlAnnotationSet.size() != 0){
 				String annotation = ((OWLAnnotation)owlAnnotationSet.toArray()[0]).getValue().toString();
 				annotation = annotation.substring(1, annotation.length() -1);
+				annotation = EntryPoint.getAnnotationManager().getStylizedAnnotation(annotation);
 				this.annotationTextArea.setText(annotation);
 				this.annotationTextArea.setCaretPosition(0);
 			}else{

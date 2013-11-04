@@ -42,10 +42,17 @@ public class EntryPoint {
 
 	public static MutableTree ontologyTree;
 	
-	private final String internalOWLFilePath = "/COMON_v6_full_annotation.owl";
+	private final String internalOWLFilePath = "/COMON_v7.owl";
 	
 	public static Dimension frameSize;
 
+
+	private static AnnotationManager annotationManager;
+
+
+	public static AnnotationManager getAnnotationManager() {
+		return annotationManager;
+	}
 
 	/**
      * 
@@ -113,6 +120,7 @@ public class EntryPoint {
 			e1.printStackTrace();
 		}
 		// Create and set up the window.
+		annotationManager = new AnnotationManager(ontology); 
 		gc.getModel().owlOntology = EntryPoint.ontology;
 		// LayoutAction layoutAction =
 		// ((AbstractGraph)gc.getGraph()).getLayout(LayoutConstants.LAYOUT_SPRING);

@@ -551,7 +551,7 @@ public abstract class AbstractGraph extends PCanvas implements Graph {
 //				}
 			}
 		}
-		return (tooltipText.length() > 0 ? " " + tooltipText + " " : "");
+		return (tooltipText.length() > 0 ? tooltipText : "");
 	}
 
 	/**

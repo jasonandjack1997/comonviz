@@ -1,0 +1,1782 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE Ontology [
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY xml "http://www.w3.org/XML/1998/namespace" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.semanticweb.org/uqwwan10/ontologies/2013/9/untitled-ontology-10"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     ontologyIRI="http://www.semanticweb.org/uqwwan10/ontologies/2013/9/untitled-ontology-10">
+    <Prefix name="" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Declaration>
+        <Class IRI="#Advisory"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Assurance"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Audit"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Business_Process"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Business_Process_Management"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Change_Management"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Code_of_Practice"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Committee"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Communication_&amp;_Consultation"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Competency_&amp;_Training"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Competency_&amp;_Training_Tool"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Compliance_Awareness"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Compliance_Culture"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Compliance_Driver"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Compliance_Management"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Context_Establishment"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Contract"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Control_&amp;_Monitoring"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Control_&amp;_Monitoring_Tool"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Control_Assessment_&amp;_Maintenance"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Control_Identification_&amp;_Definition"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Control_Implementation"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Control_Selection"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Corrective"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Culture_Management"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Culture_Measurement"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Detective"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Direction"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#External_Audit"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#External_Policy"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Formal_Culture"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Implementation_Cost"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Informal_Culture"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Internal_Audit"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Internal_Policy"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Mandatory_Obligation"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Monetary_Resource"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Monitor_&amp;_Review"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Non-Monetary_Resources"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Obligation_Concepts"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Obligation_Identification_&amp;_Assessment"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Obligation_Management_Tool"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Organizational_Commitment"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Penalty_Avoidance"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Penalty_Cost"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Planning"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Policy"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Preventative"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Process_Activity"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Process_Improvement"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Process_Monitoring"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Process_Objective"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Process_Rules"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Program"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Record_Keeping_&amp;_Reporting"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Record_Keeping_&amp;_Reporting_Tool"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Regulation"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Remediation_Cost"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Reputational_Cost"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Resistance_Management_Cost"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Resource"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Review"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Review_Tool"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Risk_Analysis"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Risk_Assessment"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Risk_Evaluation"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Risk_Identification"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Risk_Management"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Risk_Management_Framework"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Risk_Management_Principle"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Risk_Management_Process"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Risk_Treatment"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Role"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Service"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Solution"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Stakeholder"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Standard"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Structure"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Tool"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Training"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Value"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Voluntary_Obligation"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#associated_with"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#part_of"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#type_of"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty IRI="#Attributes"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty IRI="#Relationships"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="#Advisory"/>
+        <Class IRI="#Service"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Advisory"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Service"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Assurance"/>
+        <Class IRI="#Service"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Assurance"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Service"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Audit"/>
+        <Class IRI="#Service"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Audit"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Service"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Business_Process"/>
+        <Class IRI="#Business_Process_Management"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Business_Process"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Business_Process_Management"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Business_Process_Management"/>
+        <Class IRI="#Compliance_Management"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Business_Process_Management"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#associated_with"/>
+            <Class IRI="#Compliance_Management"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Change_Management"/>
+        <Class IRI="#Organizational_Commitment"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Change_Management"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#associated_with"/>
+            <Class IRI="#Organizational_Commitment"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Code_of_Practice"/>
+        <Class IRI="#Voluntary_Obligation"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Code_of_Practice"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Voluntary_Obligation"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Committee"/>
+        <Class IRI="#Structure"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Committee"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Structure"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Communication_&amp;_Consultation"/>
+        <Class IRI="#Risk_Management_Process"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Communication_&amp;_Consultation"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Risk_Management_Process"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Competency_&amp;_Training"/>
+        <Class IRI="#Program"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Competency_&amp;_Training"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Program"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Competency_&amp;_Training_Tool"/>
+        <Class IRI="#Tool"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Competency_&amp;_Training_Tool"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Tool"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Compliance_Awareness"/>
+        <Class IRI="#Organizational_Commitment"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Compliance_Awareness"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Organizational_Commitment"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Compliance_Culture"/>
+        <Class IRI="#Culture_Management"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Compliance_Culture"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Culture_Management"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Compliance_Driver"/>
+        <Class IRI="#Organizational_Commitment"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Compliance_Driver"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Organizational_Commitment"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Context_Establishment"/>
+        <Class IRI="#Risk_Management_Process"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Context_Establishment"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Risk_Management_Process"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Contract"/>
+        <Class IRI="#Mandatory_Obligation"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Contract"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Mandatory_Obligation"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Control_&amp;_Monitoring"/>
+        <Class IRI="#Program"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Control_&amp;_Monitoring"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Program"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Control_&amp;_Monitoring_Tool"/>
+        <Class IRI="#Tool"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Control_&amp;_Monitoring_Tool"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Tool"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Control_Assessment_&amp;_Maintenance"/>
+        <Class IRI="#Control_&amp;_Monitoring"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Control_Assessment_&amp;_Maintenance"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Control_&amp;_Monitoring"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Control_Identification_&amp;_Definition"/>
+        <Class IRI="#Control_&amp;_Monitoring"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Control_Identification_&amp;_Definition"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Control_&amp;_Monitoring"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Control_Implementation"/>
+        <Class IRI="#Control_&amp;_Monitoring"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Control_Implementation"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Control_&amp;_Monitoring"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Control_Selection"/>
+        <Class IRI="#Control_&amp;_Monitoring"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Control_Selection"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Control_&amp;_Monitoring"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Corrective"/>
+        <Class IRI="#Control_Identification_&amp;_Definition"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Corrective"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Control_Identification_&amp;_Definition"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Culture_Management"/>
+        <Class IRI="#Compliance_Management"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Culture_Management"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#associated_with"/>
+            <Class IRI="#Compliance_Management"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Culture_Measurement"/>
+        <Class IRI="#Culture_Management"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Culture_Measurement"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Culture_Management"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Detective"/>
+        <Class IRI="#Control_Identification_&amp;_Definition"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Detective"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Control_Identification_&amp;_Definition"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Direction"/>
+        <Class IRI="#Compliance_Driver"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Direction"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Compliance_Driver"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#External_Audit"/>
+        <Class IRI="#Audit"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#External_Audit"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Audit"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#External_Policy"/>
+        <Class IRI="#Policy"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#External_Policy"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Policy"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Formal_Culture"/>
+        <Class IRI="#Compliance_Culture"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Formal_Culture"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Compliance_Culture"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Implementation_Cost"/>
+        <Class IRI="#Monetary_Resource"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Implementation_Cost"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Monetary_Resource"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Informal_Culture"/>
+        <Class IRI="#Compliance_Culture"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Informal_Culture"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Compliance_Culture"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Internal_Audit"/>
+        <Class IRI="#Audit"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Internal_Audit"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Audit"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Internal_Policy"/>
+        <Class IRI="#Policy"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Internal_Policy"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Policy"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Mandatory_Obligation"/>
+        <Class IRI="#Obligation_Concepts"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Mandatory_Obligation"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Obligation_Concepts"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Monetary_Resource"/>
+        <Class IRI="#Resource"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Monetary_Resource"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Resource"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Monitor_&amp;_Review"/>
+        <Class IRI="#Risk_Management_Process"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Monitor_&amp;_Review"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Risk_Management_Process"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Non-Monetary_Resources"/>
+        <Class IRI="#Resource"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Non-Monetary_Resources"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Resource"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Obligation_Concepts"/>
+        <Class IRI="#Compliance_Management"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Obligation_Concepts"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#associated_with"/>
+            <Class IRI="#Compliance_Management"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Obligation_Identification_&amp;_Assessment"/>
+        <Class IRI="#Program"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Obligation_Identification_&amp;_Assessment"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Program"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Obligation_Management_Tool"/>
+        <Class IRI="#Tool"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Obligation_Management_Tool"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Tool"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Organizational_Commitment"/>
+        <Class IRI="#Culture_Management"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Organizational_Commitment"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Culture_Management"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Penalty_Avoidance"/>
+        <Class IRI="#Compliance_Driver"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Penalty_Avoidance"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Compliance_Driver"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Penalty_Cost"/>
+        <Class IRI="#Monetary_Resource"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Penalty_Cost"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Monetary_Resource"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Planning"/>
+        <Class IRI="#Service"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Planning"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Service"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Policy"/>
+        <Class IRI="#Mandatory_Obligation"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Policy"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Mandatory_Obligation"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Preventative"/>
+        <Class IRI="#Control_Identification_&amp;_Definition"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Preventative"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Control_Identification_&amp;_Definition"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Process_Activity"/>
+        <Class IRI="#Business_Process"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Process_Activity"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Business_Process"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Process_Improvement"/>
+        <Class IRI="#Business_Process_Management"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Process_Improvement"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#associated_with"/>
+            <Class IRI="#Business_Process_Management"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Process_Monitoring"/>
+        <Class IRI="#Business_Process_Management"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Process_Monitoring"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#associated_with"/>
+            <Class IRI="#Business_Process_Management"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Process_Objective"/>
+        <Class IRI="#Business_Process"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Process_Objective"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Business_Process"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Process_Rules"/>
+        <Class IRI="#Business_Process"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Process_Rules"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Business_Process"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Program"/>
+        <Class IRI="#Compliance_Management"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Program"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Compliance_Management"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Record_Keeping_&amp;_Reporting"/>
+        <Class IRI="#Program"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Record_Keeping_&amp;_Reporting"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Program"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Record_Keeping_&amp;_Reporting_Tool"/>
+        <Class IRI="#Tool"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Record_Keeping_&amp;_Reporting_Tool"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Tool"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Regulation"/>
+        <Class IRI="#Mandatory_Obligation"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Regulation"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Mandatory_Obligation"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Remediation_Cost"/>
+        <Class IRI="#Monetary_Resource"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Remediation_Cost"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Monetary_Resource"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Reputational_Cost"/>
+        <Class IRI="#Non-Monetary_Resources"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Reputational_Cost"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Non-Monetary_Resources"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Resistance_Management_Cost"/>
+        <Class IRI="#Non-Monetary_Resources"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Resistance_Management_Cost"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Non-Monetary_Resources"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Resource"/>
+        <Class IRI="#Compliance_Management"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Resource"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#associated_with"/>
+            <Class IRI="#Compliance_Management"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Review"/>
+        <Class IRI="#Program"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Review"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Program"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Review_Tool"/>
+        <Class IRI="#Tool"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Review_Tool"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Tool"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Risk_Analysis"/>
+        <Class IRI="#Risk_Assessment"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Risk_Analysis"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Risk_Assessment"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Risk_Assessment"/>
+        <Class IRI="#Risk_Management_Process"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Risk_Assessment"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Risk_Management_Process"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Risk_Evaluation"/>
+        <Class IRI="#Risk_Assessment"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Risk_Evaluation"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Risk_Assessment"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Risk_Identification"/>
+        <Class IRI="#Risk_Assessment"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Risk_Identification"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Risk_Assessment"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Risk_Management"/>
+        <Class IRI="#Compliance_Management"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Risk_Management"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#associated_with"/>
+            <Class IRI="#Compliance_Management"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Risk_Management_Framework"/>
+        <Class IRI="#Risk_Management"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Risk_Management_Framework"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Risk_Management"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Risk_Management_Principle"/>
+        <Class IRI="#Risk_Management"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Risk_Management_Principle"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Risk_Management"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Risk_Management_Process"/>
+        <Class IRI="#Risk_Management"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Risk_Management_Process"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Risk_Management"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Risk_Treatment"/>
+        <Class IRI="#Risk_Management_Process"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Risk_Treatment"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Risk_Management_Process"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Role"/>
+        <Class IRI="#Structure"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Role"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Structure"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Service"/>
+        <Class IRI="#Solution"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Service"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Solution"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Solution"/>
+        <Class IRI="#Compliance_Management"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Solution"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#associated_with"/>
+            <Class IRI="#Compliance_Management"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Stakeholder"/>
+        <Class IRI="#Structure"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Stakeholder"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Structure"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Standard"/>
+        <Class IRI="#Voluntary_Obligation"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Standard"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Voluntary_Obligation"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Structure"/>
+        <Class IRI="#Program"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Structure"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#part_of"/>
+            <Class IRI="#Program"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Tool"/>
+        <Class IRI="#Solution"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Tool"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Solution"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Training"/>
+        <Class IRI="#Service"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Training"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Service"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Value"/>
+        <Class IRI="#Compliance_Driver"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Value"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Compliance_Driver"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Voluntary_Obligation"/>
+        <Class IRI="#Obligation_Concepts"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Voluntary_Obligation"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#type_of"/>
+            <Class IRI="#Obligation_Concepts"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Advisory</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Guidance provided to facilitate an entity in deciding and implementing a compliance program (initiative). Advisory services may come from the organization (internally acquired) or may be provided by advisory service providers (externally acquired). 
+Relationships: type of Service 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Assurance</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Assistance provided to the regulated organisation to ensure that the provisions of its compliance obligations are being met. 
+Attributes: Name, Assurance Description, Date, Associated Obligation, AssociatedRole, RequiredCondition, Status/Feedback 
+Relationships: type of Service </Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Audit</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Services undertaken to assess a regulated organisation’s adherence to its compliance obligations. 
+Relationships: type of Service 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Business_Process</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">A set of coordinated activities designed to accomplish a particular business objective. 
+Relationships: part of Business Process Management 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Business_Process_Management</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Business Process Management is defined as a holistic management approach focused on aligning all aspects of an organization with the wants and needs of clients. It promotes business effectiveness and efficiency while striving for innovation, flexibility, and integration with technology. </Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Change_Management</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">A well structured approach to infuse compliance behavior in a particular organization. 
+Attributes: Approach Name, Description, Timeline, Target Group, Obligation 
+Relationships: associated with Organizational Commitment </Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Code_of_Practice</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">A statement of recommended practice developed internally by an organization or by an international, national or industry body or other organization. 
+Attributes: Codeof Practice Title, ApplicableArea, ApplicableIndustrySector, GoverningBody 
+Relationships: type of Voluntary Obligation 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Committee</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Specification of how compliance related responsibilities are delegated, controlled, and coordinated within a compliance program. 
+Synonym: Task Force. 
+Attributes: Committee Name, Establishment Period, Description, InternalMembers, ExternalMembers, Obligation 
+Relationships: part of Structure 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Competency_&amp;_Training</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Activities planned to ensure that all employees are competent to fulfill their job role in a manner that is consistent with the organization’s compliance culture and its commitment to compliance. 
+Attributes: Activity Name, Description, Participants, Unit/Function 
+Relationships: part of Program 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Competency_&amp;_Training_Tool</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Instruments used by the organization to facilitate employee training and develop employees’ competency to fulfill their job role in a manner that is consistent with the organization’s compliance culture and its commitment to compliance. 
+Attributes: Tool Name, Tool Description, AssociatedComplianceTask, Features 
+Relationships: type of Tool 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Compliance_Awareness</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">The ability to connect compliance with business operations. 
+Attributes: Staff Group, Associated Process, Obligation, AssociatedTraining 
+Relationships: part of Organizational Commitment </Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Compliance_Culture</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">The values, ethics and beliefs that exist throughout an organization and interact with the organization’s structures and control systems to produce behavioral norms those are conducive to compliance outcomes. 
+Relationships: part of Culture Management </Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Compliance_Driver</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">A condition, offering, or value that promotes compliance behavior. 
+Relationships: part of Organizational Commitment </Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Compliance_Management</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">OVERVIEW
+The Compliance Management ontology consists of 81 concepts. These concepts are structured into four main tiers, representing different levels of detail derived through progressive decomposition of higher tier concepts. For example, the Program concept has  been detailed into Obligations Identification and Assessment, Competency and Training, Controls and Monitoring, Record Keeping and Reporting, Review, and Structure in Tier 2, and so on. Each concept is quipped with a definition, attributes, and relationships where available.  
+Overall, CoMOn concepts are led by seven core concepts namely Business Process Management, Culture 
+Management, Obligations, Program, Resources, Risk Management, and Solutions. This  document details each concept including its definition, attributes and relationships that made up CoMOn. </Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Context_Establishment</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Defining the external and internal parameters to be taken into account when managing risk, and setting the scope and risk criteria for the risk management policy. 
+Attributes: Risk Name, External Parameter, InternalParameter, RiskCiteria, Applicability 
+Relationships: part of Risk Management Process 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Contract</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">The visible segment of the organizational culture, such as policies and procedures, mission statement, and dress codes. 
+Attributes: Contract Title, Contractors, Client, Signing Date 
+Relationships: type of Mandatory Obligation 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Control_&amp;_Monitoring</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">The observation mechanisms set up and performed by an organization to observe their particular business operations and to reduce/prevent the likelihood of non-compliance (risk). 
+Relationships: part of Program 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Control_&amp;_Monitoring_Tool</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Instruments used by the organization to facilitate monitoring of their compliance state and performing the designated controls.
+Attributes: Tool Name, Tool Description, AssociatedComplianceTask, Features 
+Relationships: type of Tool 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Control_Assessment_&amp;_Maintenance</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Activity that corresponds to review of current controls in place. Accordingly, the decision from the review will prompt the organization to add new controls; or to replace, update, or drop a particular control. 
+Synonym: Control Checking, Control Evaluation, Control Testing 
+Attributes: Control Name, Typeof Assessment, Status, MaintenanceTask 
+Relationships: part of Control &amp; Monitoring 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Control_Identification_&amp;_Definition</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Activities created to address and resolve compliance related risks. 
+Relationships: part of Control &amp; Monitoring 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Control_Implementation</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Putting the selected controls for particular business operation in place. 
+Attributes: Control Name, Status, Activation Period 
+Relationships: part of Control &amp; Monitoring 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Control_Selection</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">An activity that is performed to choose the appropriate controls to be employed for a particular business operation. This includes choosing the type of control that will be implemented which could be preventative, detective, or corrective in nature. 
+Attributes: Associated Process Rule, Selected Control, ControlRank 
+Relationships: part of Control &amp; Monitoring 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Corrective</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Provide remediation to a particular non-compliance that has been detected. 
+Attributes: Control Name, Control Description, Associated ProcessRule 
+Relationships: type of Control Identification &amp; Definition 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Culture_Management</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Culture Management is defined as the way the organization cultivates compliance culture.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Culture_Measurement</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Assessment of the degree of compliance culture cultivation among individuals and within an organization. 
+Attributes: Culture Name, Associate Obligations, MeasurementDetails 
+Relationships: part of Culture Management </Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Detective</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Mechanisms designed to observe a particular business activity and detect 
+any compliance violation. 
+Attributes: Control Name, Control Description, Associated ProcessRule 
+Relationships: type of Control Identification &amp; Definition 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Direction</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">The strategic focus of an organization toward a particular end or goal that influences its compliance activities. This may include, but not limited to, 
+strategic decision, risk appetite, or organizational aspiration. 
+Attributes: Direction Name, Direction Description, AssociatedObligations 
+Relationships: part of Compliance Driver </Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#External_Audit</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Services undertaken by third party or independent auditors to assess a regulated organisation’s adherence to its compliance obligations. 
+Attributes: Audit Name, Audit Description, Date, Auditor/Regulator, AssociatedObligation, AssociatedRole, Status/Feedback, DocumentID 
+Relationships: type of Audit 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#External_Policy</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Set of basic principles and associated guidelines, formulated and enforced by the governing body to direct and limit the organisational actions in pursuit of intended goals. 
+Attributes: Policy Title, Version Number, GoverningBodies 
+Relationships: type of Policy 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Formal_Culture</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">The visible segment of the organizational culture, such as policies and procedures, mission statement, and dress codes. 
+Attributes: Culture Name, Culture Description, AssociatedObligation
+Relationships: type of Compliance Culture</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Implementation_Cost</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">A monetary value allocated by an organisation to support the implementation of compliance management activities. This includes, but is not limited to, staff and training cost, legal and governance cost, insurance cost, auditing cost, consulting cost, software and IT services cost, and record management cost. 
+Attributes: Cost Name, Cost Type, AssociatedProgram, Amount 
+Relationships: type of Monetary Resource 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Informal_Culture</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Organizational characteristics and relationships that are not part of the formal structure but that influence how the organization accomplishes its goals. 
+Attributes: Culture Name, Culture Description, AssociatedObligation 
+Relationships: type of Compliance Culture </Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Internal_Audit</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Services undertaken by organisational auditors to assess a regulated organisation’s adherence to its compliance obligations. 
+Attributes: Audit Name, Audit Description, Date, Auditor, AssociatedObligation, AssociatedRole, Status/Feedback, DocumentID 
+Relationships: type of Audit 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Internal_Policy</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Set of basic principles and associated guidelines, formulated and enforced by a particular organisation to direct and limit its actions in pursuit of intended goals. 
+Attributes: Policy Title, Version Number, GoverningBodies 
+Relationships: type of Policy 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Mandatory_Obligation</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">The obligations that are mandated to a particular individual, organization or industry due to endorsement of a particular regulation/legislation, policy, or contractual agreement. 
+Relationships: type of Obligation </Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Monetary_Resource</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">The amount of money or loss that an organization needs to pay to have their compliance management initiatives in place. This may include implementation cost, remediation cost, and penalty associated cost or loss. 
+Relationships: type of Resource 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Non-Monetary_Resources</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">The use or loss of non-monetary sources by an organization in exchange to have their compliance management initiatives in place. This may include reputational cost and resistance management cost. 
+Relationships: type of Resource 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Obligation_Concepts</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Obligation is defined as the prescribed and/or agreed set of norms that are mandated or voluntarily adopted by an organization or individual. The terms Compliance Mandate and Compliance Requirement are considered as synonyms for Obligation due to their interchangeably use by organisations. Obligation concepts can be categorised into two types of obligation i.e. Mandatory Obligation and Voluntary Obligation.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Obligation_Identification_&amp;_Assessment</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">The systematic way of identifying organizational compliance obligations and the way in which they impact on its activities, products and services. This includes the maintenance and prioritization of compliance obligations. 
+Attributes: Obligation Name, Updates/Changes, Changes Date, Priority, Status, Admin 
+Relationships: part of Program 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Obligation_Management_Tool</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Instruments used by the organization to facilitate managing and communicating of compliance obligations. 
+Attributes: Tool Name, Tool Description, AssociatedComplianceTask, Features 
+Relationships: type of Tool 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Organizational_Commitment</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Commitment by the organization and top management towards effective compliance that permeates through the whole organization Organizational commitment includes change management, setting up compliance drivers, putting resources towards compliance programs, and strengthening compliance understanding. 
+Relationships: part of Culture Management </Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Penalty_Avoidance</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">A condition where a regulated organization/individual may be influenced to be compliant in order to avoid non-compliant associated penalty. 
+Attributes: Avoidance Behaviour, Associated Obligations, Penalty 
+Relationships: part of Compliance Driver </Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Penalty_Cost</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">A cost that need to be paid as a result of compliance violation. This may include exemplary fine, damage cost, and cost of redevelopment. 
+Attributes: Penalty Name, Description, Beneficiaries, Amount 
+Relationships: type of Monetary Resource 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Planning</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Sets of guidelines and support provided by compliance experts in conducting proper learning and training for a compliance program. 
+Attributes: Advice Name, Advice Description, Date, Consultant, AssociatedObligation, AssociatedRole, Status/Feedback
+Relationships: type of Advisory
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Policy</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Set of basic principles and associated guidelines, formulated and enforced by the governing body or a particular organisation, to direct and limit its actions in pursuit of intended goals. 
+Relationships: type of Mandatory Obligation 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Preventative</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Mechanisms designed to avoid the likelihood of non-compliance. 
+Attributes: Control Name, Control Description, Associated ProcessRule 
+Relationships: type of Control Identification &amp; Definition 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Process_Activity</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">A single logical step in a business process. 
+Attributes: Activity Name, Activity Description, AssociatedObjective 
+Relationships: part of Business Process 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Process_Improvement</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">A systematic approach to help an organization optimize its underlying processes to achieve more efficient business outcomes. 
+Attributes: Improvement Operation, Improvement Details, Status, AssociatedActivity 
+Relationships: associated with Business Process Management 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Process_Monitoring</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Continual checking, supervising, critically observing or determining the status of the process in order to identify the occurrence of changes, errors, 
+irregularities, inefficiencies and bottlenecks. 
+Attributes: Monitoring Objective, Status, Associated Activity 
+Relationships: associated with Business Process Management 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Process_Objective</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Measurable result or state a particular process is intended/ required to attain. 
+Attributes: Objective Name, Objective Description 
+Relationships: part of Business Process 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Process_Rules</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Constraints and conditions imposed on a particular process. 
+Synonym: Process Constraint 
+Attributes: Rule Name, Rule Description, AssociatedActivityName 
+Relationships: part of Business Process 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Program</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Program is described as a series of activities that, when combined, are intended to achieve the desired level of compliance. It consists of six Tier 1 concepts, namely Obligation Identification &amp; Assessment, Competency &amp; Training, Control &amp; Monitoring, Record Keeping &amp; Reporting, Review, and Structure. 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Record_Keeping_&amp;_Reporting</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">The preparation and maintenance of documents, records and reports that are associated with organizational compliance activities to assist monitoring and review processes and demonstrate conformity with the compliance program. This includes full and frank reporting to keep governing body, organization and compliance manager well informed on all relevant compliance incidents. 
+Attributes: Activity Name, Coverage, Lodgement Period, Submissionto, AffectedRoles/Division 
+Relationships: part of Program 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Record_Keeping_&amp;_Reporting_Tool</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Instruments used by the organization to facilitate the preparation and maintenance of documents, records and reports that are associated with organizational compliance activities. 
+Attributes: Tool Name, Tool Description, AssociatedComplianceTask, Features 
+Relationships: type of Tool 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Regulation</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Rule or law designed based on, and intended to carry out, a specific piece of legislation in governing and controlling conduct of a regulate. 
+Attributes: Regulation Title, Administeredby, Governing Body, Regulator 
+Relationships: type of Mandatory Obligation 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Remediation_Cost</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Cost that deals with removal or corrective actions taken onto the source or cause of non-compliance. 
+Attributes: Remediation Name, Remediation Description, non-ComplianceEvent, Obligation, AssociatedProcess, Amount 
+Relationships: type of Monetary Resource 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Reputational_Cost</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">A cost associated with the reputational damage that is incurred by an organisation as a result of non-compliance. This includes cost as a result of decreased market influence, loss of competitive advantage, and loss of customers to another competitor. 
+Attributes: Event Name, Event Description,Typeof Damage, Obligation, AssociatedProcess, AffectedRoles
+Relationships: type of Non-Monetary Resource 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Resistance_Management_Cost</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Organisational loss due to unfavorable reaction towards compliance management initiatives. This may include, but not limited to, losing employees, interruption in business activities, and staff resistance. 
+Attributes: Event Name, Event Description, Obligation, AffecctedProcess, AssociatedRoles 
+Relationships: type of Non-Monetary Resource</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Resource</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Resource concept is defined as monetary and non-monetary resources allocated to meet compliance obligations. 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Review</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Continuous assessment of compliance program to ensure its continued suitability, adequacy and effectiveness. 
+Attributes: Program Name, Updates/Changes, Date, Affected Role, Committee 
+Relationships: part of Program 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Review_Tool</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Instruments used by the organization to facilitate continuous assessment of compliance program. 
+Attributes: Tool Name, Tool Description, AssociatedComplianceTask, Features 
+Relationships: type of Tool 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Risk_Analysis</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Process of comprehending the nature of risk and to determine the level of risk. 
+Attributes: Risk Name, Possibility of Occurrence, Associated Damage, Possiblityto Control/Mitigate 
+Relationships: part of Risk Assessment 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Risk_Assessment</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Overall process of risk identification, risk analysis and risk evaluation. 
+Relationships: part of Risk Management Process 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Risk_Evaluation</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Process of comparing the results of risk analysis with risk criteria to determine whether the risk and/or its magnitude is acceptable or tolerable. 
+Attributes: Risk Name, Risk Criteria, RiskAnalysisDate, Reference, Status 
+Relationships: part of Risk Assessment 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Risk_Identification</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Process of finding, recognizing and describing risks. 
+Attributes: Risk Name, Risk Source, RiskType, Affected Stakeholder, AffectedProcess, AssociatedObligation 
+Relationships: part of Risk Assessment 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Risk_Management</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Risk Management concept is defined as coordinated activities to direct and control an organization with regard to risk. 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Risk_Management_Framework</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Set of components that provide the foundation and organizational arrangements (i.e. policies, procedures and practices) for designing, implementing, monitoring, reviewing and continually improving risk management throughout the organisation. 
+Synonym: Risk Management Plan 
+Attributes: Framework Name, Framework Description, AssociatedBusinessProcess, AssociatedRiskManagementProcess 
+Relationships: part of Risk Management 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Risk_Management_Principle</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Risk Management Principle 
+A specific basis of conduct for managing risk. 
+Attributes: Principle Name, Principle Description, 
+AssociatedBusinessProcess, AssociatedRiskManagementProcess 
+Relationships: part of Risk Management 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Risk_Management_Process</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Systematic application of management policies, procedures and practices to the activities of communicating, consulting, establishing the context, and identifying, analyzing, evaluating, treating, monitoring and reviewing risk. 
+Relationships: part of Risk Management 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Risk_Treatment</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Process of modifying risk. Risk treatment can involve avoiding the risk by deciding not to start or continue with the activity that gives rise to the risk, taking or increasing risk in order to pursue an opportunity, removing the risk source, changing the likelihood, changing the consequences, sharing the risk with another party or parties (including contracts and risk financing) and retaining the risk by informed decision. 
+Attributes: Event Name, Risk Name, Treatment Name, TreatmentDescription 
+Relationships: part of Risk Management Process 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Role</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Specification of how compliance related responsibilities are delegated, controlled, and coordinated within a compliance program. 
+Attributes: Role Name, Role Description, AssociatedActivity, Obligation 
+Relationships: part of Structure 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Service</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Services refer to assistance provided to the regulated organisation either internally or externally in ensuring the organizational fulfill their compliance obligations. Services include compliance related services namely audit, assurance and advisory. 
+Relationships: type of Solution 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Solution</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Solution concept is defined as a particular method, tool or service that provides assistance to the regulated organization in meeting their compliance obligations. Solutions concepts are organized in two groups, namely: tools and services. 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Stakeholder</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Specification of how compliance related responsibilities are delegated, controlled, and coordinated within a compliance program. 
+Attributes: Stakeholder Name, Stakeholder Type, Obligation 
+Relationships: part of Structure </Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Standard</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Documented codes of ethics, codes of conduct, good practices and charters that an organization has adopted for its operations. 
+Attributes: Standard Number/Title, Issuing Body 
+Relationships: type of Voluntary Obligation 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Structure</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">The visible segment of the organizational culture, such as policies and procedures, mission statement, and dress codes. 
+Synonym: Compliance Governance
+Relationships: part of Program 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Tool</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Instruments (manual or automated) used by an organization as means to accomplish their compliance related activities. Tools include obligation management tool, competency &amp; training tool, control &amp; monitoring tool, record keeping &amp; reporting tool, and review tool. 
+Relationships: type of Solution 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Training</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Sets of guidelines and support provided by compliance experts to ease and facilitate the planning of a compliance program. 
+Attributes: Advice Name, Advice Description, Date, Consultant, AssociatedObligation, AssociatedRole, Status/Feedback 
+Relationships: type of Advisory 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Value</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Advantage/benefit gained as a result of compliant behavior. 
+Synonym: Compliance Benefit 
+Attributes: Value Name, Value Description, AssociatedObligations 
+Relationships: part of Compliance Driver </Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>#Voluntary_Obligation</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">The obligations, either in form of a standard or a code of practice, that are voluntarily adopted or accepted by a particular organization or industry. 
+Relationships: type of Obligation 
+</Literal>
+    </AnnotationAssertion>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+
