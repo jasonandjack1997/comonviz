@@ -380,11 +380,13 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 						.getValue().toString();
 				annotation = annotation.substring(1, annotation.length() - 1);
 
-				annotation = EntryPoint.getAnnotationManager()
-						.getStylizedAnnotation(annotation);
 
 				annotation = this.splitTextIntoLines(annotation,
 						MAX_TOOLTIP_LINES, MAX_TOOLTIP_CHARS_IN_A_LINE);
+
+//				annotation = EntryPoint.getAnnotationManager()
+//						.getStylizedAnnotation(annotation);
+				
 
 				return annotation;
 
