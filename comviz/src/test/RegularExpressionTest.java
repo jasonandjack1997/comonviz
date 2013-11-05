@@ -6,22 +6,13 @@ import java.util.regex.Pattern;
 public class RegularExpressionTest {
 
 	public static void main(String args[]) {
-		String test = "aabfooaabfooabfoob";
-		Pattern pattern = Pattern.compile("(ab)");
+		String test = "ABC:xxxxx;";
+		Pattern pattern = Pattern.compile("(.*):");
 		Matcher m = pattern.matcher(test);
-		//if(m.matches())
-		{
-		
-			test = m.replaceAll("$1" + "xx");
-		}
+		//if (m.find()) {
 
-		//Matcher m2 = pattern.matcher(test);
-		
-		
-		// test = test.replaceAll("a", "x");
-		
-		String test2 = new String("1112111");
-		test2 = test2.replaceAll("(111)", "--$1--");
+			String result = m.group(1);
+		//}
 		return;
 	}
 }

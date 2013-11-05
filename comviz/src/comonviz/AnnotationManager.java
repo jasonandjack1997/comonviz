@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.semanticweb.owlapi.model.OWLClass;
@@ -46,7 +47,7 @@ public class AnnotationManager {
 			sb.append("|");
 		}
 		sb.append(boldKeywords[i]);
-		sb.append(")(:))");
+		sb.append(")(:)(.*))");
 		boldKeywordPattern = Pattern.compile(sb.toString());
 
 		sb = new StringBuffer("((");
@@ -72,6 +73,10 @@ public class AnnotationManager {
 		String line;
 		try {
 			while ((line = br.readLine()) != null) {
+				Matcher m1 = boldKeywordPattern.matcher(line);
+				if(m1.find()){
+					m1.replaceAll("<b>$1</b><br/>");
+				}
 				
 				line = boldKeywordPattern.matcher(line).replaceAll("<b>$1</b><br/>");
 				line = owlAxiomPattern.matcher(line).replaceAll("<i>$1</i>");
