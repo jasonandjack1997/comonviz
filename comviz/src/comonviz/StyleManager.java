@@ -72,7 +72,11 @@ public class StyleManager {
 	//annotation textpane
 	
 	public static final Color ANNOTATION_CLASS_COLOR = new Color(0,0,192);// standard blue color in eclipse editor
-	public static final String ANNOTATION_CLASS_COLOR_HEX = "\"#0000C0\"";
+	public static final String ANNOTATION_CLASS_COLOR_HEX = "\"#1E90FF\"";//
+
+	public static final String ANNOTATION_ATTRIBUTES_COLOR_HEX = "\"7F0055\""; //dark red like keywords in eclipse
+
+	public static final String ANNOTATION_RELATIONSHIP_COLOR_HEX = "\"#8B008B\"";;
 	private StyleManager() {
 		defaultArcColors = new Color[defultArcColorCount];
 

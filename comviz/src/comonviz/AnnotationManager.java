@@ -6,7 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,13 +21,30 @@ public class AnnotationManager {
 	private static String[] boldKeywords = new String[] { "Overview",
 			"Definition", "Synonym", "Relationships", "Attributes" };
 
-	private static Collection<String> owlClasses;
+	private static List<String> owlClasses;
 	private static Collection<String> owlAxioms;
 
 	private Pattern boldKeywordPattern;
 	private Pattern owlClassPattern;
 	private Pattern owlAxiomPattern = Pattern
-			.compile("(part of|associate with|type of)");
+			.compile("(part of|associated with|type of)");
+
+	private Pattern overViewPattern = Pattern.compile("Overview");
+	private Pattern definitionPattern = Pattern.compile("Definition");
+	private Pattern attributesPattern = Pattern.compile("Attributes");
+	private Pattern synonymPattern = Pattern.compile("Synonym");
+	private Pattern relationshipsPattern = Pattern.compile("Relationships");
+
+	private Pattern wordPattern = Pattern.compile("(\\w+)");
+
+	private String AnnotationClassStyle = "<font color = "
+			+ StyleManager.ANNOTATION_CLASS_COLOR_HEX + "><b><u>$1</u></b></font>";
+
+	private String AnnotationAttributesStyle = "<font color = "
+			+ StyleManager.ANNOTATION_ATTRIBUTES_COLOR_HEX + "><b>$1</b></font>";
+
+	private String AnnotationRelationshipStyle = "<font color = "
+			+ StyleManager.ANNOTATION_RELATIONSHIP_COLOR_HEX + "><b><i>$1</i></b></font>";
 
 	// owlAxiomPattern =
 
@@ -35,9 +55,13 @@ public class AnnotationManager {
 			owlClasses.add(getNameFromeStringID(cls.toStringID()));
 		}
 
+		//sort, longer term first to fully match classes
+		Collections.sort(owlClasses, Collections.reverseOrder());
+		
+		
 		owlAxioms = new ArrayList<String>();
 		owlAxioms.add("part of");
-		owlAxioms.add("associate with");
+		owlAxioms.add("associated with");
 		owlAxioms.add("type of");
 
 		StringBuffer sb = new StringBuffer("((");
@@ -47,7 +71,7 @@ public class AnnotationManager {
 			sb.append("|");
 		}
 		sb.append(boldKeywords[i]);
-		sb.append(")(:)(.*))");
+		sb.append(")(:?))");
 		boldKeywordPattern = Pattern.compile(sb.toString());
 
 		sb = new StringBuffer("((");
@@ -62,29 +86,75 @@ public class AnnotationManager {
 	}
 
 	public String getStylizedAnnotation(String orignalAnnotation) {
-		
-		orignalAnnotation = "Definition:" + orignalAnnotation;
+
+
+		if(!orignalAnnotation.startsWith("Overview")){
+			orignalAnnotation = "Definition:" + orignalAnnotation;
+		}
 		InputStream annotationInputStream = new ByteArrayInputStream(
 				orignalAnnotation.getBytes());
 		BufferedReader br = new BufferedReader(new InputStreamReader(
 				annotationInputStream));
 		StringBuffer stylelizedAnnotation = new StringBuffer("<html>");
-		
+
 		String line;
+
 		try {
 			while ((line = br.readLine()) != null) {
-				Matcher m1 = boldKeywordPattern.matcher(line);
-				if(m1.find()){
-					m1.replaceAll("<b>$1</b><br/>");
+				String lineRemainder = "";
+				String lineHead = "";
+
+				Matcher boldKeywordMatcher = boldKeywordPattern.matcher(line);
+				if (boldKeywordMatcher.find()) {
+					lineHead = line.substring(0, boldKeywordMatcher.end());
+					lineRemainder = line.substring(boldKeywordMatcher.end(),
+							line.length());
 				}
 				
-				line = boldKeywordPattern.matcher(line).replaceAll("<b>$1</b><br/>");
-				line = owlAxiomPattern.matcher(line).replaceAll("<i>$1</i>");
-				line = owlClassPattern.matcher(line).replaceAll(
-						"<font color = "
-								+ StyleManager.ANNOTATION_CLASS_COLOR_HEX
-								+ "><b>$1</b></font>");
-				stylelizedAnnotation.append("<p>" + line + "</p>");
+				
+				if (attributesPattern.matcher(line).find()) {
+					lineRemainder = wordPattern.matcher(lineRemainder)
+							.replaceAll(AnnotationAttributesStyle);
+				} else if (synonymPattern.matcher(line).find()) {
+					lineRemainder = wordPattern.matcher(lineRemainder)
+							.replaceAll(AnnotationClassStyle);
+
+				} else if (relationshipsPattern.matcher(line).find()) {
+					Matcher owlAxiomPatternMatcher = owlAxiomPattern
+							.matcher(lineRemainder);
+					if (owlAxiomPatternMatcher.find()) {
+						String axiom = lineRemainder.substring(0,
+								owlAxiomPatternMatcher.end());
+						String wordList = lineRemainder.substring(
+								owlAxiomPatternMatcher.end(),
+								lineRemainder.length());
+						axiom = owlAxiomPattern.matcher(axiom)
+								.replaceAll(AnnotationRelationshipStyle);
+						wordList = wordPattern.matcher(wordList)
+								.replaceAll(AnnotationClassStyle);
+						lineRemainder = axiom + wordList;
+					}
+				} else if (definitionPattern.matcher(line).find()) {
+					lineRemainder = owlClassPattern.matcher(lineRemainder).replaceAll(
+							AnnotationClassStyle);
+				} else if (overViewPattern.matcher(line).find()) {
+					lineRemainder = owlClassPattern.matcher(lineRemainder).replaceAll(
+						AnnotationClassStyle);
+				} 
+				//
+				if(lineHead.equals("")){
+					lineRemainder = line;
+					lineRemainder = owlClassPattern.matcher(lineRemainder).replaceAll(
+							AnnotationClassStyle);
+				}
+
+				if(!lineHead.equals("")){
+					lineHead = boldKeywordPattern.matcher(lineHead).replaceAll(
+							"<b>$1</b><br/>");
+				}
+
+				stylelizedAnnotation.append("<p>" + lineHead + lineRemainder
+						+ "</p>");
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

@@ -139,7 +139,7 @@
         <Class IRI="#Non-Monetary_Resources"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#Obligation_Concepts"/>
+        <Class IRI="#Obligation"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Obligation_Identification_&amp;_Assessment"/>
@@ -658,13 +658,13 @@
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Mandatory_Obligation"/>
-        <Class IRI="#Obligation_Concepts"/>
+        <Class IRI="#Obligation"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Mandatory_Obligation"/>
         <ObjectSomeValuesFrom>
             <ObjectProperty IRI="#type_of"/>
-            <Class IRI="#Obligation_Concepts"/>
+            <Class IRI="#Obligation"/>
         </ObjectSomeValuesFrom>
     </SubClassOf>
     <SubClassOf>
@@ -701,11 +701,11 @@
         </ObjectSomeValuesFrom>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="#Obligation_Concepts"/>
+        <Class IRI="#Obligation"/>
         <Class IRI="#Compliance_Management"/>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="#Obligation_Concepts"/>
+        <Class IRI="#Obligation"/>
         <ObjectSomeValuesFrom>
             <ObjectProperty IRI="#associated_with"/>
             <Class IRI="#Compliance_Management"/>
@@ -1164,13 +1164,13 @@
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Voluntary_Obligation"/>
-        <Class IRI="#Obligation_Concepts"/>
+        <Class IRI="#Obligation"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Voluntary_Obligation"/>
         <ObjectSomeValuesFrom>
             <ObjectProperty IRI="#type_of"/>
-            <Class IRI="#Obligation_Concepts"/>
+            <Class IRI="#Obligation"/>
         </ObjectSomeValuesFrom>
     </SubClassOf>
     <AnnotationAssertion>
@@ -1268,10 +1268,8 @@ Relationships: part of Organizational Commitment </Literal>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
         <IRI>#Compliance_Management</IRI>
-        <Literal datatypeIRI="&rdf;PlainLiteral">OVERVIEW
-The Compliance Management ontology consists of 81 concepts. These concepts are structured into four main tiers, representing different levels of detail derived through progressive decomposition of higher tier concepts. For example, the Program concept has  been detailed into Obligations Identification and Assessment, Competency and Training, Controls and Monitoring, Record Keeping and Reporting, Review, and Structure in Tier 2, and so on. Each concept is quipped with a definition, attributes, and relationships where available.  
-Overall, CoMOn concepts are led by seven core concepts namely Business Process Management, Culture 
-Management, Obligations, Program, Resources, Risk Management, and Solutions. This  document details each concept including its definition, attributes and relationships that made up CoMOn. </Literal>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Overview: The Compliance Management ontology consists of 81 concepts. These concepts are structured into four main tiers, representing different levels of detail derived through progressive decomposition of higher tier concepts. Each concept is quipped with a definition, attributes, and relationships where available.  
+Overall, CoMOn concepts are led by seven core concepts namely Business Process Management, Culture Management, Obligations, Program, Resources, Risk Management, and Solutions. This  document details each concept including its definition, attributes and relationships that made up CoMOn. </Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
@@ -1449,7 +1447,7 @@ Relationships: type of Resource
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
-        <IRI>#Obligation_Concepts</IRI>
+        <IRI>#Obligation</IRI>
         <Literal datatypeIRI="&rdf;PlainLiteral">Obligation is defined as the prescribed and/or agreed set of norms that are mandated or voluntarily adopted by an organization or individual. The terms Compliance Mandate and Compliance Requirement are considered as synonyms for Obligation due to their interchangeably use by organisations. Obligation concepts can be categorised into two types of obligation i.e. Mandatory Obligation and Voluntary Obligation.</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
@@ -1531,8 +1529,7 @@ Relationships: associated with Business Process Management
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
         <IRI>#Process_Monitoring</IRI>
-        <Literal datatypeIRI="&rdf;PlainLiteral">Continual checking, supervising, critically observing or determining the status of the process in order to identify the occurrence of changes, errors, 
-irregularities, inefficiencies and bottlenecks. 
+        <Literal datatypeIRI="&rdf;PlainLiteral">Continual checking, supervising, critically observing or determining the status of the process in order to identify the occurrence of changes, errors, irregularities, inefficiencies and bottlenecks. 
 Attributes: Monitoring Objective, Status, Associated Activity 
 Relationships: associated with Business Process Management 
 </Literal>

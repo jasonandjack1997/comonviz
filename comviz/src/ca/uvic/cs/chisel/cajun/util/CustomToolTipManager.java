@@ -215,6 +215,7 @@ public class CustomToolTipManager extends MouseAdapter implements MouseMotionLis
 			hideTipWindow();
 
 			tip = insideComponent.createToolTip();
+			
 			tip.setTipText(toolTipText);
 			size = tip.getPreferredSize();
 
