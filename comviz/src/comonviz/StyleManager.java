@@ -30,10 +30,10 @@ public class StyleManager {
 	private static Map<Object, Color> nodeBackgroundColorMap;
 	private static Map<Object, Color> arcColorMap;
 
-	final private static float NODE_BACKGROUND_SATUATION = 0.2F;
+	final private static float NODE_BACKGROUND_SATUATION = 0.6F;
 	final private static float NODE_BACKGROUND_BRIGHTNESS = 1F;
 	final private static float NODE_HUE_START = 0.0F;
-	final private static float NODE_HUE_END = 1.0F;
+	final private static float NODE_HUE_END = 0.8F;
 	
 	final private static float NODE_BORDER_BRIGHTNESS_GAIN = 0.2F;
 	final private static float ARC_SATUATION = 179/256F;
@@ -120,8 +120,8 @@ public class StyleManager {
 		float hueDistance = (NODE_HUE_END - NODE_HUE_START) / numColors;
 
 		for (int i = 0; i < numColors; i++) {
-			Color color = Color.getHSBColor(NODE_HUE_START + 100 + hueDistance
-					* i, NODE_BACKGROUND_SATUATION, NODE_BACKGROUND_BRIGHTNESS);
+			Color color = Color.getHSBColor(NODE_HUE_START + hueDistance
+					* i + 0.01f, NODE_BACKGROUND_SATUATION, NODE_BACKGROUND_BRIGHTNESS);
 			nodeBackgroundColors.add(color);
 		}
 

@@ -42,7 +42,7 @@ public class EntryPoint {
 
 	public static MutableTree ontologyTree;
 	
-	private final String internalOWLFilePath = "/COMON_v7.owl";
+	private final String internalOWLFilePath = "/COMON_v8_HenryNewRel.owl";
 	
 	public static Dimension frameSize;
 

@@ -38,7 +38,7 @@ public class AnnotationManager {
 	private Pattern wordPattern = Pattern.compile("(\\w+)");
 
 	private String AnnotationClassStyle = "<font color = "
-			+ StyleManager.ANNOTATION_CLASS_COLOR_HEX + "><b><u>$1</u></b></font>";
+			+ StyleManager.ANNOTATION_CLASS_COLOR_HEX + "><b>$1</b></font>";
 
 	private String AnnotationAttributesStyle = "<font color = "
 			+ StyleManager.ANNOTATION_ATTRIBUTES_COLOR_HEX + "><b>$1</b></font>";
