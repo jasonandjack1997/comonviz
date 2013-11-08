@@ -19,7 +19,7 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import ca.uvic.cs.chisel.cajun.actions.CajunAction;
-import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
+import au.uq.dke.comonviz.graph.FlatGraph;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 
 public class OpenGraphAction extends CajunAction {

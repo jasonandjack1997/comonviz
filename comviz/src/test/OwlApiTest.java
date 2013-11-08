@@ -9,11 +9,11 @@ import org.junit.Test;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
-import au.uq.dke.comonviz.misc.OwlApi;
+import util.OwlApi;
 
 public class OwlApiTest {
 
-    private static OwlApi owlTest = new OwlApi();
+    private static OWLUtil owlTest = new OWLUtil();
 
 	@Before
 	public void setUp() throws Exception {

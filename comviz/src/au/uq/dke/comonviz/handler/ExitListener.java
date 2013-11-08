@@ -1,4 +1,4 @@
-package au.uq.dke.comonviz.misc;
+package au.uq.dke.comonviz.handler;
 
 import java.awt.*;
 import java.awt.event.*;

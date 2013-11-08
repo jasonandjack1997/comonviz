@@ -1,4 +1,4 @@
-package au.uq.dke.comonviz.treeUtils;
+package au.uq.dke.comonviz.model;
 
 import java.util.List;
 

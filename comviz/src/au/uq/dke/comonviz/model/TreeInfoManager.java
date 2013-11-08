@@ -1,4 +1,4 @@
-package au.uq.dke.comonviz.treeUtils;
+package au.uq.dke.comonviz.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,7 +25,11 @@ public class TreeInfoManager {
         
         private static Map<Object, EntityTreeInfo> entityTreeInfoMap;
         
-        private static List<MutableTree> branchNodes;
+        public static Map<Object, EntityTreeInfo> getEntityTreeInfoMap() {
+			return entityTreeInfoMap;
+		}
+
+		private static List<MutableTree> branchNodes;
         
         public static Collection<MutableTree> getBranchNodes() {
 			return branchNodes;
@@ -189,7 +193,5 @@ public class TreeInfoManager {
 			}
 			return (node);
 		}
-
-        
 
 }

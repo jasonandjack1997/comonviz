@@ -12,7 +12,7 @@ import java.util.Map;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
-import au.uq.dke.comonviz.treeUtils.TreeInfoManager;
+import au.uq.dke.comonviz.model.TreeInfoManager;
 import edu.umd.cs.piccolox.util.PFixedWidthStroke;
 
 /**

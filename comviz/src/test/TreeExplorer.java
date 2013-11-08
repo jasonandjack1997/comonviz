@@ -8,8 +8,8 @@ import java.util.regex.Pattern;
 import javax.swing.*;
 import javax.swing.tree.*;
 
-import au.uq.dke.comonviz.misc.ExitListener;
-import au.uq.dke.comonviz.misc.WindowUtilities;
+import util.WindowUtilities;
+import au.uq.dke.comonviz.handler.ExitListener;
 
 public class TreeExplorer extends JFrame {
   public static void main(String[] args) {

@@ -1,6 +1,10 @@
 package database;
 
 import java.sql.Timestamp;
+import java.util.Date;
+
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 
 public class Trackable {
 	
@@ -33,11 +37,19 @@ public class Trackable {
 	public Long getDatabaseVersionId() {
 		return databaseVersionId;
 	}
+	@PrePersist
+	protected void onCreate(){
+		this.creationDateTime = new Timestamp(new Date().getTime());
+	}
 
+	@PreUpdate 
+	protected void onUpdate(){
+		this.modificationDateTime = new Timestamp(new Date().getTime());
+	}
+	
 	public void setCreationDateTime(Timestamp creationDateTime) {
 		this.creationDateTime = creationDateTime;
 	}
-
 	public void setModificationDateTime(Timestamp modificationDateTime) {
 		this.modificationDateTime = modificationDateTime;
 	}

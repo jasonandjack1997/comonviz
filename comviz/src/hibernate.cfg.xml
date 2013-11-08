@@ -4,23 +4,25 @@
 	<session-factory>
 
 
-        <!-- Database connection settings -->
-        <property name="connection.driver_class">org.sqlite.JDBC</property>
-        <property name="connection.url">jdbc:sqlite:sqliteTest</property>
-        <property name="connection.username"></property>
-        <property name="connection.password"></property>
+		<!-- Database connection settings -->
+		<property name="connection.driver_class">org.sqlite.JDBC</property>
+		<property name="connection.url">jdbc:sqlite:sqliteTest</property>
+		<property name="connection.username"></property>
+		<property name="connection.password"></property>
 
-        <!-- JDBC connection pool (use the built-in) -->
-        <property name="connection.pool_size">1</property>
+		<!-- JDBC connection pool (use the built-in) -->
+		<property name="connection.pool_size">1</property>
 
-        <!-- SQL dialect -->
-        <property name="dialect">org.hibernate.dialect.SQLITEDialect</property>
+		<!-- SQL dialect -->
+		<property name="dialect">database.SQLiteDialect</property>
 
-        <!-- Echo all executed SQL to stdout -->
-        <property name="show_sql">true</property>
+		<!-- Echo all executed SQL to stdout -->
+		<property name="show_sql">true</property>
 
-        <!-- Drop and re-create the database schema on startup -->
-        <property name="hbm2ddl.auto">create</property>
+		<!-- Drop and re-create the database schema on startup -->
+		<property name="hbm2ddl.auto">create</property>
+
+		<mapping resource="database/Trackable.hbm.xml" />
 
 
 	</session-factory>

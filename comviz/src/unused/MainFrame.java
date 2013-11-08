@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import comonviz.graph.arc.DefaultGraphArcStyle;
 import comonviz.graph.node.DefaultGraphNodeStyle;
 import ca.uvic.cs.chisel.cajun.actions.CajunAction;
-import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
+import au.uq.dke.comonviz.graph.FlatGraph;
 import ca.uvic.cs.chisel.cajun.graph.ui.DefaultFlatGraphView;
 
 class MainFrame extends JFrame {

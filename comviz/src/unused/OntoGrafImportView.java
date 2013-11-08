@@ -23,7 +23,7 @@ import comonviz.graph.arc.GraphArc;
 import ca.uvic.cs.chisel.cajun.actions.LayoutAction;
 import ca.uvic.cs.chisel.cajun.constants.LayoutConstants;
 import ca.uvic.cs.chisel.cajun.graph.DefaultGraphModel;
-import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
+import au.uq.dke.comonviz.graph.FlatGraph;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import ca.uvic.cs.chisel.cajun.graph.ui.DefaultFlatGraphView;
 

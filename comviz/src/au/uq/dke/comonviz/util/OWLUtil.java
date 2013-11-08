@@ -37,7 +37,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package au.uq.dke.comonviz.misc;
+package au.uq.dke.comonviz.util;
 
 import static org.semanticweb.owlapi.vocab.OWLFacet.MAX_EXCLUSIVE;
 import static org.semanticweb.owlapi.vocab.OWLFacet.MIN_INCLUSIVE;
@@ -158,7 +158,7 @@ import uk.ac.manchester.cs.owlapi.modularity.SyntacticLocalityModuleExtractor;
  * Date: 11-Jan-2007
  */
 @Ignore
-public class OwlApi {
+public class OWLUtil {
 	// private static final String PIZZA_IRI =
 	// "http://owl.cs.manchester.ac.uk/co-ode-files/ontologies/pizza.owl";
 
@@ -613,7 +613,7 @@ public class OwlApi {
 		AssertedClassHierarchyProvider provider = new AssertedClassHierarchyProvider(
 				manager);
 
-		// OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+		// OWLOntologyManager manager = OWLUtil.createOWLOntologyManager();
 		// Ontologies can have an IRI, which is used to identify the ontology.
 		// You should think of the ontology IRI as the "name" of the ontology.
 		// This IRI frequently resembles a Web address (i.e. http://...), but it
@@ -699,7 +699,7 @@ public class OwlApi {
 	public void shouldCreateOntology() throws OWLOntologyCreationException {
 		// We first need to create an OWLOntologyManager, which will provide a
 		// point for creating, loading and saving ontologies. We can create a
-		// default ontology manager with the OWLManager class. This provides a
+		// default ontology manager with the OWLUtil class. This provides a
 		// common setup of an ontology manager. It registers parsers etc. for
 		// loading ontologies in a variety of syntaxes
 		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
@@ -1867,7 +1867,7 @@ public class OwlApi {
 	public void owlPrimer() throws OWLOntologyCreationException,
 			OWLOntologyStorageException {
 		// The OWLOntologyManager is at the heart of the OWL API, we can create
-		// an instance of this using the OWLManager class, which will set up
+		// an instance of this using the OWLUtil class, which will set up
 		// commonly used options (such as which parsers are registered etc.
 		// etc.)
 		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
@@ -2248,6 +2248,6 @@ public class OwlApi {
 
 	public static void main(String args[]) throws OWLOntologyCreationException,
 			OWLOntologyStorageException {
-		new OwlApi().shouldAddAxiom();
+		new OWLUtil().shouldAddAxiom();
 	}
 }

@@ -17,15 +17,14 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
 import au.uq.dke.comonviz.actions.LayoutAction;
-import au.uq.dke.comonviz.misc.OwlApi;
+import au.uq.dke.comonviz.graph.FlatGraph;
 import au.uq.dke.comonviz.model.AnnotationManager;
-import au.uq.dke.comonviz.treeUtils.TreeInfoManager;
+import au.uq.dke.comonviz.model.TreeInfoManager;
 import au.uq.dke.comonviz.ui.StyleManager;
+import au.uq.dke.comonviz.util.OWLUtil;
 import uk.ac.manchester.cs.bhig.util.MutableTree;
 import ca.uvic.cs.chisel.cajun.constants.LayoutConstants;
 import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;
-import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
-import ca.uvic.cs.chisel.cajun.graph.Graph;
 
 public class EntryPoint {
 
@@ -125,7 +124,7 @@ public class EntryPoint {
 
 	public static void loadOntologyFile(URI uri) {
 
-		OwlApi owlapi = new OwlApi();
+		OWLUtil owlapi = new OWLUtil();
 		try {
 			ontology = owlapi.openOntology(uri);
 
@@ -186,14 +185,15 @@ public class EntryPoint {
 	}
 
 	public static void main(String[] args) {
+		new EntryPoint().start();
 		// TODO Auto-generated method stub
 		// Schedule a job for the event-dispatching thread:
 		// creating and showing this application's GUI.
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				new EntryPoint().start();
-			}
-		});
+//		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+//			public void run() {
+//				new EntryPoint().start();
+//			}
+//		});
 
 	}
 

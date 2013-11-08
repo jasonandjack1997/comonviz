@@ -28,7 +28,7 @@ import au.uq.dke.comonviz.actions.NoZoomAction;
 import au.uq.dke.comonviz.actions.ZoomInAction;
 import au.uq.dke.comonviz.actions.ZoomOutAction;
 import au.uq.dke.comonviz.filter.FilterManager;
-import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
+import au.uq.dke.comonviz.graph.FlatGraph;
 import ca.uvic.cs.chisel.cajun.graph.Graph;
 import ca.uvic.cs.chisel.cajun.graph.GraphModelAdapter;
 import ca.uvic.cs.chisel.cajun.resources.ResourceHandler;

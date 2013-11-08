@@ -11,7 +11,7 @@ import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import au.uq.dke.comonviz.EntryPoint;
 import au.uq.dke.comonviz.ComonvizGraphModel;
 import au.uq.dke.comonviz.graph.node.DefaultGraphNode;
-import au.uq.dke.comonviz.treeUtils.TreeInfoManager;
+import au.uq.dke.comonviz.model.TreeInfoManager;
 import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PBasicInputEventHandler;

@@ -1,6 +1,8 @@
-package au.uq.dke.comonviz.misc;
+package au.uq.dke.comonviz.util;
 
 import javax.swing.*;
+
+import au.uq.dke.comonviz.handler.ExitListener;
 
 import java.awt.*;
 

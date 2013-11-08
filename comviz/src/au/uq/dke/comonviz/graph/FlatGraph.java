@@ -1,4 +1,4 @@
-package ca.uvic.cs.chisel.cajun.graph;
+package au.uq.dke.comonviz.graph;
 
 import au.uq.dke.comonviz.EntryPoint;
 import au.uq.dke.comonviz.GraphController;
@@ -11,6 +11,7 @@ import au.uq.dke.comonviz.handler.graph.NodeDragHandler;
 import au.uq.dke.comonviz.handler.graph.NodeSelectionHandler;
 import au.uq.dke.comonviz.handler.graph.RotationHandler;
 import au.uq.dke.comonviz.handler.graph.ZoomHandler;
+import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;
 import ca.uvic.cs.chisel.cajun.graph.util.AnimationHandler;
 import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.util.PPaintContext;

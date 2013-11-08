@@ -12,8 +12,8 @@ public class OntologyClass  extends TrackableDatabaseEntity{
 	public int getLevel() {
 		return level;
 	}
-	public int getOrder() {
-		return order;
+	public int getSiblingRank() {
+		return siblingRank;
 	}
 	public Long getBranchId() {
 		return branchId;
@@ -24,15 +24,15 @@ public class OntologyClass  extends TrackableDatabaseEntity{
 	public void setLevel(int level) {
 		this.level = level;
 	}
-	public void setOrder(int order) {
-		this.order = order;
+	public void setSiblingRank(int order) {
+		this.siblingRank = order;
 	}
 	public void setBranchId(Long branchId) {
 		this.branchId = branchId;
 	}
 	private String iri;
-	private int level;
-	private int order;
+	private int level = -1;
+	private int siblingRank;
 	private Long branchId;
 	
 }

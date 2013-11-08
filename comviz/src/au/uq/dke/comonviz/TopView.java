@@ -32,6 +32,7 @@ import javax.swing.tree.DefaultTreeModel;
 
 import au.uq.dke.comonviz.actions.CajunAction;
 import au.uq.dke.comonviz.filter.FilterManager;
+import au.uq.dke.comonviz.graph.FlatGraph;
 import au.uq.dke.comonviz.handler.tree.MyTreeExpansionListener;
 import au.uq.dke.comonviz.handler.tree.MyTreeHirarchyChangeListener;
 import au.uq.dke.comonviz.handler.tree.MyTreeItemSelectionListener;
@@ -39,7 +40,6 @@ import au.uq.dke.comonviz.ui.FilterPanel;
 import au.uq.dke.comonviz.ui.OpenOntologyFileAction;
 import au.uq.dke.comonviz.ui.StatusProgressBar;
 import uk.ac.manchester.cs.bhig.util.MutableTree;
-import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
 import ca.uvic.cs.chisel.cajun.graph.Graph;
 import ca.uvic.cs.chisel.cajun.graph.GraphModelAdapter;
 import ca.uvic.cs.chisel.cajun.graph.node.NodeCollection;

@@ -1,4 +1,4 @@
-package hib.test.cn;
+package database;
 
 
 import org.hibernate.*;
