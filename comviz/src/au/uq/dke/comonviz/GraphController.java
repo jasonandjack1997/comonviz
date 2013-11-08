@@ -68,7 +68,7 @@ public class GraphController {
 	private FlatGraph graph;
 
 	/** the model representation of the graph, nodes and edges */
-	public static ComonvizGraphModel model;
+	private  ComonvizGraphModel model;
 	
 	/** the panel that renders the graph view */
 	private TopView view;
@@ -95,7 +95,7 @@ public class GraphController {
 	}
 
 	public GraphController() {
-		
+		this.view = EntryPoint.getTopView();
 		this.model = EntryPoint.getGraphModel();
 		this.graph = EntryPoint.getFlatGraph();
 		this.graph.setShowNodeTooltips(true);
@@ -106,44 +106,44 @@ public class GraphController {
 		this.graph.setBounds(0, 0, width, height);
 
 
-//		// show the plus icon for expandable nodes
-//		DefaultGraphNodeStyle nodeStyle = new DefaultGraphNodeStyle() {
-//			public Collection<Icon> getOverlayIcons(GraphNode graphNode) {
-//				if (model.isExpandable(graphNode) && !model.isExpanded(graphNode)) {
-//					Collection<Icon> icons = new ArrayList<Icon>();
-//					icons.add(IconConstants.ICON_PLUS);
-//
-//					return icons;
-//				}
-//
-//				return null;
-//			}
-//		};
-//		nodeStyle.setNodeTypes(model.getNodeTypes());
-//		this.graph.setGraphNodeStyle(nodeStyle);
-//
-//		// color the arcs based on arc type
-//		DefaultGraphArcStyle arcStyle = new DefaultGraphArcStyle() {
-//			public Stroke getStroke(GraphArc arc) {
-//				if (arc.getType().toString().contains(ComonvizGraphModel.DIRECT_SUBCLASS_SLOT_TYPE) || arc.getType().toString().contains(ComonvizGraphModel.DIRECT_INDIVIDUAL_SLOT_TYPE)) {
-//					setDashed(false);
-//				} else {
-//					setDashed(true);
-//					if (arc.getType().toString().contains("Equivalent")) {
-//						setDashedCapSquare(BasicStroke.CAP_ROUND);
-//						setDashWidth(2f);
-//					}
-//					else {
-//						setDashedCapSquare(BasicStroke.CAP_SQUARE);
-//						setDashWidth(10f);
-//					}
-//				}
-//
-//				return super.getStroke(arc);
-//			}
-//		};
-//		arcStyle.setArcTypes(model.getArcTypes());
-//		this.graph.setGraphArcStyle(arcStyle);
+		// show the plus icon for expandable nodes
+		DefaultGraphNodeStyle nodeStyle = new DefaultGraphNodeStyle() {
+			public Collection<Icon> getOverlayIcons(GraphNode graphNode) {
+				if (model.isExpandable(graphNode) && !model.isExpanded(graphNode)) {
+					Collection<Icon> icons = new ArrayList<Icon>();
+					icons.add(IconConstants.ICON_PLUS);
+
+					return icons;
+				}
+
+				return null;
+			}
+		};
+		nodeStyle.setNodeTypes(model.getNodeTypes());
+		this.graph.setGraphNodeStyle(nodeStyle);
+
+		// color the arcs based on arc type
+		DefaultGraphArcStyle arcStyle = new DefaultGraphArcStyle() {
+			public Stroke getStroke(GraphArc arc) {
+				if (arc.getType().toString().contains(ComonvizGraphModel.DIRECT_SUBCLASS_SLOT_TYPE) || arc.getType().toString().contains(ComonvizGraphModel.DIRECT_INDIVIDUAL_SLOT_TYPE)) {
+					setDashed(false);
+				} else {
+					setDashed(true);
+					if (arc.getType().toString().contains("Equivalent")) {
+						setDashedCapSquare(BasicStroke.CAP_ROUND);
+						setDashWidth(2f);
+					}
+					else {
+						setDashedCapSquare(BasicStroke.CAP_SQUARE);
+						setDashWidth(10f);
+					}
+				}
+
+				return super.getStroke(arc);
+			}
+		};
+		arcStyle.setArcTypes(model.getArcTypes());
+		this.graph.setGraphArcStyle(arcStyle);
 
 		initialize();
 		

@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.geom.Ellipse2D;
 
+import au.uq.dke.comonviz.EntryPoint;
 import au.uq.dke.comonviz.GraphController;
 import au.uq.dke.comonviz.treeUtils.TreeInfoManager;
 import au.uq.dke.comonviz.ui.StyleManager;
@@ -52,7 +53,7 @@ public class HiddenChildrenCountIcon extends PText {
 
 		Graphics2D g2 = paintContext.getGraphics();
 
-		if (!GraphController.model.isExpanded(this.graphNode)) {
+		if (!EntryPoint.getGraphModel().isExpanded(this.graphNode)) {
 			TreeInfoManager treeInforManager = TreeInfoManager.getTreeManager();
 			String childrenCount = String.valueOf(treeInforManager
 					.getChildrenCount(graphNode.getUserObject()));

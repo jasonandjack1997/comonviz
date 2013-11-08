@@ -92,6 +92,7 @@ public class TopView extends JPanel {
 		this.graph = EntryPoint.getFlatGraph();
 		this.selectedNodes = graph.getNodeSelection();
 		initialize();
+		EntryPoint.getjFrame().add(this);
 	}
 
 	public void initialize() {

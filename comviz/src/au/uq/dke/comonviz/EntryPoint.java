@@ -74,10 +74,25 @@ public class EntryPoint {
 
 		graphModel = new ComonvizGraphModel();
 		flatGraph = new FlatGraph();
-		graphController = new GraphController();
 		topView = new TopView();
+		graphController = new GraphController();
 
-		loadOntologyFile
+		URL ontologyURL = null;
+		try {
+
+			ontologyURL = this.getClass().getResource(internalOWLFilePath);
+			//ontologyURL = this.getClass().getResource("/annotationTest.owl");
+		} catch (NullPointerException e3) {
+			e3.printStackTrace();
+		}
+		
+		try {
+			loadOntologyFile(ontologyURL.toURI());
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	public static OWLOntology getOntology() {
