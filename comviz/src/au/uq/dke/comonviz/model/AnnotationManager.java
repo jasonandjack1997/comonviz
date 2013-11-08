@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLOntology;
 
-import au.uq.dke.comonviz.StyleManager;
+import au.uq.dke.comonviz.ui.StyleManager;
 
 public class AnnotationManager {
 

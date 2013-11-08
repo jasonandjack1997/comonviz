@@ -12,7 +12,7 @@ import javax.swing.tree.TreePath;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import au.uq.dke.comonviz.EntryPoint;
-import au.uq.dke.comonviz.ProtegeGraphModel;
+import au.uq.dke.comonviz.ComonvizGraphModel;
 import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.NodeCollection;
@@ -37,13 +37,12 @@ public class MyTreeExpansionListener implements TreeExpansionListener {
 					.getUserObject();
 			try {
 				Object userObject = selectedGraphNode.getUserObject();
-				GraphNode realGraphNode = EntryPoint.gc.getModel().getNode(
+				GraphNode realGraphNode = EntryPoint.getGraphModel().getNode(
 						userObject);
 				if (realGraphNode == null) {
 
-					((ProtegeGraphModel) EntryPoint.gc.getGraph().getModel())
-							.showWithExsistingNodes((OWLEntity) userObject,
-									((AbstractGraph) EntryPoint.graph)
+					EntryPoint.getGraphModel().showWithExsistingNodes((OWLEntity) userObject,
+							EntryPoint.getFlatGraph()
 											.getFilterManager());
 					// ((ProtegeGraphModel)
 					// EntryPoint.gc.getGraph().getModel()).(realGraphNode);
@@ -54,7 +53,7 @@ public class MyTreeExpansionListener implements TreeExpansionListener {
 			}
 		}
 
-		(EntryPoint.gc.getGraph()).performLayout();
+		EntryPoint.getFlatGraph().performLayout();
 
 	}
 
@@ -72,16 +71,14 @@ public class MyTreeExpansionListener implements TreeExpansionListener {
 			userObjectCollection.add(userObject);
 		}
 
-		for (GraphNode graphNodeToDelete : ((ProtegeGraphModel) EntryPoint.gc
-				.getGraph().getModel()).getVisibleNodes()) {
+		for (GraphNode graphNodeToDelete : EntryPoint.getGraphModel().getVisibleNodes()) {
 			if(!userObjectCollection.contains(graphNodeToDelete.getUserObject())){
-				((ProtegeGraphModel) EntryPoint.gc
-						.getGraph().getModel()).removeNode(graphNodeToDelete.getUserObject());
+				EntryPoint.getGraphModel().removeNode(graphNodeToDelete.getUserObject());
 			}
 
 		}
 
-		(EntryPoint.gc.getGraph()).performLayout();
+		EntryPoint.getFlatGraph().performLayout();
 
 	}
 

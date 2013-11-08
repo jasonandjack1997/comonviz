@@ -1,4 +1,4 @@
-package au.uq.dke.comonviz.ui;
+package au.uq.dke.comonviz;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -35,6 +35,9 @@ import au.uq.dke.comonviz.filter.FilterManager;
 import au.uq.dke.comonviz.handler.tree.MyTreeExpansionListener;
 import au.uq.dke.comonviz.handler.tree.MyTreeHirarchyChangeListener;
 import au.uq.dke.comonviz.handler.tree.MyTreeItemSelectionListener;
+import au.uq.dke.comonviz.ui.FilterPanel;
+import au.uq.dke.comonviz.ui.OpenOntologyFileAction;
+import au.uq.dke.comonviz.ui.StatusProgressBar;
 import uk.ac.manchester.cs.bhig.util.MutableTree;
 import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
 import ca.uvic.cs.chisel.cajun.graph.Graph;
@@ -84,9 +87,9 @@ public class TopView extends JPanel {
 		return jTree;
 	}
 
-	public TopView(FlatGraph graph) {
+	public TopView() {
 		super(new BorderLayout());
-		this.graph = graph;
+		this.graph = EntryPoint.getFlatGraph();
 		this.selectedNodes = graph.getNodeSelection();
 		initialize();
 	}

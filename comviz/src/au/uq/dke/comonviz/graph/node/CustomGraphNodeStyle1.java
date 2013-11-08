@@ -22,8 +22,8 @@ import javax.swing.Icon;
 
 import org.semanticweb.owlapi.model.OWLEntity;
 
-import au.uq.dke.comonviz.StyleManager;
 import au.uq.dke.comonviz.treeUtils.TreeInfoManager;
+import au.uq.dke.comonviz.ui.StyleManager;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNodeStyle;
 import ca.uvic.cs.chisel.cajun.util.GraphicsUtils;

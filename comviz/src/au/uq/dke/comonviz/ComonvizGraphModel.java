@@ -59,7 +59,7 @@ import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
  * 
  * @author seanf
  */
-public class ProtegeGraphModel extends DefaultGraphModel {
+public class ComonvizGraphModel extends DefaultGraphModel {
 
 	private Map treeInfoMap;
 
@@ -111,13 +111,10 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 	private Collection<Object> arcTypes;
 
 	public OWLOntology owlOntology;
-	private OWLModelManager owlModelManager;
-	private OWLEditorKit owlEditorKit;
 
 	private FilterManager filterManager;
 
-	public ProtegeGraphModel() throws OWLOntologyCreationException,
-			OWLOntologyStorageException, IOException {
+	public ComonvizGraphModel(){
 		super();
 
 		this.frameToArcCount = new HashMap<OWLEntity, Set<GraphArc>>();
@@ -1251,8 +1248,8 @@ public class ProtegeGraphModel extends DefaultGraphModel {
 
 	private Collection<Object> generateArcTypes() {
 		Set<Object> types = new HashSet<Object>();
-		types.add(ProtegeGraphModel.DIRECT_SUBCLASS_SLOT_TYPE);
-		types.add(ProtegeGraphModel.DIRECT_INDIVIDUAL_SLOT_TYPE);
+		types.add(ComonvizGraphModel.DIRECT_SUBCLASS_SLOT_TYPE);
+		types.add(ComonvizGraphModel.DIRECT_INDIVIDUAL_SLOT_TYPE);
 		types.addAll(super.getArcTypes());
 
 		return types;

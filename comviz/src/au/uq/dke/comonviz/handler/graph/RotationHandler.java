@@ -9,7 +9,7 @@ import org.semanticweb.owlapi.model.OWLEntity;
 
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import au.uq.dke.comonviz.EntryPoint;
-import au.uq.dke.comonviz.ProtegeGraphModel;
+import au.uq.dke.comonviz.ComonvizGraphModel;
 import au.uq.dke.comonviz.graph.node.DefaultGraphNode;
 import au.uq.dke.comonviz.treeUtils.TreeInfoManager;
 import edu.umd.cs.piccolo.PCamera;
@@ -66,7 +66,7 @@ public class RotationHandler extends PBasicInputEventHandler {
 
 		GraphNode oldNodeInTreeManager = (GraphNode) TreeInfoManager
 				.getTreeRoot().getUserObject();
-		anchorGraphNode = ((ProtegeGraphModel) EntryPoint.getGc().getModel())
+		anchorGraphNode = EntryPoint.getGraphModel()
 				.getNode(oldNodeInTreeManager.getUserObject());
 		ANCHOR_X = ((DefaultGraphNode) anchorGraphNode).getCenterX();
 		ANCHOR_Y = ((DefaultGraphNode) anchorGraphNode).getCenterY();
@@ -111,17 +111,14 @@ public class RotationHandler extends PBasicInputEventHandler {
 					.getRotateInstance(sign * deltaRadians, ANCHOR_X, ANCHOR_Y);
 
 			// rotate all visible nodes
-			Collection<GraphNode> visibleNodes = EntryPoint.getGc().getModel()
-					.getVisibleNodes();
-			List<OWLEntity> desendantsNode = ((ProtegeGraphModel) EntryPoint
-					.getGc().getModel()).getDesendantList(
+			Collection<GraphNode> visibleNodes = EntryPoint.getGraphModel().getVisibleNodes();
+			List<OWLEntity> desendantsNode = EntryPoint.getGraphModel().getDesendantList(
 					(OWLEntity) anchorGraphNode.getUserObject(), false);
 
 			for (OWLEntity nodeEntity : desendantsNode) {
 				// if (graphNode.getText().contains("Compliance")) {
 				{
-					GraphNode graphNode = ((ProtegeGraphModel) EntryPoint
-							.getGc().getModel()).getNode(nodeEntity);
+					GraphNode graphNode = EntryPoint.getGraphModel().getNode(nodeEntity);
 					if (graphNode == null) {
 						continue;
 					}

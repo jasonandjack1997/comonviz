@@ -32,7 +32,7 @@ public class OpenOntologyFileAction extends CajunAction {
 		chooser.setMultiSelectionEnabled(false);
 		FileFilter fileFilter = new FileNameExtensionFilter("OWL files", new String[]{"owl"});
 		chooser.setFileFilter(fileFilter);
-		int option = chooser.showOpenDialog(EntryPoint.frame);
+		int option = chooser.showOpenDialog(EntryPoint.getjFrame());
 		if (option == JFileChooser.APPROVE_OPTION) {
 			uri = chooser.getSelectedFile().toURI();
 			EntryPoint.loadOntologyFile(uri);

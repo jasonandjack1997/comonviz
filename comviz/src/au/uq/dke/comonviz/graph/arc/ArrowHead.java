@@ -11,7 +11,7 @@ import java.awt.Stroke;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 
-import au.uq.dke.comonviz.StyleManager;
+import au.uq.dke.comonviz.ui.StyleManager;
 import edu.umd.cs.piccolox.util.PFixedWidthStroke;
 
 /**

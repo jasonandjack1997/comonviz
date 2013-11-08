@@ -85,7 +85,7 @@ public class NodeSelectionHandler extends PBasicInputEventHandler {
 				// left click - always select just this node
 				selectedNodes.setNode(displayNode);
 				// also select node in the tree explorer
-				JTree jTree = EntryPoint.gc.getView().getjTree();
+				JTree jTree = EntryPoint.getTopView().getjTree();
 				DefaultMutableTreeNode rootNode = (DefaultMutableTreeNode) jTree
 						.getModel().getRoot();
 				Enumeration<?> enumeration = rootNode.breadthFirstEnumeration();

@@ -14,10 +14,10 @@ import org.eclipse.zest.layouts.progress.ProgressListener;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import au.uq.dke.comonviz.EntryPoint;
-import au.uq.dke.comonviz.Parameters;
-import au.uq.dke.comonviz.ProtegeGraphModel;
+import au.uq.dke.comonviz.ComonvizGraphModel;
 import au.uq.dke.comonviz.graph.arc.DefaultGraphArc;
 import au.uq.dke.comonviz.graph.node.DefaultGraphNode;
+import au.uq.dke.comonviz.ui.Parameters;
 import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;
 import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
 import ca.uvic.cs.chisel.cajun.graph.Graph;
@@ -97,7 +97,7 @@ public class LayoutAction extends CajunAction {
 		int layoutArea = 0;
 		for(GraphNode graphNode : nodes){
 			nodesAreaSum += graphNode.getBounds().getWidth() * graphNode.getBounds().getHeight();
-			ProtegeGraphModel graphModel = (ProtegeGraphModel)graph.getModel();
+			ComonvizGraphModel graphModel = (ComonvizGraphModel)graph.getModel();
 			possibleArcs.addAll(graphModel.loadChildren2((OWLEntity) graphNode.getUserObject(), false));
 		}
 		
@@ -105,7 +105,7 @@ public class LayoutAction extends CajunAction {
 		
 //		int layoutWidth = (int) Math.sqrt(layoutArea);
 //		int layoutHeight = layoutWidth;
-		int dividerLocation = ((FlatGraph)graph).getGraphController().getView().getTopHorizontalSplitPane().getDividerLocation();
+		int dividerLocation = EntryPoint.getTopView().getTopHorizontalSplitPane().getDividerLocation();
 		
 		//int a = ((FlatGraph)graph).getGraphController().getView().getTopHorizontalSplitPane().getRightComponent().getWidth();
 

@@ -15,7 +15,7 @@ import java.util.Map;
 
 import javax.swing.Icon;
 
-import au.uq.dke.comonviz.StyleManager;
+import au.uq.dke.comonviz.ui.StyleManager;
 import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
 import ca.uvic.cs.chisel.cajun.graph.arc.GraphArcStyle;
 import ca.uvic.cs.chisel.cajun.util.GraphicsUtils;

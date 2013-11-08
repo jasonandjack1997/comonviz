@@ -1,4 +1,4 @@
-package au.uq.dke.comonviz;
+package au.uq.dke.comonviz.ui;
 
 import java.awt.Color;
 import java.awt.Font;

@@ -1,5 +1,6 @@
 package ca.uvic.cs.chisel.cajun.graph;
 
+import au.uq.dke.comonviz.EntryPoint;
 import au.uq.dke.comonviz.GraphController;
 import au.uq.dke.comonviz.filter.FilterManager;
 import au.uq.dke.comonviz.handler.graph.CameraDragPanHandler;
@@ -21,21 +22,9 @@ public class FlatGraph extends AbstractGraph {
 	
 	private AnimationHandler animationHandler;
 	
-	private GraphController graphController;
 	
-	public GraphController getGraphController() {
-		return graphController;
-	}
-
-	public FlatGraph(GraphController graphController) {
-		this(graphController, new DefaultGraphModel());
-		
-		this.showNodeTooltips = true;
-	}
-	
-	public FlatGraph(GraphController graphController, GraphModel model) {
-		super(model);
-		this.graphController = graphController;
+	public FlatGraph() {
+		super(EntryPoint.getGraphModel());
 		
 		setDefaultRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
 		setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);

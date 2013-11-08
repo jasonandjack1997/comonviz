@@ -16,7 +16,7 @@ import org.semanticweb.owlapi.model.OWLClass;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.NodeCollection;
 import au.uq.dke.comonviz.EntryPoint;
-import au.uq.dke.comonviz.ui.TopView;
+import au.uq.dke.comonviz.TopView;
 
 public class MyTreeItemSelectionListener implements TreeSelectionListener {
 	private NodeCollection selectedNodes;
@@ -35,7 +35,7 @@ public class MyTreeItemSelectionListener implements TreeSelectionListener {
 			DefaultMutableTreeNode selectedTreeNode = (DefaultMutableTreeNode) ((JTree)e.getSource()).getLastSelectedPathComponent();
 			GraphNode selectedGraphNode = (GraphNode) selectedTreeNode.getUserObject();
 			Object userObject = selectedGraphNode.getUserObject();
-			GraphNode realGraphNode = EntryPoint.gc.getModel().getNode(userObject);
+			GraphNode realGraphNode = EntryPoint.getGraphModel().getNode(userObject);
 			this.selectedNodes.setNode(realGraphNode);
 			Collection <OWLAnnotation> owlAnnotationSet = ((OWLClass)userObject).getAnnotations(EntryPoint.ontology);
 			if(owlAnnotationSet.size() != 0){

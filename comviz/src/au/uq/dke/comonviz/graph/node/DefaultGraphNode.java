@@ -30,7 +30,7 @@ import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLClass;
 
 import au.uq.dke.comonviz.EntryPoint;
-import au.uq.dke.comonviz.StyleManager;
+import au.uq.dke.comonviz.ui.StyleManager;
 import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNodeStyle;

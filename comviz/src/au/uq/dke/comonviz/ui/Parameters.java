@@ -1,4 +1,4 @@
-package au.uq.dke.comonviz;
+package au.uq.dke.comonviz.ui;
 
 public class Parameters {
 

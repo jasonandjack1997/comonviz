@@ -20,36 +20,39 @@ import au.uq.dke.comonviz.actions.LayoutAction;
 import au.uq.dke.comonviz.misc.OwlApi;
 import au.uq.dke.comonviz.model.AnnotationManager;
 import au.uq.dke.comonviz.treeUtils.TreeInfoManager;
-import au.uq.dke.comonviz.ui.TopView;
+import au.uq.dke.comonviz.ui.StyleManager;
 import uk.ac.manchester.cs.bhig.util.MutableTree;
 import ca.uvic.cs.chisel.cajun.constants.LayoutConstants;
 import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;
+import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
 import ca.uvic.cs.chisel.cajun.graph.Graph;
 
 public class EntryPoint {
 
 	public static OWLOntology ontology = null;
+	private final String internalOWLFilePath = "/COMON_v8_HenryNewRel.owl";
 
+	/** the graph object, performs layouts and renders the model */
+	private static FlatGraph flatGraph;
 
-	public static GraphController gc;
+	/** the model representation of the graph, nodes and edges */
+	private static ComonvizGraphModel graphModel;
 
-	public static Graph graph;
-	
-	public static JFrame frame;
+	private static TopView topView;
 
-	public static GraphController getGc() {
-		return gc;
+	private static GraphController graphController;
+
+	private static JFrame jFrame;
+
+	public static JFrame getjFrame() {
+		return jFrame;
 	}
 
-	public static MutableTree ontologyTree;
-	
-	private final String internalOWLFilePath = "/COMON_v8_HenryNewRel.owl";
-	
+	private static MutableTree ontologyTree;
+
 	public static Dimension frameSize;
 
-
 	private static AnnotationManager annotationManager;
-
 
 	public static AnnotationManager getAnnotationManager() {
 		return annotationManager;
@@ -59,49 +62,50 @@ public class EntryPoint {
      * 
      */
 	@SuppressWarnings({ "unused", "static-access", "static-access" })
-	private  void start() {
-		frame = new JFrame("CoMOnViz");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		
+	private void start() {
+		jFrame = new JFrame("CoMOnViz");
+		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Display the window.
-		frame.setMinimumSize(new Dimension(800, 600));
-		frame.pack();
-		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-		frame.setVisible(true);
-		frameSize = frame.getSize();
-		
-		try {
-			gc = new GraphController(frame);
-		} catch (OWLOntologyCreationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (OWLOntologyStorageException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		graph = gc.getGraph();
+		jFrame.setMinimumSize(new Dimension(800, 600));
+		jFrame.pack();
+		jFrame.setExtendedState(jFrame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		jFrame.setVisible(true);
+		frameSize = jFrame.getSize();
 
-		URL ontologyURL = null;
-		try {
+		graphModel = new ComonvizGraphModel();
+		flatGraph = new FlatGraph();
+		graphController = new GraphController();
+		topView = new TopView();
 
-			ontologyURL = this.getClass().getResource(internalOWLFilePath);
-			//ontologyURL = this.getClass().getResource("/annotationTest.owl");
-		} catch (NullPointerException e3) {
-			e3.printStackTrace();
-		}
-		
-		try {
-			loadOntologyFile(ontologyURL.toURI());
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		loadOntologyFile
+	}
 
+	public static OWLOntology getOntology() {
+		return ontology;
+	}
+
+	public static FlatGraph getFlatGraph() {
+		return flatGraph;
+	}
+
+	public static ComonvizGraphModel getGraphModel() {
+		return graphModel;
+	}
+
+	public static TopView getTopView() {
+		return topView;
+	}
+
+	public static GraphController getGraphController() {
+		return graphController;
+	}
+
+	public static JFrame getFrame() {
+		return jFrame;
+	}
+
+	public static MutableTree getOntologyTree() {
+		return ontologyTree;
 	}
 
 	public static void loadOntologyFile(URI uri) {
@@ -110,52 +114,54 @@ public class EntryPoint {
 		try {
 			ontology = owlapi.openOntology(uri);
 
-		} catch(IllegalArgumentException e){
+		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "This is an invalid owl file!", "Error", JOptionPane.ERROR_MESSAGE);		
+			JOptionPane.showMessageDialog(null, "This is an invalid owl file!",
+					"Error", JOptionPane.ERROR_MESSAGE);
 			return;
-		}
-		catch (OWLOntologyCreationException | OWLOntologyStorageException
+		} catch (OWLOntologyCreationException | OWLOntologyStorageException
 				| IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		// Create and set up the window.
-		annotationManager = new AnnotationManager(ontology); 
-		gc.getModel().owlOntology = EntryPoint.ontology;
+		annotationManager = new AnnotationManager(ontology);
+		graphController.getModel().owlOntology = EntryPoint.ontology;
 		// LayoutAction layoutAction =
 		// ((AbstractGraph)gc.getGraph()).getLayout(LayoutConstants.LAYOUT_SPRING);
-		LayoutAction layoutAction = ((AbstractGraph) gc.getGraph())
+		LayoutAction layoutAction = ((AbstractGraph) graphController.getGraph())
 				.getLayout(LayoutConstants.LAYOUT_RADIAL);
 
 		for (OWLClass cls : ontology.getClassesInSignature()) {
-			gc.getModel().generateNodesAndArcs(cls,
-					((AbstractGraph) gc.getGraph()).getFilterManager());
+			graphController.getModel().generateNodesAndArcs(
+					cls,
+					((AbstractGraph) graphController.getGraph())
+							.getFilterManager());
 		}
 
 		Collection nodes = null;
-		nodes = gc.getModel().getAllNodes();
+		nodes = graphController.getModel().getAllNodes();
 		TreeInfoManager treeInfoManager = TreeInfoManager.getTreeManager();
 		treeInfoManager.generateTreeInfo(nodes);
 
 		ontologyTree = treeInfoManager.getTreeRoot();
 		DefaultMutableTreeNode root = null;
 		root = TreeInfoManager.convertFromManchesterToUITreeNode(ontologyTree);
-		TopView topView = gc.getView();
+		TopView topView = graphController.getView();
 		topView.getTreeModel().setRoot(root);
 
-		StyleManager.initStyleManager(treeInfoManager.getBranchNodes(), gc
-				.getModel().getArcTypes());
-
+		StyleManager.initStyleManager(treeInfoManager.getBranchNodes(),
+				graphController.getModel().getArcTypes());
 
 		for (OWLClass cls : ontology.getClassesInSignature()) {
 
 			if (treeInfoManager.getLevel(cls) >= 2) {
-				gc.getModel().removeNode(cls);
+				graphController.getModel().removeNode(cls);
 			} else {
-				gc.getModel().hideAllDesendants(gc.getModel().getNode(cls));
-				gc.getModel().show(cls,
-						((AbstractGraph) graph).getFilterManager());
+				graphController.getModel().hideAllDesendants(
+						graphController.getModel().getNode(cls));
+				graphController.getModel().show(cls,
+						EntryPoint.getFlatGraph().getFilterManager());
 			}
 		}
 
@@ -173,8 +179,6 @@ public class EntryPoint {
 				new EntryPoint().start();
 			}
 		});
-		
-
 
 	}
 

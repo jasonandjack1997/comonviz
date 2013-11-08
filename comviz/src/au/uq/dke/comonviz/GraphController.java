@@ -46,7 +46,6 @@ import au.uq.dke.comonviz.graph.ProtegeInputEventHandler;
 import au.uq.dke.comonviz.graph.arc.DefaultGraphArcStyle;
 import au.uq.dke.comonviz.graph.node.DefaultGraphNode;
 import au.uq.dke.comonviz.graph.node.DefaultGraphNodeStyle;
-import au.uq.dke.comonviz.ui.TopView;
 import ca.uvic.cs.chisel.cajun.constants.LayoutConstants;
 import uk.ac.manchester.cs.bhig.util.MutableTree;
 import edu.umd.cs.piccolo.util.PBounds;
@@ -69,7 +68,7 @@ public class GraphController {
 	private FlatGraph graph;
 
 	/** the model representation of the graph, nodes and edges */
-	public static ProtegeGraphModel model;
+	public static ComonvizGraphModel model;
 	
 	/** the panel that renders the graph view */
 	private TopView view;
@@ -95,10 +94,10 @@ public class GraphController {
 		this.treeOntology = treeOntology;
 	}
 
-	public GraphController(Container parentContainer) throws OWLOntologyCreationException, OWLOntologyStorageException, IOException {
+	public GraphController() {
 		
-		model = new ProtegeGraphModel();
-		this.graph = new FlatGraph(this, model);
+		this.model = EntryPoint.getGraphModel();
+		this.graph = EntryPoint.getFlatGraph();
 		this.graph.setShowNodeTooltips(true);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = (int) screenSize.getWidth();
@@ -106,48 +105,47 @@ public class GraphController {
 
 		this.graph.setBounds(0, 0, width, height);
 
-		this.view = new TopView(this.graph);
 
-		// show the plus icon for expandable nodes
-		DefaultGraphNodeStyle nodeStyle = new DefaultGraphNodeStyle() {
-			public Collection<Icon> getOverlayIcons(GraphNode graphNode) {
-				if (model.isExpandable(graphNode) && !model.isExpanded(graphNode)) {
-					Collection<Icon> icons = new ArrayList<Icon>();
-					icons.add(IconConstants.ICON_PLUS);
+//		// show the plus icon for expandable nodes
+//		DefaultGraphNodeStyle nodeStyle = new DefaultGraphNodeStyle() {
+//			public Collection<Icon> getOverlayIcons(GraphNode graphNode) {
+//				if (model.isExpandable(graphNode) && !model.isExpanded(graphNode)) {
+//					Collection<Icon> icons = new ArrayList<Icon>();
+//					icons.add(IconConstants.ICON_PLUS);
+//
+//					return icons;
+//				}
+//
+//				return null;
+//			}
+//		};
+//		nodeStyle.setNodeTypes(model.getNodeTypes());
+//		this.graph.setGraphNodeStyle(nodeStyle);
+//
+//		// color the arcs based on arc type
+//		DefaultGraphArcStyle arcStyle = new DefaultGraphArcStyle() {
+//			public Stroke getStroke(GraphArc arc) {
+//				if (arc.getType().toString().contains(ComonvizGraphModel.DIRECT_SUBCLASS_SLOT_TYPE) || arc.getType().toString().contains(ComonvizGraphModel.DIRECT_INDIVIDUAL_SLOT_TYPE)) {
+//					setDashed(false);
+//				} else {
+//					setDashed(true);
+//					if (arc.getType().toString().contains("Equivalent")) {
+//						setDashedCapSquare(BasicStroke.CAP_ROUND);
+//						setDashWidth(2f);
+//					}
+//					else {
+//						setDashedCapSquare(BasicStroke.CAP_SQUARE);
+//						setDashWidth(10f);
+//					}
+//				}
+//
+//				return super.getStroke(arc);
+//			}
+//		};
+//		arcStyle.setArcTypes(model.getArcTypes());
+//		this.graph.setGraphArcStyle(arcStyle);
 
-					return icons;
-				}
-
-				return null;
-			}
-		};
-		nodeStyle.setNodeTypes(model.getNodeTypes());
-		this.graph.setGraphNodeStyle(nodeStyle);
-
-		// color the arcs based on arc type
-		DefaultGraphArcStyle arcStyle = new DefaultGraphArcStyle() {
-			public Stroke getStroke(GraphArc arc) {
-				if (arc.getType().toString().contains(ProtegeGraphModel.DIRECT_SUBCLASS_SLOT_TYPE) || arc.getType().toString().contains(ProtegeGraphModel.DIRECT_INDIVIDUAL_SLOT_TYPE)) {
-					setDashed(false);
-				} else {
-					setDashed(true);
-					if (arc.getType().toString().contains("Equivalent")) {
-						setDashedCapSquare(BasicStroke.CAP_ROUND);
-						setDashWidth(2f);
-					}
-					else {
-						setDashedCapSquare(BasicStroke.CAP_SQUARE);
-						setDashWidth(10f);
-					}
-				}
-
-				return super.getStroke(arc);
-			}
-		};
-		arcStyle.setArcTypes(model.getArcTypes());
-		this.graph.setGraphArcStyle(arcStyle);
-
-		initialize(parentContainer);
+		initialize();
 		
 		this.graph.addLayoutListener(new ProgressListener() {
 			public void progressEnded(ProgressEvent arg0) {
@@ -168,7 +166,7 @@ public class GraphController {
 		});
 	}
 
-	public ProtegeGraphModel getModel() {
+	public ComonvizGraphModel getModel() {
 		return model;
 	}
 
@@ -302,11 +300,11 @@ public class GraphController {
 		return searchString;
 	}
 
-	private void initialize(Container parentContainer) {
+	private void initialize() {
 		// setup the layouts
 		List<Object> layoutRelTypes = new ArrayList<Object>();
-		layoutRelTypes.add(ProtegeGraphModel.DIRECT_SUBCLASS_SLOT_TYPE);
-		layoutRelTypes.add(ProtegeGraphModel.DIRECT_INDIVIDUAL_SLOT_TYPE);
+		layoutRelTypes.add(ComonvizGraphModel.DIRECT_SUBCLASS_SLOT_TYPE);
+		layoutRelTypes.add(ComonvizGraphModel.DIRECT_INDIVIDUAL_SLOT_TYPE);
 		for (LayoutAction layoutAction : graph.getLayouts()) {
 			if (layoutAction.getName().equals(LayoutConstants.LAYOUT_TREE_HORIZONTAL)) {
 				layoutAction.setLayout(new HorizontalDirectedGraphLayoutAlgorithm());
@@ -317,10 +315,6 @@ public class GraphController {
 				layoutAction.setLayoutRelTypes(layoutRelTypes);
 			}
 		}
-
-		view = new TopView(graph);
-
-		parentContainer.add(view, BorderLayout.CENTER);
 
 		initNodeMenu(graph.getNodeContextMenu());
 		graph.addInputEventListener(new ProtegeInputEventHandler(model, graph));
