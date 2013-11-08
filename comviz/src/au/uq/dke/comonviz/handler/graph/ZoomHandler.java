@@ -2,7 +2,6 @@ package au.uq.dke.comonviz.handler.graph;
 
 import java.awt.event.KeyEvent;
 
-import ca.uvic.cs.chisel.cajun.graph.handlers.PNormalZoomHandler;
 import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
 import edu.umd.cs.piccolo.event.PInputEvent;

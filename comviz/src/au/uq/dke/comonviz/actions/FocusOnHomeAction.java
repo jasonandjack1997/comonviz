@@ -1,6 +1,5 @@
 package au.uq.dke.comonviz.actions;
 
-import ca.uvic.cs.chisel.cajun.actions.CajunAction;
 import ca.uvic.cs.chisel.cajun.graph.util.AnimationHandler;
 import ca.uvic.cs.chisel.cajun.resources.ResourceHandler;
 

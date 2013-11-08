@@ -20,7 +20,6 @@ import java.util.Map;
 
 import javax.swing.Icon;
 
-import ca.uvic.cs.chisel.cajun.graph.node.DefaultGraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNodeStyle;
 import ca.uvic.cs.chisel.cajun.util.GraphicsUtils;

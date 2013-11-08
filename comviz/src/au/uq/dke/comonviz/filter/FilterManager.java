@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 import au.uq.dke.comonviz.filter.FilterChangedEvent;
-import ca.uvic.cs.chisel.cajun.filter.GraphFilter;
 import ca.uvic.cs.chisel.cajun.graph.Graph;
 import ca.uvic.cs.chisel.cajun.graph.GraphItem;
 import ca.uvic.cs.chisel.cajun.graph.GraphModel;
