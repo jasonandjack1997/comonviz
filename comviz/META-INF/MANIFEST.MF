@@ -47,7 +47,7 @@ Require-Bundle: org.protege.common,
  org.protege.editor.owl,
  org.semanticweb.owl.owlapi,
  ca.uvic.cs.chisel.cajun
-Export-Package: ca.uvic.cs.chisel.cajun.actions;version="1.0.0.2012_05_09_0523";
+Export-Package: au.uq.dke.comonviz.actions;version="1.0.0.2012_05_09_0523";
   uses:="ca.uvic.cs.chisel.cajun.graph,
    ca.uvic.cs.chisel.cajun.graph.node,
    ca.uvic.cs.chisel.cajun.graph.util,
@@ -56,8 +56,8 @@ Export-Package: ca.uvic.cs.chisel.cajun.actions;version="1.0.0.2012_05_09_0523";
    javax.swing,
    org.eclipse.zest.layouts,
    org.eclipse.zest.layouts.progress",
+ au.uq.dke.comonviz.filter;version="1.0.0.2012_05_09_0523";uses:="ca.uvic.cs.chisel.cajun.graph",
  ca.uvic.cs.chisel.cajun.constants;version="1.0.0.2012_05_09_0523",
- ca.uvic.cs.chisel.cajun.filter;version="1.0.0.2012_05_09_0523";uses:="ca.uvic.cs.chisel.cajun.graph",
  ca.uvic.cs.chisel.cajun.graph;version="1.0.0.2012_05_09_0523";
   uses:="ca.uvic.cs.chisel.cajun.actions,
    ca.uvic.cs.chisel.cajun.filter,

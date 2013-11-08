@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
-import comonviz.OwlApi;
+import au.uq.dke.comonviz.misc.OwlApi;
 
 public class OwlApiTest {
 

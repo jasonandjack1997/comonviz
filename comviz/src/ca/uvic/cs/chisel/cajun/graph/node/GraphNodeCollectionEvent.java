@@ -2,6 +2,9 @@ package ca.uvic.cs.chisel.cajun.graph.node;
 
 import java.util.Collection;
 
+import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
+import ca.uvic.cs.chisel.cajun.graph.node.NodeCollection;
+
 /**
  * Contains the added nodes and removed nodes from a {@link NodeCollection}.
  *

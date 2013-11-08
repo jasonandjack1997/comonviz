@@ -4,6 +4,7 @@ import java.awt.Paint;
 import java.awt.Stroke;
 
 import ca.uvic.cs.chisel.cajun.graph.GraphItemStyle;
+import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
 
 /**
  * Defines the colors and strokes for graph arcs.

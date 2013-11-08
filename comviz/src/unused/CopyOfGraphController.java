@@ -34,6 +34,9 @@ import org.protege.ontograf.common.util.IconConstants;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntity;
 
+import comonviz.graph.arc.DefaultGraphArcStyle;
+import comonviz.graph.arc.GraphArc;
+
 import ca.uvic.cs.chisel.cajun.actions.CajunAction;
 import ca.uvic.cs.chisel.cajun.actions.LayoutAction;
 import ca.uvic.cs.chisel.cajun.constants.LayoutConstants;
@@ -41,8 +44,6 @@ import ca.uvic.cs.chisel.cajun.filter.FilterChangedEvent;
 import ca.uvic.cs.chisel.cajun.filter.FilterChangedListener;
 import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
 import ca.uvic.cs.chisel.cajun.graph.Graph;
-import ca.uvic.cs.chisel.cajun.graph.arc.DefaultGraphArcStyle;
-import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
 import ca.uvic.cs.chisel.cajun.graph.node.DefaultGraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.DefaultGraphNodeStyle;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;

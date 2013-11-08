@@ -12,10 +12,10 @@ import java.util.Set;
 
 import javax.swing.Icon;
 
-import ca.uvic.cs.chisel.cajun.graph.arc.DefaultGraphArc;
 import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
-import ca.uvic.cs.chisel.cajun.graph.node.DefaultGraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
+import au.uq.dke.comonviz.graph.arc.DefaultGraphArc;
+import au.uq.dke.comonviz.graph.node.DefaultGraphNode;
 
 public class DefaultGraphModel implements GraphModel {
 

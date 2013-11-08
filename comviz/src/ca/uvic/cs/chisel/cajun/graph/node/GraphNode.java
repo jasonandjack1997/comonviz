@@ -7,6 +7,7 @@ import org.eclipse.zest.layouts.LayoutEntity;
 
 import ca.uvic.cs.chisel.cajun.graph.GraphItem;
 import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
+import ca.uvic.cs.chisel.cajun.graph.node.GraphNodeStyle;
 
 public interface GraphNode extends GraphItem, LayoutEntity {
 

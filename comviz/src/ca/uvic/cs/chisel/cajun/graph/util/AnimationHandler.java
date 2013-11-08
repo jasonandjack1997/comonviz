@@ -6,8 +6,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import au.uq.dke.comonviz.handler.graph.PNormalZoomHandler;
 import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;
-import ca.uvic.cs.chisel.cajun.graph.handlers.PNormalZoomHandler;
 import ca.uvic.cs.chisel.cajun.util.GeometryUtils;
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PLayer;

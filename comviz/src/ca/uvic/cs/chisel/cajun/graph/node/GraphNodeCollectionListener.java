@@ -1,5 +1,8 @@
 package ca.uvic.cs.chisel.cajun.graph.node;
 
+import ca.uvic.cs.chisel.cajun.graph.node.GraphNodeCollectionEvent;
+import ca.uvic.cs.chisel.cajun.graph.node.NodeCollection;
+
 /**
  * Notifies listeners that the {@link NodeCollection} changed.
  *

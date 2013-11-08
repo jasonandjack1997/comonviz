@@ -7,11 +7,11 @@ import java.util.Collection;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 
-import ca.uvic.cs.chisel.cajun.actions.LayoutAction;
 import ca.uvic.cs.chisel.cajun.graph.arc.GraphArcStyle;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNodeCollectionListener;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNodeStyle;
+import au.uq.dke.comonviz.actions.LayoutAction;
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.event.PInputEventListener;
 

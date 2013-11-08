@@ -17,12 +17,13 @@ import org.protege.ontograf.common.util.OWLIconProviderImpl;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLOntology;
 
+import comonviz.graph.arc.DefaultGraphArc;
+import comonviz.graph.arc.GraphArc;
+
 import ca.uvic.cs.chisel.cajun.actions.LayoutAction;
 import ca.uvic.cs.chisel.cajun.constants.LayoutConstants;
 import ca.uvic.cs.chisel.cajun.graph.DefaultGraphModel;
 import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
-import ca.uvic.cs.chisel.cajun.graph.arc.DefaultGraphArc;
-import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import ca.uvic.cs.chisel.cajun.graph.ui.DefaultFlatGraphView;
 

@@ -12,6 +12,7 @@ import java.util.Collection;
 import javax.swing.Icon;
 
 import ca.uvic.cs.chisel.cajun.graph.GraphItemStyle;
+import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 
 public interface GraphNodeStyle extends GraphItemStyle {
 

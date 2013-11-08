@@ -1,16 +1,15 @@
 package ca.uvic.cs.chisel.cajun.graph;
 
-import org.protege.ontograf.common.GraphController;
-
-import ca.uvic.cs.chisel.cajun.filter.FilterManager;
-import ca.uvic.cs.chisel.cajun.graph.handlers.CameraDragPanHandler;
-import ca.uvic.cs.chisel.cajun.graph.handlers.CameraKeyPanHandler;
-import ca.uvic.cs.chisel.cajun.graph.handlers.FocusOnExtentsHandler;
-import ca.uvic.cs.chisel.cajun.graph.handlers.HighlightHandler;
-import ca.uvic.cs.chisel.cajun.graph.handlers.NodeDragHandler;
-import ca.uvic.cs.chisel.cajun.graph.handlers.NodeSelectionHandler;
-import ca.uvic.cs.chisel.cajun.graph.handlers.RotationHandler;
-import ca.uvic.cs.chisel.cajun.graph.handlers.ZoomHandler;
+import au.uq.dke.comonviz.GraphController;
+import au.uq.dke.comonviz.filter.FilterManager;
+import au.uq.dke.comonviz.handler.graph.CameraDragPanHandler;
+import au.uq.dke.comonviz.handler.graph.CameraKeyPanHandler;
+import au.uq.dke.comonviz.handler.graph.FocusOnExtentsHandler;
+import au.uq.dke.comonviz.handler.graph.HighlightHandler;
+import au.uq.dke.comonviz.handler.graph.NodeDragHandler;
+import au.uq.dke.comonviz.handler.graph.NodeSelectionHandler;
+import au.uq.dke.comonviz.handler.graph.RotationHandler;
+import au.uq.dke.comonviz.handler.graph.ZoomHandler;
 import ca.uvic.cs.chisel.cajun.graph.util.AnimationHandler;
 import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.util.PPaintContext;

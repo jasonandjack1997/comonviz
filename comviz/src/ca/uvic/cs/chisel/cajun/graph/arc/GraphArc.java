@@ -5,6 +5,7 @@ import javax.swing.Icon;
 import org.eclipse.zest.layouts.LayoutRelationship;
 
 import ca.uvic.cs.chisel.cajun.graph.GraphItem;
+import ca.uvic.cs.chisel.cajun.graph.arc.GraphArcStyle;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 
 public interface GraphArc extends GraphItem, LayoutRelationship {
