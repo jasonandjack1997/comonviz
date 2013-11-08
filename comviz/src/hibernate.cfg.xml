@@ -5,9 +5,9 @@
 
 
         <!-- Database connection settings -->
-        <property name="connection.driver_class">org.hsqldb.jdbcDriver</property>
-        <property name="connection.url">jdbc:hsqldb:data/tutorial</property>
-        <property name="connection.username">sa</property>
+        <property name="connection.driver_class">org.sqlite.JDBC</property>
+        <property name="connection.url">jdbc:sqlite:sqliteTest</property>
+        <property name="connection.username"></property>
         <property name="connection.password"></property>
 
         <!-- JDBC connection pool (use the built-in) -->
@@ -25,7 +25,7 @@
 
 
 	
-		<mapping class="hibernate.test.User"></mapping>
+		<mapping class="test.hibernate.test.User2"></mapping>
 
 	</session-factory>
 

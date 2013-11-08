@@ -1261,7 +1261,7 @@ public class OwlApi {
 		for (Iterator<OWLClass> it = node.getEntities().iterator(); it
 				.hasNext();) {
 			OWLClass cls = it.next();
-			// User a prefix manager to provide a slightly nicer shorter name
+			// User2 a prefix manager to provide a slightly nicer shorter name
 			System.out.print(pm.getShortForm(cls));
 			if (it.hasNext()) {
 				System.out.print(" ");

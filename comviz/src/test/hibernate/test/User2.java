@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity(name = "User_table")
-public class User {
+public class User2 {
 	@Id
 	int userId;
 	@Column(name = "User_Name")

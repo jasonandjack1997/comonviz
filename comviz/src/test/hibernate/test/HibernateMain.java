@@ -15,11 +15,11 @@ public class HibernateMain {
   ServiceRegistry sr= new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();  
   SessionFactory sf=configuration.buildSessionFactory(sr);  
     
-  User user1=new User();  
+  User2 user1=new User2();  
   user1.setUserName("Arpit");  
   user1.setUserMessage("Hello world from arpit");  
     
-  User user2=new User();  
+  User2 user2=new User2();  
   user2.setUserName("Ankita");  
   user2.setUserMessage("Hello world from ankita");  
   Session ss=sf.openSession();  
