@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+<class name = "database.Trackable" abstract = "true">
+<id name = "id" column = "id"></id>
+<property name="creationDateTime" column = "creationDateTime"></property>
+<property name="modificationDateTime" column = "modificationDateTime"></property>
+<property name="creationUserId" column = "creationUserId"></property>
+<property name="modificationUserId" column = "modificationUserId"></property>
+
+</class>
+
+<union-subclass name = "database.TrackableDatabaseEntity" abstract = "true" extends = "database.Trackable">
+<property name = "name" column = "name"></property>
+<property name = "description" column = "description"></property>
+<property name = "description" column = "description"></property>
+
+</union-subclass>
+
+
+</hibernate-mapping>
