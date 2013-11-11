@@ -1,6 +1,6 @@
 package database.model.user;
 
-import database.model.TrackableDatabaseEntity;
+import unused.TrackableDatabaseEntity;
 
 public class Role extends TrackableDatabaseEntity{
 }

@@ -182,7 +182,7 @@ public class EntryPoint {
 
 		topView.changeDividerLocation();
 		layoutAction.doAction();
-
+		
 	}
 
 	public static void main(String[] args) {

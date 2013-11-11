@@ -2,10 +2,19 @@ package database.model.ontology;
 
 import java.sql.Timestamp;
 
-import database.model.Trackable;
 
-public class Relationship extends Trackable{
+
+public class Relationship{
 	
+	private String discription;
+
+	public String getDiscription() {
+		return discription;
+	}
+
+	public void setDiscription(String discription) {
+		this.discription = discription;
+	}
 	private Long srcClassId;
 	private Long dstClassId;
 	private Long axiomId;
