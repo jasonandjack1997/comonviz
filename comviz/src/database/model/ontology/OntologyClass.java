@@ -11,57 +11,66 @@ import javax.persistence.PrimaryKeyJoinColumn;
 
 import database.model.Trackable;
 
-
 @Entity
-@PrimaryKeyJoinColumn(name="ID")
-public class OntologyClass  extends Trackable{
-	public String getIri() {
-		return iri;
-	}
-	public int getLevel() {
-		return level;
-	}
-	public int getSiblingRank() {
-		return siblingRank;
-	}
+@PrimaryKeyJoinColumn(name = "ID")
+public class OntologyClass extends Trackable {
+	private Long branchId;
+	@Column(columnDefinition = "TEXT")
+	private String discription;
+	private String iri;
+	private int level;
+	private String name;
+	private int siblingRank;
+
 	public Long getBranchId() {
 		return branchId;
 	}
-	public void setIri(String iri) {
-		this.iri = iri;
+
+	public String getDiscription() {
+		return discription;
 	}
-	public void setLevel(int level) {
-		this.level = level;
+
+	public String getIri() {
+		return iri;
 	}
-	public void setSiblingRank(int order) {
-		this.siblingRank = order;
+
+	public int getLevel() {
+		return level;
 	}
-	public void setBranchId(Long branchId) {
-		this.branchId = branchId;
-	}
-	private String name;
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public int getSiblingRank() {
+		return siblingRank;
 	}
-	@Column(columnDefinition="TEXT")
-	private String discription;
 
-	public String getDiscription() {
-		return discription;
+	public void setBranchId(Long branchId) {
+		this.branchId = branchId;
 	}
 
 	public void setDiscription(String discription) {
 		this.discription = discription;
 	}
 
-	private String iri;
-	private int level;
-	private int siblingRank;
-	private Long branchId;
-	
+	public void setIri(String iri) {
+		this.iri = iri;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setSiblingRank(int order) {
+		this.siblingRank = order;
+	}
+	public String toString(){
+		return super.toString() + ", iri: " + iri;
+	}
+
 }

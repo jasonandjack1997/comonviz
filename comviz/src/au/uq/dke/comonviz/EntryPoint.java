@@ -6,6 +6,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collection;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -16,16 +17,15 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
+import uk.ac.manchester.cs.bhig.util.MutableTree;
 import au.uq.dke.comonviz.actions.LayoutAction;
 import au.uq.dke.comonviz.misc.OwlApi;
 import au.uq.dke.comonviz.model.AnnotationManager;
 import au.uq.dke.comonviz.treeUtils.TreeInfoManager;
 import au.uq.dke.comonviz.ui.StyleManager;
-import uk.ac.manchester.cs.bhig.util.MutableTree;
 import ca.uvic.cs.chisel.cajun.constants.LayoutConstants;
 import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;
 import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
-import ca.uvic.cs.chisel.cajun.graph.Graph;
 
 public class EntryPoint {
 
@@ -158,6 +158,7 @@ public class EntryPoint {
 		nodes = graphController.getModel().getAllNodes();
 		TreeInfoManager treeInfoManager = TreeInfoManager.getTreeManager();
 		treeInfoManager.generateTreeInfo(nodes);
+		
 
 		ontologyTree = treeInfoManager.getTreeRoot();
 		DefaultMutableTreeNode root = null;
@@ -168,21 +169,25 @@ public class EntryPoint {
 		StyleManager.initStyleManager(treeInfoManager.getBranchNodes(),
 				graphController.getModel().getArcTypes());
 
-		for (OWLClass cls : ontology.getClassesInSignature()) {
-
-			if (treeInfoManager.getLevel(cls) >= 2) {
-				graphController.getModel().removeNode(cls);
-			} else {
-				graphController.getModel().hideAllDesendants(
-						graphController.getModel().getNode(cls));
-				graphController.getModel().show(cls,
-						EntryPoint.getFlatGraph().getFilterManager());
-			}
-		}
-
+//		for (OWLClass cls : ontology.getClassesInSignature()) {
+//
+//			if (treeInfoManager.getLevel(cls) >= 2) {
+//				graphController.getModel().removeNode(cls);
+//			} else {
+//				graphController.getModel().hideAllDesendants(
+//						graphController.getModel().getNode(cls));
+//				graphController.getModel().show(cls,
+//						EntryPoint.getFlatGraph().getFilterManager());
+//			}
+//		}
+//
 		topView.changeDividerLocation();
 		layoutAction.doAction();
 		
+		Collection arcs = EntryPoint.getGraphModel().getAllArcs();
+		Collection visableArcs = EntryPoint.getGraphModel().getVisibleArcs();
+		Collection arcTypes = EntryPoint.getGraphModel().getArcTypes();
+		return;
 	}
 
 	public static void main(String[] args) {

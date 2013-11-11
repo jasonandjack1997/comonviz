@@ -187,6 +187,7 @@ public class ComonvizGraphModel extends DefaultGraphModel {
 		Set<GraphArc> incomingArcs = new HashSet<GraphArc>();
 
 		incomingArcs.addAll(loadParents2(entityOfInterest, mustBeVisible));
+		//incomingArcs.addAll(loadParents(entityOfInterest, mustBeVisible));
 		incomingArcs.addAll(loadDomainRangeRels(entityOfInterest, false,
 				mustBeVisible));
 		incomingArcs.addAll(findIncomingIndividualRelationships(
@@ -204,6 +205,7 @@ public class ComonvizGraphModel extends DefaultGraphModel {
 		Set<GraphArc> outgoingRels = new HashSet<GraphArc>();
 
 		outgoingRels.addAll(loadChildren2(entityOfInterest, mustBeVisible));
+		//outgoingRels.addAll(loadChildren(entityOfInterest, mustBeVisible));
 		outgoingRels.addAll(loadDomainRangeRels(entityOfInterest, true,
 				mustBeVisible));
 		outgoingRels.addAll(findOutgoingIndividualRelationships(

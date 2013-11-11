@@ -14,10 +14,10 @@ import database.dao.OntologyAxiomDAO;
 import database.model.ontology.OntologyAxiom;
 
 /**
- * This is the implementation for our OntologyAxiom Service. The @Service annotation
- * allows Spring to automatically detect this as a component rather than having
- * to comfigure it in XML. The @Autowired annotation tells Spring to inject our
- * OntologyAxiom DAO using the setDao() method.
+ * This is the implementation for our OntologyAxiom Service. The @Service
+ * annotation allows Spring to automatically detect this as a component rather
+ * than having to comfigure it in XML. The @Autowired annotation tells Spring to
+ * inject our OntologyAxiom DAO using the setDao() method.
  * 
  * @author dwolverton
  * 
@@ -27,6 +27,18 @@ import database.model.ontology.OntologyAxiom;
 public class OntologyAxiomService {
 
 	OntologyAxiomDAO dao;
+
+	public void deleteAll() {
+		List<OntologyAxiom> axiomList = dao.findAll();
+		for(OntologyAxiom axiom: axiomList){
+			dao.remove(axiom);
+		}
+	}
+	
+	public void delete(OntologyAxiom axiom){
+		dao.remove(axiom);
+		
+	}
 
 	@Autowired
 	public void setDao(OntologyAxiomDAO dao) {

@@ -1,5 +1,6 @@
 package database.model.ontology;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 
@@ -10,6 +11,14 @@ import database.model.Trackable;
 @PrimaryKeyJoinColumn(name="ID")
 public class OntologyRelationship extends Trackable {
 	
+	@Column(columnDefinition = "TEXT")
+	private String key;
+	public String getKey() {
+		return key;
+	}
+	public void setKey(String key) {
+		this.key = key;
+	}
 	private Long srcClassId;
 	private Long dstClassId;
 	private Long axiomId;

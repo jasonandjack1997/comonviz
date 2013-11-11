@@ -11,6 +11,7 @@ import com.googlecode.genericdao.search.Search;
 import com.googlecode.genericdao.search.SearchResult;
 
 import database.dao.OntologyRelationshipDAO;
+import database.model.ontology.OntologyAxiom;
 import database.model.ontology.OntologyRelationship;
 
 /**
@@ -31,6 +32,18 @@ public class OntologyRelationshipService {
 	@Autowired
 	public void setDao(OntologyRelationshipDAO dao) {
 		this.dao = dao;
+	}
+
+	public void deleteAll() {
+		List<OntologyRelationship> relationshipList = dao.findAll();
+		for(OntologyRelationship relationship: relationshipList){
+			dao.remove(relationship);
+		}
+	}
+	
+	public void delete(OntologyRelationship relationship){
+		dao.remove(relationship);
+		
 	}
 
 	public void save(OntologyRelationship ontologyRelationship) {
