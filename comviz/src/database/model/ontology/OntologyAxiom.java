@@ -1,9 +1,9 @@
-package database.ontology;
+package database.model.ontology;
 
 import java.sql.Timestamp;
 
-import database.Trackable;
-import database.TrackableDatabaseEntity;
+import database.model.Trackable;
+import database.model.TrackableDatabaseEntity;
 
 public class OntologyAxiom extends TrackableDatabaseEntity{
 	private String iri;

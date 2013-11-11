@@ -1,8 +1,8 @@
-package database.ontology;
+package database.model.ontology;
 
 import java.sql.Timestamp;
 
-import database.Trackable;
+import database.model.Trackable;
 
 public class Relationship extends Trackable{
 	

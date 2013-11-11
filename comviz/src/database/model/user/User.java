@@ -1,6 +1,6 @@
-package database.user;
+package database.model.user;
 
-import database.TrackableDatabaseEntity;
+import database.model.TrackableDatabaseEntity;
 
 public class User extends TrackableDatabaseEntity{
 
