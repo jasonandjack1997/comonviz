@@ -2,34 +2,27 @@ package database.model.ontology;
 
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrimaryKeyJoinColumn;
+
+import database.model.Trackable;
 
 
-//@Entity
-public class OntologyClass{
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+@Entity
+@PrimaryKeyJoinColumn(name="ID")
+public class OntologyClass  extends Trackable{
 	public String getIri() {
 		return iri;
 	}
 	public int getLevel() {
 		return level;
 	}
-	public int getOrder() {
-		return order;
+	public int getSiblingRank() {
+		return siblingRank;
 	}
 	public Long getBranchId() {
 		return branchId;
@@ -40,8 +33,8 @@ public class OntologyClass{
 	public void setLevel(int level) {
 		this.level = level;
 	}
-	public void setOrder(int order) {
-		this.order = order;
+	public void setSiblingRank(int order) {
+		this.siblingRank = order;
 	}
 	public void setBranchId(Long branchId) {
 		this.branchId = branchId;
@@ -55,6 +48,7 @@ public class OntologyClass{
 	public void setName(String name) {
 		this.name = name;
 	}
+	@Column(columnDefinition="TEXT")
 	private String discription;
 
 	public String getDiscription() {
@@ -67,7 +61,7 @@ public class OntologyClass{
 
 	private String iri;
 	private int level;
-	private int order;
+	private int siblingRank;
 	private Long branchId;
 	
 }

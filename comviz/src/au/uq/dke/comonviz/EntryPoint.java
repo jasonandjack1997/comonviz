@@ -62,7 +62,7 @@ public class EntryPoint {
      * 
      */
 	@SuppressWarnings({ "unused", "static-access", "static-access" })
-	private void start() {
+	public void start() {
 		jFrame = new JFrame("CoMOnViz");
 		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Display the window.
@@ -186,14 +186,15 @@ public class EntryPoint {
 	}
 
 	public static void main(String[] args) {
+		new EntryPoint().start();
 		// TODO Auto-generated method stub
 		// Schedule a job for the event-dispatching thread:
 		// creating and showing this application's GUI.
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				new EntryPoint().start();
-			}
-		});
+//		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+//			public void run() {
+//				new EntryPoint().start();
+//			}
+//		});
 
 	}
 

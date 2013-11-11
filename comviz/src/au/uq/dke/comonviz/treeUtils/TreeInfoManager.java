@@ -25,7 +25,11 @@ public class TreeInfoManager {
         
         private static Map<Object, EntityTreeInfo> entityTreeInfoMap;
         
-        private static List<MutableTree> branchNodes;
+        public static Map<Object, EntityTreeInfo> getEntityTreeInfoMap() {
+			return entityTreeInfoMap;
+		}
+
+		private static List<MutableTree> branchNodes;
         
         public static Collection<MutableTree> getBranchNodes() {
 			return branchNodes;
@@ -72,7 +76,7 @@ public class TreeInfoManager {
                 List<GraphNode> localNodeList = new ArrayList();
                 localNodeList.addAll(nodes);
                 
-                //ç�?Ÿæˆ�ä¸€ä¸ªtreeList
+                //莽锟�鸥忙藛锟矫ぢ糕偓盲赂陋treeList
                 List<MutableTree> treeNodeList = new ArrayList();
                 
                 

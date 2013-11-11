@@ -1,20 +1,15 @@
 package database.model.ontology;
 
-import java.sql.Timestamp;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+
+import database.model.Trackable;
 
 
-
-public class Relationship{
+@Entity
+@PrimaryKeyJoinColumn(name="ID")
+public class OntologyRelationship extends Trackable {
 	
-	private String discription;
-
-	public String getDiscription() {
-		return discription;
-	}
-
-	public void setDiscription(String discription) {
-		this.discription = discription;
-	}
 	private Long srcClassId;
 	private Long dstClassId;
 	private Long axiomId;
@@ -43,5 +38,4 @@ public class Relationship{
 	public void setBidirection(boolean isBidirection) {
 		this.isBidirection = isBidirection;
 	}
-
 }
