@@ -943,6 +943,8 @@ public class OwlApi {
 		// assertion axiom matthew --> hasFather --> peter
 		OWLObjectPropertyAssertionAxiom assertion = dataFactory
 				.getOWLObjectPropertyAssertionAxiom(hasFather, matthew, peter);
+		
+		
 		// Finally, add the axiom to our ontology and save
 		AddAxiom addAxiomChange = new AddAxiom(ont, assertion);
 		man.applyChange(addAxiomChange);

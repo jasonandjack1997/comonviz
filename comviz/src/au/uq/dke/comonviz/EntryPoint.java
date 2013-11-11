@@ -169,18 +169,18 @@ public class EntryPoint {
 		StyleManager.initStyleManager(treeInfoManager.getBranchNodes(),
 				graphController.getModel().getArcTypes());
 
-//		for (OWLClass cls : ontology.getClassesInSignature()) {
-//
-//			if (treeInfoManager.getLevel(cls) >= 2) {
-//				graphController.getModel().removeNode(cls);
-//			} else {
-//				graphController.getModel().hideAllDesendants(
-//						graphController.getModel().getNode(cls));
-//				graphController.getModel().show(cls,
-//						EntryPoint.getFlatGraph().getFilterManager());
-//			}
-//		}
-//
+		for (OWLClass cls : ontology.getClassesInSignature()) {
+
+			if (treeInfoManager.getLevel(cls) >= 1) {
+				graphController.getModel().removeNode(cls);
+			} else {
+				graphController.getModel().hideAllDesendants(
+						graphController.getModel().getNode(cls));
+				graphController.getModel().show(cls,
+						EntryPoint.getFlatGraph().getFilterManager());
+			}
+		}
+
 		topView.changeDividerLocation();
 		layoutAction.doAction();
 		

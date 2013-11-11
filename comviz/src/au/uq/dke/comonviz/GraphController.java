@@ -267,7 +267,7 @@ public class GraphController {
 		}
 	}
 	
-	private void panTo(DefaultGraphNode node) {
+	public void panTo(DefaultGraphNode node) {
 		if(node != null) {
 			double x = node.getFullBoundsReference().getX();
 			double y = node.getFullBoundsReference().getY();

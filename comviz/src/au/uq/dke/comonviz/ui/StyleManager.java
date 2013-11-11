@@ -44,7 +44,7 @@ public class StyleManager {
 	private static int MAX_ALPHA = 255;
 	private static int MIN_ALPHA = 50;
 	
-	private final static int defultArcColorCount = 5;
+	private final static int defultArcColorCount = 25;
 	private static Color[] defaultArcColors;
 
 	public static final Color DEFAULT_TOOLTIP_BACKGROUND_COLOR = new Color(255, 255, 225);//standard tooltip color in eclipse editor

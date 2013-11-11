@@ -17,6 +17,7 @@ import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.NodeCollection;
 import au.uq.dke.comonviz.EntryPoint;
 import au.uq.dke.comonviz.TopView;
+import au.uq.dke.comonviz.graph.node.DefaultGraphNode;
 
 public class MyTreeItemSelectionListener implements TreeSelectionListener {
 	private NodeCollection selectedNodes;
@@ -47,6 +48,8 @@ public class MyTreeItemSelectionListener implements TreeSelectionListener {
 			}else{
 				this.annotationTextArea.setText("");
 			}
+			
+			EntryPoint.getGraphController().panTo((DefaultGraphNode) realGraphNode);
 		} catch(NullPointerException e2){
 			e2.printStackTrace();
 		}
