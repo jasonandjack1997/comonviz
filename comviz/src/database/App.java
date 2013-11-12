@@ -70,7 +70,7 @@ public class App {
 		OntologyClass com = ontologyClassService
 				.findByName("Compliance Management");
 
-		List result = ontologyRelationshipService.findRelSrcNeighbourClasses(com);
+		List result = ontologyRelationshipService.findDesendants(com);
 		return;
 
 	}

@@ -123,7 +123,21 @@ public class OntologyRelationshipService {
 
 	
 	public List<OntologyClass> findDesendants(OntologyClass ontologyClass) {
-		return null;
+		List<OntologyClass> desendants = new ArrayList<OntologyClass>();
+		this.findDesendantsRecursively(desendants, ontologyClass);
+		return desendants;
+	}
+	
+	private void findDesendantsRecursively(List<OntologyClass> desendants, OntologyClass rootClass){
+		List<OntologyClass> children = this.findChildren(rootClass);
+		if(children == null || children.size() == 0){
+			return;
+		} else{
+			desendants.addAll(children);
+			for(OntologyClass subRoot: children){
+				findDesendantsRecursively(desendants, subRoot);
+			}
+		}
 	}
 
 	public OntologyClass findBranchRoot(OntologyClass ontologyClass) {
