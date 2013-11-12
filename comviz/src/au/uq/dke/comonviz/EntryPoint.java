@@ -171,7 +171,7 @@ public class EntryPoint {
 
 		for (OWLClass cls : ontology.getClassesInSignature()) {
 
-			if (treeInfoManager.getLevel(cls) >= 1) {
+			if (treeInfoManager.getLevel(cls) >= 2) {
 				graphController.getModel().removeNode(cls);
 			} else {
 				graphController.getModel().hideAllDesendants(
