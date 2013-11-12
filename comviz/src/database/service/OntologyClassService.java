@@ -34,6 +34,10 @@ public class OntologyClassService{
 		this.dao = dao;
 	}
 
+	public List<OntologyClass> getRootList(){
+			List<OntologyClass> rootList = this.dao.search(new Search().addFilterEqual("level", 1));
+			return rootList;
+	}
 	public void deleteAll() {
 		List<OntologyClass> classList = dao.findAll();
 		for(OntologyClass ontologyClass: classList){

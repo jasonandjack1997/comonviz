@@ -40,6 +40,7 @@ public class OntologyRelationshipService {
 		this.dao = dao;
 	}
 
+	//Tested
 	public OntologyClass findSourceOntologyClass(
 			OntologyRelationship ontologyRelationship) {
 
@@ -47,12 +48,14 @@ public class OntologyRelationshipService {
 				.getSrcClassId());
 	}
 
+	//Tested
 	public OntologyClass findDestinationOntologyClass(
 			OntologyRelationship ontologyRelationship) {
 		return this.ontologyClassService.findById(ontologyRelationship
 				.getDstClassId());
 	}
 
+	//Tested
 	public void deleteAll() {
 		List<OntologyRelationship> relationshipList = dao.findAll();
 		for (OntologyRelationship relationship : relationshipList) {
@@ -60,6 +63,7 @@ public class OntologyRelationshipService {
 		}
 	}
 
+	//Tested
 	public List<OntologyClass> findChildren(OntologyClass srcOntologyClass) {
 		List<OntologyClass> childrenOntologyClass = new ArrayList<OntologyClass>();
 
@@ -79,6 +83,7 @@ public class OntologyRelationshipService {
 		return childrenOntologyClass;
 	}
 
+	//Tested
 	public List<OntologyClass> findRelDestNeighbourClasses(
 			OntologyClass ontologyClass) {
 		
@@ -100,6 +105,7 @@ public class OntologyRelationshipService {
 		return neighbourOntologyClass;
 	}
 
+	//Tested
 	public List<OntologyClass> findRelSrcNeighbourClasses(
 			OntologyClass ontologyClass) {
 		
@@ -122,6 +128,7 @@ public class OntologyRelationshipService {
 	}
 
 	
+	//Tested
 	public List<OntologyClass> findDesendants(OntologyClass ontologyClass) {
 		List<OntologyClass> desendants = new ArrayList<OntologyClass>();
 		this.findDesendantsRecursively(desendants, ontologyClass);
@@ -141,6 +148,7 @@ public class OntologyRelationshipService {
 	}
 
 	
+	//Tested
 	private void generateLevelInfo(List<OntologyClass> desendants, OntologyClass rootClass){
 		List<OntologyClass> children = this.findChildren(rootClass);
 		if(children == null || children.size() == 0){
@@ -154,6 +162,7 @@ public class OntologyRelationshipService {
 		}
 	}
 
+	//Tested
 	public void generateBranchRootInfo(OntologyClass rootClass) {
 		
 		rootClass.setBranchId(rootClass.getId());
@@ -176,15 +185,22 @@ public class OntologyRelationshipService {
 
 	}
 
+	//Tested
 	public void generateLevelInfo(OntologyClass rootClass){
 		rootClass.setLevel(1);
+		this.ontologyClassService.save(rootClass);
 		List<OntologyClass> desendants = new ArrayList<OntologyClass>();
 		this.generateLevelInfo(desendants, rootClass);
 	}
 	
 	
-	public OntologyClass findRoot(OntologyClass ontologyClass) {
-		return null;
+	public OntologyClass findRoot() {
+		List<OntologyClass> rootClassList = this.ontologyClassService.getRootList();
+
+		if(rootClassList == null || rootClassList.size() == 0){
+			return null;
+		}
+		return rootClassList.get(0);
 	}
 
 	public void delete(OntologyRelationship relationship) {

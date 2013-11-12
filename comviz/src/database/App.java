@@ -68,8 +68,10 @@ public class App {
 
 		OntologyClass com = ontologyClassService
 				.findByName("Compliance Management");
-
+		
 		ontologyRelationshipService.generateLevelInfo(com);
+
+		ontologyRelationshipService.findRoot();
 		classes = ontologyClassService.findAll();
 		axioms = ontologyAxiomService.findAll();
 		relationships = ontologyRelationshipService.findAll();
