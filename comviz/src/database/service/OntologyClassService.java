@@ -28,10 +28,14 @@ import database.model.ontology.OntologyClass;
  */
 @Service
 @Transactional
-public class OntologyClassService{
+public class OntologyClassService {
 
 	OntologyClassDAO dao;
 	List<DatabaseModelListener> listeners = new ArrayList<DatabaseModelListener>();
+	public List<DatabaseModelListener> getListeners() {
+		return listeners;
+	}
+
 	protected void fireClassAddedEvent(OntologyClass cls){
 		for(DatabaseModelListener listener: listeners){
 			listener.databaseClassAdded(cls);

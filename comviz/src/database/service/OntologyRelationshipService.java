@@ -268,4 +268,9 @@ public class OntologyRelationshipService {
 	public SearchResult<OntologyRelationship> searchAndCount(ISearch search) {
 		return dao.searchAndCount(search);
 	}
+	
+	public List<DatabaseModelListener> getListeners() {
+		return listeners;
+	}
+
 }

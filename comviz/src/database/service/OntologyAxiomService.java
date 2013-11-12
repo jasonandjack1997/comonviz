@@ -105,4 +105,8 @@ public class OntologyAxiomService {
 	public SearchResult<OntologyAxiom> searchAndCount(ISearch search) {
 		return dao.searchAndCount(search);
 	}
+	public List<DatabaseModelListener> getListeners() {
+		return listeners;
+	}
+
 }
