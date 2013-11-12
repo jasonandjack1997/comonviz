@@ -6,7 +6,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collection;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -16,6 +15,8 @@ import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import uk.ac.manchester.cs.bhig.util.MutableTree;
 import au.uq.dke.comonviz.actions.LayoutAction;
@@ -26,8 +27,31 @@ import au.uq.dke.comonviz.ui.StyleManager;
 import ca.uvic.cs.chisel.cajun.constants.LayoutConstants;
 import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;
 import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
+import database.service.OntologyAxiomService;
+import database.service.OntologyClassService;
+import database.service.OntologyRelationshipService;
 
 public class EntryPoint {
+
+	static ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext(
+			"applicationContext.xml");
+	private static OntologyAxiomService ontologyAxiomService = (OntologyAxiomService) ctx
+			.getBean("ontologyAxiomService");
+	private static OntologyClassService ontologyClassService  = (OntologyClassService) ctx
+	.getBean("ontologyClassService");
+	private static OntologyRelationshipService ontologyRelationshipService = (OntologyRelationshipService) ctx
+	.getBean("ontologyRelationshipService");
+	public static OntologyAxiomService getOntologyAxiomService() {
+		return ontologyAxiomService;
+	}
+
+	public static OntologyClassService getOntologyClassService() {
+		return ontologyClassService;
+	}
+
+	public static OntologyRelationshipService getOntologyRelationshipService() {
+		return ontologyRelationshipService;
+	}
 
 	public static OWLOntology ontology = null;
 	private final String internalOWLFilePath = "/COMON_v8_HenryNewRel.owl";
