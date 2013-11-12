@@ -25,9 +25,9 @@ import database.service.OntologyRelationshipService;
  * 
  */
 public class App {
-	OntologyAxiomService ontologyAxiomService;
-	OntologyClassService ontologyClassService;
-	OntologyRelationshipService ontologyRelationshipService;
+	public static OntologyAxiomService ontologyAxiomService;
+	public static OntologyClassService ontologyClassService;
+	public static OntologyRelationshipService ontologyRelationshipService;
 
 	static ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext(
 			"applicationContext.xml");
@@ -51,15 +51,26 @@ public class App {
 
 		// importOWLToDatabase();
 		// testServices();
-		
-		
 
-		ontologyAxiomService.deleteAll();
-		ontologyRelationshipService.deleteAll();
-		importAxiomToDatabase();
+		//ontologyClassService.deleteAll();
+		//ontologyAxiomService.deleteAll();
+		//ontologyRelationshipService.deleteAll();
+
 		List classes = ontologyClassService.findAll();
 		List axioms = ontologyAxiomService.findAll();
 		List relationships = ontologyRelationshipService.findAll();
+
+		//importOWLToDatabase();
+		//importAxiomToDatabase();
+
+		classes = ontologyClassService.findAll();
+		axioms = ontologyAxiomService.findAll();
+		relationships = ontologyRelationshipService.findAll();
+
+		OntologyClass com = ontologyClassService
+				.findByName("Compliance Management");
+
+		List result = ontologyRelationshipService.findRelSrcNeighbourClasses(com);
 		return;
 
 	}
@@ -100,12 +111,14 @@ public class App {
 					.findByIRI(destinationIRI);
 
 			String iri = graphArc.getType().toString();
-			if(iri.contains("subclass")){//recover to normal type
-				iri = "<http://www.semanticweb.org/uqwwan10/ontologies/2013/9/untitled-ontology-10#" + iri + ">";
+			if (iri.contains("subclass")) {// recover to normal type
+				iri = "<http://www.semanticweb.org/uqwwan10/ontologies/2013/9/untitled-ontology-10#"
+						+ iri + ">";
 			}
 			iri = iri.substring(1, iri.length() - 1);
 
-			String name = iri.substring(iri.lastIndexOf("#") + 1, iri.length()).replace("_", " ");
+			String name = iri.substring(iri.lastIndexOf("#") + 1, iri.length())
+					.replace("_", " ");
 
 			OntologyRelationship ontologyRelationship = new OntologyRelationship();
 			ontologyRelationship.setKey(key);
@@ -121,7 +134,7 @@ public class App {
 			OntologyAxiom ontologyAxiom = ontologyAxiomService.findByName(name);
 			if (ontologyAxiom == null) {
 				ontologyAxiomService.save(newAxiom);
-				//ontologyAxiomService.delete(ontologyAxiom.getId());
+				// ontologyAxiomService.delete(ontologyAxiom.getId());
 			}
 
 			ontologyRelationshipService.save(ontologyRelationship);
@@ -142,8 +155,11 @@ public class App {
 			String iri = treeInfo.getOwlEntity().toStringID();
 			ontologyClass.setIri(iri);
 
-			ontologyClass.setName(iri.substring(iri.lastIndexOf("#") + 1,
-					iri.length()).replace("_", " "));
+			// ontologyClass.setName(iri.substring(iri.lastIndexOf("#") + 1,
+			// iri.length()).replace("_", " "));
+			ontologyClass.setName(iri
+					.substring(iri.lastIndexOf("#") + 1, iri.length())
+					.replace("_", " ").replace("&", " & "));
 
 			String annotation = "";
 			Collection<OWLAnnotation> owlAnnotationSet = (treeInfo

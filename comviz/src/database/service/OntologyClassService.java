@@ -11,6 +11,7 @@ import com.googlecode.genericdao.search.Search;
 import com.googlecode.genericdao.search.SearchResult;
 
 import database.dao.OntologyClassDAO;
+import database.model.ontology.OntologyAxiom;
 import database.model.ontology.OntologyClass;
 
 /**
@@ -33,6 +34,17 @@ public class OntologyClassService{
 		this.dao = dao;
 	}
 
+	public void deleteAll() {
+		List<OntologyClass> classList = dao.findAll();
+		for(OntologyClass ontologyClass: classList){
+			dao.remove(ontologyClass);
+		}
+	}
+	
+	public void delete(OntologyClass ontologyClass){
+		dao.remove(ontologyClass);
+		
+	}
 	public void save(OntologyClass ontologyClass) {
 		dao.save(ontologyClass);
 	}

@@ -19,7 +19,6 @@ public class OntologyClass extends Trackable {
 	private String discription;
 	private String iri;
 	private int level;
-	private String name;
 	private int siblingRank;
 
 	public Long getBranchId() {
@@ -38,9 +37,6 @@ public class OntologyClass extends Trackable {
 		return level;
 	}
 
-	public String getName() {
-		return name;
-	}
 
 	public int getSiblingRank() {
 		return siblingRank;
@@ -60,10 +56,6 @@ public class OntologyClass extends Trackable {
 
 	public void setLevel(int level) {
 		this.level = level;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public void setSiblingRank(int order) {
