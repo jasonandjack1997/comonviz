@@ -37,6 +37,13 @@ public class OntologyClassService{
 			listener.databaseClassAdded(cls);
 		}
 	}
+	
+	protected void fireClassUpdatdeEvent(OntologyClass cls){
+		for(DatabaseModelListener listener: listeners){
+			listener.databaseClassUpdated(cls);
+		}
+	}
+	
 
 	protected void fireClassRemovedEvent(OntologyClass cls){
 		for(DatabaseModelListener listener: listeners){
@@ -65,8 +72,12 @@ public class OntologyClassService{
 		fireClassRemovedEvent(ontologyClass);
 	}
 	public void save(OntologyClass ontologyClass) {
-		dao.save(ontologyClass);
-		fireClassRemovedEvent(ontologyClass);
+		boolean isCreate = dao.save(ontologyClass);
+		if (isCreate) {
+			fireClassAddedEvent(ontologyClass);
+		} else {
+			fireClassUpdatdeEvent(ontologyClass);
+		}
 	}
 
 	public List<OntologyClass> findAll() {

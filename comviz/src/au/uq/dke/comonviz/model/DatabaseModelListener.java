@@ -11,10 +11,16 @@ public class DatabaseModelListener {
 	public void databaseRelationshipAdded(OntologyRelationship relationship) {
 	}
 
+	public void databaseRelationshipUpdated(OntologyRelationship relationship) {
+	}
+
 	public void databaseRelationshipRemoved(OntologyRelationship relationship) {
 	}
 
 	public void databaseClassAdded(OntologyClass cls) {
+	}
+
+	public void databaseClassUpdated(OntologyClass cls) {
 	}
 
 	public void databaseClassRemoved(OntologyClass cls) {
@@ -24,6 +30,9 @@ public class DatabaseModelListener {
 	public void databaseAxiomAdded(Object axiom) {
 	}
 	
+	public void databaseAxiomUpdated(Object axiom) {
+	}
+
 	public void databaseAxiomRemoved(Object axiom) {
 	}
 }

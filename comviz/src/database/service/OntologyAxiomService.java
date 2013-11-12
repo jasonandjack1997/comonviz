@@ -38,6 +38,12 @@ public class OntologyAxiomService {
 		}
 	}
 
+	protected void fireAxiomUpdatedEvent(OntologyAxiom axiom){
+		for(DatabaseModelListener listener: listeners){
+			listener.databaseAxiomUpdated(axiom);
+		}
+	}
+
 	protected void fireAxiomRemovedEvent(OntologyAxiom axiom){
 		for(DatabaseModelListener listener: listeners){
 			listener.databaseAxiomRemoved(axiom);
@@ -62,8 +68,12 @@ public class OntologyAxiomService {
 	}
 
 	public void save(OntologyAxiom ontologyAxiom) {
-		dao.save(ontologyAxiom);
-		fireAxiomAddedEvent(ontologyAxiom);
+		boolean isCreate = dao.save(ontologyAxiom);
+		if (isCreate) {
+			fireAxiomAddedEvent(ontologyAxiom);
+		} else {
+			fireAxiomUpdatedEvent(ontologyAxiom);
+		}
 	}
 
 	public List<OntologyAxiom> findAll() {

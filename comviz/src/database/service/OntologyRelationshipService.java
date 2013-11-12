@@ -32,14 +32,23 @@ import database.model.ontology.OntologyRelationship;
 public class OntologyRelationshipService {
 
 	List<DatabaseModelListener> listeners = new ArrayList<DatabaseModelListener>();
-	protected void fireRelationshipAddedEvent(OntologyRelationship relationship){
-		for(DatabaseModelListener listener: listeners){
+
+	protected void fireRelationshipAddedEvent(OntologyRelationship relationship) {
+		for (DatabaseModelListener listener : listeners) {
 			listener.databaseRelationshipAdded(relationship);
 		}
 	}
 
-	protected void fireRelationshipRemovedEvent(OntologyRelationship relationship){
-		for(DatabaseModelListener listener: listeners){
+	protected void fireRelationshipUpdatdeEvent(
+			OntologyRelationship relationship) {
+		for (DatabaseModelListener listener : listeners) {
+			listener.databaseRelationshipUpdated(relationship);
+		}
+	}
+
+	protected void fireRelationshipRemovedEvent(
+			OntologyRelationship relationship) {
+		for (DatabaseModelListener listener : listeners) {
 			listener.databaseRelationshipRemoved(relationship);
 		}
 	}
@@ -56,7 +65,7 @@ public class OntologyRelationshipService {
 		this.dao = dao;
 	}
 
-	//Tested
+	// Tested
 	public OntologyClass findSourceOntologyClass(
 			OntologyRelationship ontologyRelationship) {
 
@@ -64,14 +73,14 @@ public class OntologyRelationshipService {
 				.getSrcClassId());
 	}
 
-	//Tested
+	// Tested
 	public OntologyClass findDestinationOntologyClass(
 			OntologyRelationship ontologyRelationship) {
 		return this.ontologyClassService.findById(ontologyRelationship
 				.getDstClassId());
 	}
 
-	//Tested
+	// Tested
 	public void deleteAll() {
 		List<OntologyRelationship> relationshipList = dao.findAll();
 		for (OntologyRelationship relationship : relationshipList) {
@@ -79,14 +88,13 @@ public class OntologyRelationshipService {
 		}
 	}
 
-	//Tested
+	// Tested
 	public List<OntologyClass> findChildren(OntologyClass srcOntologyClass) {
 		List<OntologyClass> childrenOntologyClass = new ArrayList<OntologyClass>();
 
 		List<OntologyRelationship> subclassRelationships = this.dao
-				.search(new Search().addFilterEqual("name", "has subclass").addFilterEqual(
-						"srcClassId", srcOntologyClass.getId()));
-
+				.search(new Search().addFilterEqual("name", "has subclass")
+						.addFilterEqual("srcClassId", srcOntologyClass.getId()));
 
 		for (OntologyRelationship rel : subclassRelationships) {
 			OntologyClass src = this.findSourceOntologyClass(rel);
@@ -99,16 +107,16 @@ public class OntologyRelationshipService {
 		return childrenOntologyClass;
 	}
 
-	//Tested
+	// Tested
 	public List<OntologyClass> findRelDestNeighbourClasses(
 			OntologyClass ontologyClass) {
-		
+
 		List<OntologyClass> neighbourOntologyClass = new ArrayList<OntologyClass>();
 
 		List<OntologyRelationship> subclassRelationships = this.dao
-				.search(new Search().addFilterEqual(
-						"srcClassId", ontologyClass.getId()).addFilterNotEqual("name", "has subclass"));
-
+				.search(new Search().addFilterEqual("srcClassId",
+						ontologyClass.getId()).addFilterNotEqual("name",
+						"has subclass"));
 
 		for (OntologyRelationship rel : subclassRelationships) {
 			OntologyClass src = this.findSourceOntologyClass(rel);
@@ -121,99 +129,97 @@ public class OntologyRelationshipService {
 		return neighbourOntologyClass;
 	}
 
-	//Tested
+	// Tested
 	public List<OntologyClass> findRelSrcNeighbourClasses(
 			OntologyClass ontologyClass) {
-		
+
 		List<OntologyClass> neighbourOntologyClass = new ArrayList<OntologyClass>();
 
 		List<OntologyRelationship> subclassRelationships = this.dao
-				.search(new Search().addFilterEqual(
-						"dstClassId", ontologyClass.getId()).addFilterNotEqual("name", "has subclass"));
-
+				.search(new Search().addFilterEqual("dstClassId",
+						ontologyClass.getId()).addFilterNotEqual("name",
+						"has subclass"));
 
 		for (OntologyRelationship rel : subclassRelationships) {
 			OntologyClass dst = this.findDestinationOntologyClass(rel);
 			if (dst.getId() == ontologyClass.getId()) {
-				neighbourOntologyClass.add(this
-						.findSourceOntologyClass(rel));
+				neighbourOntologyClass.add(this.findSourceOntologyClass(rel));
 			}
 		}
 
 		return neighbourOntologyClass;
 	}
 
-	
-	//Tested
+	// Tested
 	public List<OntologyClass> findDesendants(OntologyClass ontologyClass) {
 		List<OntologyClass> desendants = new ArrayList<OntologyClass>();
 		this.findDesendantsRecursively(desendants, ontologyClass);
 		return desendants;
 	}
-	
-	private void findDesendantsRecursively(List<OntologyClass> desendants, OntologyClass rootClass){
+
+	private void findDesendantsRecursively(List<OntologyClass> desendants,
+			OntologyClass rootClass) {
 		List<OntologyClass> children = this.findChildren(rootClass);
-		if(children == null || children.size() == 0){
+		if (children == null || children.size() == 0) {
 			return;
-		} else{
+		} else {
 			desendants.addAll(children);
-			for(OntologyClass subRoot: children){
+			for (OntologyClass subRoot : children) {
 				findDesendantsRecursively(desendants, subRoot);
 			}
 		}
 	}
 
-	
-	//Tested
-	private void generateLevelInfo(List<OntologyClass> desendants, OntologyClass rootClass){
+	// Tested
+	private void generateLevelInfo(List<OntologyClass> desendants,
+			OntologyClass rootClass) {
 		List<OntologyClass> children = this.findChildren(rootClass);
-		if(children == null || children.size() == 0){
+		if (children == null || children.size() == 0) {
 			return;
-		} else{
+		} else {
 			desendants.addAll(children);
-			for(OntologyClass subRoot: children){
+			for (OntologyClass subRoot : children) {
 				subRoot.setLevel(rootClass.getLevel() + 1);
 				generateLevelInfo(desendants, subRoot);
 			}
 		}
 	}
 
-	//Tested
+	// Tested
 	public void generateBranchRootInfo(OntologyClass rootClass) {
-		
+
 		rootClass.setBranchId(rootClass.getId());
 		this.ontologyClassService.save(rootClass);
 		List<OntologyClass> children = this.findChildren(rootClass);
-		
-		for(OntologyClass child: children){
-			if(child.getId() == null){
+
+		for (OntologyClass child : children) {
+			if (child.getId() == null) {
 				throw new NullPointerException();
 			}
 			child.setBranchId(child.getId());
 			List<OntologyClass> desendants = this.findDesendants(child);
-			for(OntologyClass desendant: desendants){
+			for (OntologyClass desendant : desendants) {
 				desendant.setBranchId(child.getId());
 			}
 		}
-		
-	
+
 		return;
 
 	}
 
-	//Tested
-	public void generateLevelInfo(OntologyClass rootClass){
+	// Tested
+	public void generateLevelInfo(OntologyClass rootClass) {
 		rootClass.setLevel(1);
 		this.ontologyClassService.save(rootClass);
 		List<OntologyClass> desendants = new ArrayList<OntologyClass>();
 		this.generateLevelInfo(desendants, rootClass);
 	}
-	
-	
-	public OntologyClass findRoot() {
-		List<OntologyClass> rootClassList = this.ontologyClassService.getRootList();
 
-		if(rootClassList == null || rootClassList.size() == 0){
+	public OntologyClass findRoot() {
+		List<OntologyClass> rootClassList = this.ontologyClassService
+				.getRootList();
+
+		if (rootClassList == null || rootClassList.size() == 0) {
 			return null;
 		}
 		return rootClassList.get(0);
@@ -225,9 +231,13 @@ public class OntologyRelationshipService {
 	}
 
 	public void save(OntologyRelationship ontologyRelationship) {
-		dao.save(ontologyRelationship);
-		fireRelationshipAddedEvent(ontologyRelationship);
+		boolean isCreate = dao.save(ontologyRelationship);
+		if (isCreate) {
+			fireRelationshipAddedEvent(ontologyRelationship);
+		} else {
+			fireRelationshipUpdatdeEvent(ontologyRelationship);
 		}
+	}
 
 	public List<OntologyRelationship> findAll() {
 		return dao.findAll();

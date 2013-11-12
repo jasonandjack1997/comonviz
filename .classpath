@@ -4,9 +4,9 @@
 	<classpathentry kind="src" path="comviz/resources"/>
 	<classpathentry kind="lib" path="comviz/jar/comonviz.jar"/>
 	<classpathentry kind="lib" path="comviz/lib/database/genericdao/dao-1.2.0-sources.jar"/>
-	<classpathentry kind="lib" path="comviz/lib/database/genericdao/dao-1.2.0.jar"/>
+	<classpathentry kind="lib" path="comviz/lib/database/genericdao/dao-1.2.0.jar" sourcepath="comviz/lib/database/genericdao/dao-1.2.0-sources.jar"/>
 	<classpathentry kind="lib" path="comviz/lib/database/genericdao/dao-hibernate-1.2.0-sources.jar"/>
-	<classpathentry kind="lib" path="comviz/lib/database/genericdao/dao-hibernate-1.2.0.jar"/>
+	<classpathentry kind="lib" path="comviz/lib/database/genericdao/dao-hibernate-1.2.0.jar" sourcepath="comviz/lib/database/genericdao/dao-hibernate-1.2.0-sources.jar"/>
 	<classpathentry kind="lib" path="comviz/lib/database/genericdao/search-1.2.0-sources.jar"/>
 	<classpathentry kind="lib" path="comviz/lib/database/genericdao/search-1.2.0.jar"/>
 	<classpathentry kind="lib" path="comviz/lib/database/genericdao/search-hibernate-1.2.0-sources.jar"/>
