@@ -29,6 +29,7 @@ public class NewGraphModel extends DefaultGraphModel {
 		public void databaseRelationshipAdded(OntologyRelationship relationship) {
 			// TODO Auto-generated method stub
 			super.databaseRelationshipAdded(relationship);
+			NewGraphModel.this.createArc(relationship);
 		}
 
 		@Override
@@ -36,6 +37,7 @@ public class NewGraphModel extends DefaultGraphModel {
 				OntologyRelationship relationship) {
 			// TODO Auto-generated method stub
 			super.databaseRelationshipUpdated(relationship);
+			//NewGraphModel.this.u(relationship);
 		}
 
 		@Override
@@ -43,24 +45,28 @@ public class NewGraphModel extends DefaultGraphModel {
 				OntologyRelationship relationship) {
 			// TODO Auto-generated method stub
 			super.databaseRelationshipRemoved(relationship);
+			NewGraphModel.this.removeArc(relationship);
 		}
 
 		@Override
 		public void databaseClassAdded(OntologyClass cls) {
 			// TODO Auto-generated method stub
 			super.databaseClassAdded(cls);
-		}
+			NewGraphModel.this.createNode(cls);
+	}
 
 		@Override
 		public void databaseClassUpdated(OntologyClass cls) {
 			// TODO Auto-generated method stub
 			super.databaseClassUpdated(cls);
+			NewGraphModel.this.updateNode(cls);
 		}
 
 		@Override
 		public void databaseClassRemoved(OntologyClass cls) {
 			// TODO Auto-generated method stub
 			super.databaseClassRemoved(cls);
+			NewGraphModel.this.removeNode(cls);
 		}
 
 		@Override
@@ -99,6 +105,7 @@ public class NewGraphModel extends DefaultGraphModel {
 		this.arcs = super.getArcs();
 	}
 
+//CRUD of node	
 	// tested
 	private GraphNode findGraphNode(OntologyClass ontologyClass) {
 		for (Map.Entry<Object, GraphNode> entry : nodes.entrySet()) {
@@ -140,7 +147,7 @@ public class NewGraphModel extends DefaultGraphModel {
 		
 	}
 
-//
+//CRUD of arc
 	
 	// tested
 	private GraphArc findGraphArc(OntologyRelationship ontologyRelationship) {
@@ -182,6 +189,13 @@ public class NewGraphModel extends DefaultGraphModel {
 		}
 	}
 
+/*CRUD of arcTypes, to be added or don't need?
+ * since arcTypes are updated by tranverse all arcs and get their types
+ * for database, axiom crud is needed, but for model, we may not need it
+*/
+	
+	
+	
 
 	private List<GraphNode> getChildren(GraphNode graphNode) {
 		List<OntologyClass> relationSrcClassList = this.ontologyRelationshipService
