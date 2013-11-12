@@ -1,10 +1,13 @@
 package database.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import au.uq.dke.comonviz.model.DatabaseModelListener;
 
 import com.googlecode.genericdao.search.ISearch;
 import com.googlecode.genericdao.search.Search;
@@ -28,6 +31,19 @@ public class OntologyAxiomService {
 
 	OntologyAxiomDAO dao;
 
+	List<DatabaseModelListener> listeners = new ArrayList<DatabaseModelListener>();
+	protected void fireAxiomAddedEvent(OntologyAxiom axiom){
+		for(DatabaseModelListener listener: listeners){
+			listener.databaseAxiomAdded(axiom);
+		}
+	}
+
+	protected void fireAxiomRemovedEvent(OntologyAxiom axiom){
+		for(DatabaseModelListener listener: listeners){
+			listener.databaseAxiomRemoved(axiom);
+		}
+	}
+
 	public void deleteAll() {
 		List<OntologyAxiom> axiomList = dao.findAll();
 		for(OntologyAxiom axiom: axiomList){
@@ -37,7 +53,7 @@ public class OntologyAxiomService {
 	
 	public void delete(OntologyAxiom axiom){
 		dao.remove(axiom);
-		
+		fireAxiomRemovedEvent(axiom);
 	}
 
 	@Autowired
@@ -47,6 +63,7 @@ public class OntologyAxiomService {
 
 	public void save(OntologyAxiom ontologyAxiom) {
 		dao.save(ontologyAxiom);
+		fireAxiomAddedEvent(ontologyAxiom);
 	}
 
 	public List<OntologyAxiom> findAll() {

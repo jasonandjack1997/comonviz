@@ -21,7 +21,9 @@ public class DatabaseModelListener {
 	}
 
 	
-	public void databaseRelationshipAdded(Object relationshipType) {
+	public void databaseAxiomAdded(Object axiom) {
 	}
 	
+	public void databaseAxiomRemoved(Object axiom) {
+	}
 }

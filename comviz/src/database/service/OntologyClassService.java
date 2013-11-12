@@ -1,17 +1,20 @@
 package database.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import au.uq.dke.comonviz.model.DatabaseModelListener;
+
 import com.googlecode.genericdao.search.ISearch;
 import com.googlecode.genericdao.search.Search;
 import com.googlecode.genericdao.search.SearchResult;
 
 import database.dao.OntologyClassDAO;
-import database.model.ontology.OntologyAxiom;
+import database.model.ontology.OntologyClass;
 import database.model.ontology.OntologyClass;
 
 /**
@@ -28,6 +31,18 @@ import database.model.ontology.OntologyClass;
 public class OntologyClassService{
 
 	OntologyClassDAO dao;
+	List<DatabaseModelListener> listeners = new ArrayList<DatabaseModelListener>();
+	protected void fireClassAddedEvent(OntologyClass cls){
+		for(DatabaseModelListener listener: listeners){
+			listener.databaseClassAdded(cls);
+		}
+	}
+
+	protected void fireClassRemovedEvent(OntologyClass cls){
+		for(DatabaseModelListener listener: listeners){
+			listener.databaseClassRemoved(cls);
+		}
+	}
 
 	@Autowired
 	public void setDao(OntologyClassDAO dao) {
@@ -47,10 +62,11 @@ public class OntologyClassService{
 	
 	public void delete(OntologyClass ontologyClass){
 		dao.remove(ontologyClass);
-		
+		fireClassRemovedEvent(ontologyClass);
 	}
 	public void save(OntologyClass ontologyClass) {
 		dao.save(ontologyClass);
+		fireClassRemovedEvent(ontologyClass);
 	}
 
 	public List<OntologyClass> findAll() {
