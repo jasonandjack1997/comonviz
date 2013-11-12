@@ -1,5 +1,6 @@
 package au.uq.dke.comonviz;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +27,7 @@ public class NewGraphModel extends DefaultGraphModel {
 		this.nodes = super.getNodes();
 		this.arcs = super.getArcs();
 	}
+	//tested
 	private void createNodes(){
 		
 		List<OntologyClass> ontologyClassList = this.ontologyClassService.findAll();
@@ -33,7 +35,7 @@ public class NewGraphModel extends DefaultGraphModel {
 			super.addNode(ontologyClass, ontologyClass.getName(),null);
 		}
 	}
-	
+	//tested
 	private void createArcs(){
 		
 		List<OntologyRelationship> ontologyRelationshipList = this.ontologyRelationshipService.findAll();
@@ -48,7 +50,7 @@ public class NewGraphModel extends DefaultGraphModel {
 		}
 		
 	}
-
+	//tested
 	private GraphNode findGraphNode(OntologyClass ontologyClass){
 		for(Map.Entry<Object, GraphNode> entry: nodes.entrySet()){
 			if(((OntologyClass)entry.getKey()).getId() == ontologyClass.getId()){
@@ -60,6 +62,42 @@ public class NewGraphModel extends DefaultGraphModel {
 		return null;
 	}
 	
+	private List<GraphNode> getChildren(GraphNode graphNode){
+		List<OntologyClass> relationSrcClassList = this.ontologyRelationshipService.findChildren((OntologyClass) graphNode.getUserObject());
+		List<GraphNode> graphNodeList = getGraphNodesFromClasses(relationSrcClassList);
+		
+		return graphNodeList;
+	}
+	
+	private List<GraphNode> getRelationSrcNodes(GraphNode graphNode){
+		List<OntologyClass> relationSrcClassList = this.ontologyRelationshipService.findRelSrcNeighbourClasses((OntologyClass) graphNode.getUserObject());
+		List<GraphNode> graphNodeList = getGraphNodesFromClasses(relationSrcClassList);
+		return graphNodeList;
+	}
+	
+	private List<GraphNode> getRelationDestNodes(GraphNode graphNode){
+		List<OntologyClass> relationDestClassList = this.ontologyRelationshipService.findRelDestNeighbourClasses((OntologyClass) graphNode.getUserObject());
+		List<GraphNode> graphNodeList = getGraphNodesFromClasses(relationDestClassList);
+		return graphNodeList;
+	}
+	
+	private List<GraphNode> getDesendants(GraphNode graphNode){
+		List<OntologyClass> desendantsClassList = this.ontologyRelationshipService.findDesendants((OntologyClass) graphNode.getUserObject());
+		List<GraphNode> graphNodeList = getGraphNodesFromClasses(desendantsClassList);
+		return graphNodeList;
+	}
+	
+	private List<GraphNode> getGraphNodesFromClasses(List<OntologyClass> classList){
+		List<GraphNode> graphNodeList = new ArrayList<GraphNode>();
+		for(OntologyClass cls: classList){
+			GraphNode node = this.findGraphNode(cls);
+			graphNodeList.add(node);
+		}
+		return graphNodeList;
+		
+	}
+	
+
 	public void test(){
 		createNodes();
 		createArcs();
