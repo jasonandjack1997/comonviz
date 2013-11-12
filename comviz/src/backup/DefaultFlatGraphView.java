@@ -1,4 +1,4 @@
-package au.uq.dke.comonviz.ui;
+package backup;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -28,6 +28,8 @@ import au.uq.dke.comonviz.actions.NoZoomAction;
 import au.uq.dke.comonviz.actions.ZoomInAction;
 import au.uq.dke.comonviz.actions.ZoomOutAction;
 import au.uq.dke.comonviz.filter.FilterManager;
+import au.uq.dke.comonviz.ui.FilterPanel;
+import au.uq.dke.comonviz.ui.StatusProgressBar;
 import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
 import ca.uvic.cs.chisel.cajun.graph.Graph;
 import ca.uvic.cs.chisel.cajun.graph.GraphModelAdapter;

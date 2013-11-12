@@ -26,6 +26,11 @@ import database.model.ontology.OntologyRelationship;
 @Service
 @Transactional
 public class OntologyRelationshipService {
+	
+	@Autowired
+	OntologyClassService ontologyClassService;
+	@Autowired
+	OntologyAxiomService ontologyAxiomService;
 
 	OntologyRelationshipDAO dao;
 

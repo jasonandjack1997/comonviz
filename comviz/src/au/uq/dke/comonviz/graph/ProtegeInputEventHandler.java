@@ -2,7 +2,7 @@ package au.uq.dke.comonviz.graph;
 
 import org.semanticweb.owlapi.model.OWLEntity;
 
-import au.uq.dke.comonviz.ComonvizGraphModel;
+import au.uq.dke.comonviz.DeprecatedGraphModel;
 import au.uq.dke.comonviz.graph.node.DefaultGraphNode;
 import au.uq.dke.comonviz.ui.FrameTooltipNode;
 import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;
@@ -20,13 +20,13 @@ import edu.umd.cs.piccolo.event.PInputEventFilter;
 public class ProtegeInputEventHandler extends PBasicInputEventHandler {
 	private static final int DOUBLE_CLICK = 2;
 
-	private ComonvizGraphModel graphModel;
+	private DeprecatedGraphModel graphModel;
 	private AbstractGraph graph;
 	
 	private FrameTooltipNode toolTip;
 	private DefaultGraphNode currentNode;
 
-	public ProtegeInputEventHandler(ComonvizGraphModel graphModel, AbstractGraph graph) {
+	public ProtegeInputEventHandler(DeprecatedGraphModel graphModel, AbstractGraph graph) {
 		this.graphModel = graphModel;
 		this.graph = graph;
 

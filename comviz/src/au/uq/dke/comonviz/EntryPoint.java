@@ -16,6 +16,8 @@ import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import uk.ac.manchester.cs.bhig.util.MutableTree;
 import au.uq.dke.comonviz.actions.LayoutAction;
@@ -25,10 +27,23 @@ import au.uq.dke.comonviz.treeUtils.TreeInfoManager;
 import au.uq.dke.comonviz.ui.StyleManager;
 import ca.uvic.cs.chisel.cajun.constants.LayoutConstants;
 import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;
+import ca.uvic.cs.chisel.cajun.graph.DefaultGraphModel;
 import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
+import database.service.OntologyAxiomService;
+import database.service.OntologyClassService;
+import database.service.OntologyRelationshipService;
 
 public class EntryPoint {
 
+	public static OntologyAxiomService ontologyAxiomService;
+	public static OntologyClassService ontologyClassService;
+	public static OntologyRelationshipService ontologyRelationshipService;
+
+	static ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext(
+			"applicationContext.xml");
+
+
+	
 	public static OWLOntology ontology = null;
 	private final String internalOWLFilePath = "/COMON_v8_HenryNewRel.owl";
 
@@ -36,7 +51,7 @@ public class EntryPoint {
 	private static FlatGraph flatGraph;
 
 	/** the model representation of the graph, nodes and edges */
-	private static ComonvizGraphModel graphModel;
+	private static DefaultGraphModel graphModel;
 
 	private static TopView topView;
 
@@ -63,6 +78,16 @@ public class EntryPoint {
      */
 	@SuppressWarnings({ "unused", "static-access", "static-access" })
 	public void start() {
+		ontologyAxiomService = (OntologyAxiomService) ctx
+				.getBean("ontologyAxiomService");
+
+		ontologyClassService = (OntologyClassService) ctx
+				.getBean("ontologyClassService");
+
+		ontologyRelationshipService = (OntologyRelationshipService) ctx
+				.getBean("ontologyRelationshipService");
+
+
 		jFrame = new JFrame("CoMOnViz");
 		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Display the window.
@@ -72,7 +97,7 @@ public class EntryPoint {
 		jFrame.setVisible(true);
 		frameSize = jFrame.getSize();
 
-		graphModel = new ComonvizGraphModel();
+		graphModel = new DeprecatedGraphModel();
 		flatGraph = new FlatGraph();
 		topView = new TopView();
 		graphController = new GraphController();
@@ -103,7 +128,7 @@ public class EntryPoint {
 		return flatGraph;
 	}
 
-	public static ComonvizGraphModel getGraphModel() {
+	public static DefaultGraphModel getGraphModel() {
 		return graphModel;
 	}
 

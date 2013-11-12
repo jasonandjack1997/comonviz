@@ -9,7 +9,7 @@ import org.semanticweb.owlapi.model.OWLEntity;
 
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import au.uq.dke.comonviz.EntryPoint;
-import au.uq.dke.comonviz.ComonvizGraphModel;
+import au.uq.dke.comonviz.DeprecatedGraphModel;
 import au.uq.dke.comonviz.graph.node.DefaultGraphNode;
 import au.uq.dke.comonviz.treeUtils.TreeInfoManager;
 import edu.umd.cs.piccolo.PCamera;

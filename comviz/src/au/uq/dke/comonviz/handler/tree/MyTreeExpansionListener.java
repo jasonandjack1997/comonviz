@@ -12,7 +12,7 @@ import javax.swing.tree.TreePath;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import au.uq.dke.comonviz.EntryPoint;
-import au.uq.dke.comonviz.ComonvizGraphModel;
+import au.uq.dke.comonviz.DeprecatedGraphModel;
 import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.NodeCollection;

@@ -59,7 +59,7 @@ import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
  * 
  * @author seanf
  */
-public class ComonvizGraphModel extends DefaultGraphModel {
+public class DeprecatedGraphModel extends DefaultGraphModel {
 
 	private Map treeInfoMap;
 
@@ -114,7 +114,7 @@ public class ComonvizGraphModel extends DefaultGraphModel {
 
 	private FilterManager filterManager;
 
-	public ComonvizGraphModel(){
+	public DeprecatedGraphModel(){
 		super();
 
 		this.frameToArcCount = new HashMap<OWLEntity, Set<GraphArc>>();
@@ -1250,8 +1250,8 @@ public class ComonvizGraphModel extends DefaultGraphModel {
 
 	private Collection<Object> generateArcTypes() {
 		Set<Object> types = new HashSet<Object>();
-		types.add(ComonvizGraphModel.DIRECT_SUBCLASS_SLOT_TYPE);
-		types.add(ComonvizGraphModel.DIRECT_INDIVIDUAL_SLOT_TYPE);
+		types.add(DeprecatedGraphModel.DIRECT_SUBCLASS_SLOT_TYPE);
+		types.add(DeprecatedGraphModel.DIRECT_INDIVIDUAL_SLOT_TYPE);
 		types.addAll(super.getArcTypes());
 
 		return types;

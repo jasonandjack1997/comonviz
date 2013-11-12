@@ -68,7 +68,7 @@ public class GraphController {
 	private FlatGraph graph;
 
 	/** the model representation of the graph, nodes and edges */
-	private  ComonvizGraphModel model;
+	private  DeprecatedGraphModel model;
 	
 	/** the panel that renders the graph view */
 	private TopView view;
@@ -125,7 +125,7 @@ public class GraphController {
 		// color the arcs based on arc type
 		DefaultGraphArcStyle arcStyle = new DefaultGraphArcStyle() {
 			public Stroke getStroke(GraphArc arc) {
-				if (arc.getType().toString().contains(ComonvizGraphModel.DIRECT_SUBCLASS_SLOT_TYPE) || arc.getType().toString().contains(ComonvizGraphModel.DIRECT_INDIVIDUAL_SLOT_TYPE)) {
+				if (arc.getType().toString().contains(DeprecatedGraphModel.DIRECT_SUBCLASS_SLOT_TYPE) || arc.getType().toString().contains(DeprecatedGraphModel.DIRECT_INDIVIDUAL_SLOT_TYPE)) {
 					setDashed(false);
 				} else {
 					setDashed(true);
@@ -166,7 +166,7 @@ public class GraphController {
 		});
 	}
 
-	public ComonvizGraphModel getModel() {
+	public DeprecatedGraphModel getModel() {
 		return model;
 	}
 
@@ -303,8 +303,8 @@ public class GraphController {
 	private void initialize() {
 		// setup the layouts
 		List<Object> layoutRelTypes = new ArrayList<Object>();
-		layoutRelTypes.add(ComonvizGraphModel.DIRECT_SUBCLASS_SLOT_TYPE);
-		layoutRelTypes.add(ComonvizGraphModel.DIRECT_INDIVIDUAL_SLOT_TYPE);
+		layoutRelTypes.add(DeprecatedGraphModel.DIRECT_SUBCLASS_SLOT_TYPE);
+		layoutRelTypes.add(DeprecatedGraphModel.DIRECT_INDIVIDUAL_SLOT_TYPE);
 		for (LayoutAction layoutAction : graph.getLayouts()) {
 			if (layoutAction.getName().equals(LayoutConstants.LAYOUT_TREE_HORIZONTAL)) {
 				layoutAction.setLayout(new HorizontalDirectedGraphLayoutAlgorithm());

@@ -14,7 +14,7 @@ import org.eclipse.zest.layouts.progress.ProgressListener;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import au.uq.dke.comonviz.EntryPoint;
-import au.uq.dke.comonviz.ComonvizGraphModel;
+import au.uq.dke.comonviz.DeprecatedGraphModel;
 import au.uq.dke.comonviz.graph.arc.DefaultGraphArc;
 import au.uq.dke.comonviz.graph.node.DefaultGraphNode;
 import au.uq.dke.comonviz.ui.Parameters;
@@ -97,7 +97,7 @@ public class LayoutAction extends CajunAction {
 		int layoutArea = 0;
 		for(GraphNode graphNode : nodes){
 			nodesAreaSum += graphNode.getBounds().getWidth() * graphNode.getBounds().getHeight();
-			ComonvizGraphModel graphModel = (ComonvizGraphModel)graph.getModel();
+			DeprecatedGraphModel graphModel = (DeprecatedGraphModel)graph.getModel();
 			possibleArcs.addAll(graphModel.loadChildren2((OWLEntity) graphNode.getUserObject(), false));
 		}
 		

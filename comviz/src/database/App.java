@@ -8,7 +8,7 @@ import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import au.uq.dke.comonviz.ComonvizGraphModel;
+import au.uq.dke.comonviz.DeprecatedGraphModel;
 import au.uq.dke.comonviz.EntryPoint;
 import au.uq.dke.comonviz.treeUtils.EntityTreeInfo;
 import au.uq.dke.comonviz.treeUtils.TreeInfoManager;
@@ -25,9 +25,9 @@ import database.service.OntologyRelationshipService;
  * 
  */
 public class App {
-	OntologyAxiomService ontologyAxiomService;
-	OntologyClassService ontologyClassService;
-	OntologyRelationshipService ontologyRelationshipService;
+	public static OntologyAxiomService ontologyAxiomService;
+	public static OntologyClassService ontologyClassService;
+	public static OntologyRelationshipService ontologyRelationshipService;
 
 	static ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext(
 			"applicationContext.xml");
@@ -78,7 +78,7 @@ public class App {
 		EntryPoint entryPoint = new EntryPoint();
 		entryPoint.start();
 
-		ComonvizGraphModel model = EntryPoint.getGraphModel();
+		DeprecatedGraphModel model = EntryPoint.getGraphModel();
 		Map<Object, GraphArc> arcs = model.getArcs();
 
 		for (Map.Entry entry : arcs.entrySet()) {
