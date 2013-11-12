@@ -140,11 +140,49 @@ public class OntologyRelationshipService {
 		}
 	}
 
-	public OntologyClass findBranchRoot(OntologyClass ontologyClass) {
-		return null;
+	
+	private void generateLevelInfo(List<OntologyClass> desendants, OntologyClass rootClass){
+		List<OntologyClass> children = this.findChildren(rootClass);
+		if(children == null || children.size() == 0){
+			return;
+		} else{
+			desendants.addAll(children);
+			for(OntologyClass subRoot: children){
+				subRoot.setLevel(rootClass.getLevel() + 1);
+				generateLevelInfo(desendants, subRoot);
+			}
+		}
+	}
+
+	public void generateBranchRootInfo(OntologyClass rootClass) {
+		
+		rootClass.setBranchId(rootClass.getId());
+		this.ontologyClassService.save(rootClass);
+		List<OntologyClass> children = this.findChildren(rootClass);
+		
+		for(OntologyClass child: children){
+			if(child.getId() == null){
+				throw new NullPointerException();
+			}
+			child.setBranchId(child.getId());
+			List<OntologyClass> desendants = this.findDesendants(child);
+			for(OntologyClass desendant: desendants){
+				desendant.setBranchId(child.getId());
+			}
+		}
+		
+	
+		return;
 
 	}
 
+	public void generateLevelInfo(OntologyClass rootClass){
+		rootClass.setLevel(1);
+		List<OntologyClass> desendants = new ArrayList<OntologyClass>();
+		this.generateLevelInfo(desendants, rootClass);
+	}
+	
+	
 	public OntologyClass findRoot(OntologyClass ontologyClass) {
 		return null;
 	}

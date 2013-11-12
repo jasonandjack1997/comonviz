@@ -1,8 +1,10 @@
 package database;
 
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -56,21 +58,32 @@ public class App {
 		//ontologyAxiomService.deleteAll();
 		//ontologyRelationshipService.deleteAll();
 
-		List classes = ontologyClassService.findAll();
-		List axioms = ontologyAxiomService.findAll();
-		List relationships = ontologyRelationshipService.findAll();
+		List<OntologyClass> classes = ontologyClassService.findAll();
+		List<OntologyAxiom> axioms = ontologyAxiomService.findAll();
+		List<OntologyRelationship> relationships = ontologyRelationshipService.findAll();
 
 		//importOWLToDatabase();
 		//importAxiomToDatabase();
 
-		classes = ontologyClassService.findAll();
-		axioms = ontologyAxiomService.findAll();
-		relationships = ontologyRelationshipService.findAll();
 
 		OntologyClass com = ontologyClassService
 				.findByName("Compliance Management");
 
-		List result = ontologyRelationshipService.findDesendants(com);
+		ontologyRelationshipService.generateLevelInfo(com);
+		classes = ontologyClassService.findAll();
+		axioms = ontologyAxiomService.findAll();
+		relationships = ontologyRelationshipService.findAll();
+		
+		Set<OntologyClass> branchSet = new LinkedHashSet<OntologyClass>();
+		for(OntologyClass cla: classes){
+			if(cla.getBranchId() == null || cla.getBranchId() == 0){
+				int a = 1;
+			}
+			branchSet.add(ontologyClassService.findById(cla.getBranchId()));
+			
+		}
+		
+
 		return;
 
 	}
