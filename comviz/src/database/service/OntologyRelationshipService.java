@@ -3,6 +3,8 @@ package database.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,9 +66,27 @@ public class OntologyRelationshipService {
 		this.dao = dao;
 	}
 
-	//to be test
+	//to be tested
 	
-	public DefaultMutableTree generateMutableTree(){
+	public DefaultMutableTreeNode generateMutableTree(){
+		
+		DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(this.findRoot());
+		
+		generateMutableTreeRecursively(rootNode);
+		
+		return rootNode;
+		
+	}
+	
+	//to be tested
+	
+	private void generateMutableTreeRecursively(DefaultMutableTreeNode rootNode){
+		List<OntologyClass> children = this.findChildren((OntologyClass) rootNode.getUserObject());
+		for(OntologyClass child: children){
+			DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(child);
+			rootNode.add(childNode);
+			generateMutableTreeRecursively(childNode);
+		}
 		
 	}
 	// Tested
@@ -190,7 +210,8 @@ public class OntologyRelationshipService {
 	}
 
 	// Tested
-	public void generateBranchRootInfo(OntologyClass rootClass) {
+	public void generateBranchRootInfo() {
+		OntologyClass rootClass = this.findRoot();
 
 		rootClass.setBranchId(rootClass.getId());
 		this.ontologyClassService.save(rootClass);

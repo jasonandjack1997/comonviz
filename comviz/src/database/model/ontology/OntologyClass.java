@@ -61,7 +61,8 @@ public class OntologyClass extends Trackable {
 	public void setSiblingRank(int order) {
 		this.siblingRank = order;
 	}
-	public String toString(){
+	
+	public String getNameAndIRI(){
 		return super.toString() + ", iri: " + iri;
 	}
 

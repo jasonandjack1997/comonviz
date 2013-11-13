@@ -178,7 +178,6 @@ public class TreeInfoManager {
 		}
         
 		public static DefaultMutableTreeNode convertFromManchesterToUITreeNode(MutableTree manchesterMutableTree){
-			//ÎÒÐ´µÄ¶ÔÂð
 			DefaultMutableTreeNode node = new DefaultMutableTreeNode(manchesterMutableTree.getUserObject());
 			DefaultMutableTreeNode child;
 			

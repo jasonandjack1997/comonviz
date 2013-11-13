@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -27,29 +29,26 @@ import database.service.OntologyRelationshipService;
  * 
  */
 public class App {
-	public static OntologyAxiomService ontologyAxiomService;
-	public static OntologyClassService ontologyClassService;
-	public static OntologyRelationshipService ontologyRelationshipService;
 
 	static ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext(
 			"applicationContext.xml");
 
+	public static OntologyAxiomService ontologyAxiomService = (OntologyAxiomService) ctx
+			.getBean("ontologyAxiomService");
+
+	public static OntologyClassService ontologyClassService = (OntologyClassService) ctx
+			.getBean("ontologyClassService");
+
+	public static OntologyRelationshipService ontologyRelationshipService = (OntologyRelationshipService) ctx
+			.getBean("ontologyRelationshipService");
+
 	public static void main(String[] args) {
 		new App().start();
-
 		ctx.close();
 	}
 
 	public void start() {
 
-		ontologyAxiomService = (OntologyAxiomService) ctx
-				.getBean("ontologyAxiomService");
-
-		ontologyClassService = (OntologyClassService) ctx
-				.getBean("ontologyClassService");
-
-		ontologyRelationshipService = (OntologyRelationshipService) ctx
-				.getBean("ontologyRelationshipService");
 
 		// importOWLToDatabase();
 		// testServices();
@@ -70,8 +69,12 @@ public class App {
 				.findByName("Compliance Management");
 		
 		ontologyRelationshipService.generateLevelInfo(com);
+		ontologyRelationshipService.generateBranchRootInfo();
+		
 
 		ontologyRelationshipService.findRoot();
+		
+		DefaultMutableTreeNode tree = ontologyRelationshipService.generateMutableTree();
 		classes = ontologyClassService.findAll();
 		axioms = ontologyAxiomService.findAll();
 		relationships = ontologyRelationshipService.findAll();
