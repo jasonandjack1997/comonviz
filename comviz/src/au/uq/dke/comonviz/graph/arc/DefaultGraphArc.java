@@ -1,5 +1,6 @@
 package au.uq.dke.comonviz.graph.arc;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.Point;
@@ -20,13 +21,16 @@ import org.eclipse.zest.layouts.LayoutBendPoint;
 import org.eclipse.zest.layouts.LayoutEntity;
 import org.eclipse.zest.layouts.constraints.LayoutConstraint;
 
+import au.uq.dke.comonviz.EntryPoint;
 import au.uq.dke.comonviz.graph.node.DefaultGraphNode;
 import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
 import ca.uvic.cs.chisel.cajun.graph.arc.GraphArcStyle;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
+import database.model.ontology.OntologyRelationship;
 import edu.umd.cs.piccolo.nodes.PImage;
 import edu.umd.cs.piccolo.nodes.PPath;
 import edu.umd.cs.piccolo.util.PPaintContext;
+import edu.umd.cs.piccolox.util.PFixedWidthStroke;
 
 public class DefaultGraphArc extends PPath implements GraphArc {
 	private static final long serialVersionUID = 1530720146193007435L;
@@ -107,8 +111,9 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 		}
 
 		this.style = new DefaultGraphArcStyle();
+		String name = ((OntologyRelationship)this.getUserObject()).getName();
 
-		this.arcLabel = new ArcLabel(this, this.type.toString());
+		this.arcLabel = new ArcLabel(this, name);
 		addChild(arcLabel);
 
 		// this.updateArcPath();
@@ -385,8 +390,12 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 	protected void paint(PPaintContext paintContext) {
 		Graphics2D g2 = paintContext.getGraphics();
 
-		Stroke stroke = getStroke();
-		Paint paint = getStrokePaint();
+//		Stroke stroke = getStroke();
+//		Paint paint = getStrokePaint();
+		
+		Stroke stroke = new PFixedWidthStroke(3f);
+		Paint paint = Color.green;
+		
 		if ((stroke != null) && (paint != null)) {
 			g2.setPaint(paint);
 			g2.setStroke(stroke);

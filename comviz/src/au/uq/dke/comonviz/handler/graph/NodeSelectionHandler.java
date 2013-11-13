@@ -84,26 +84,6 @@ public class NodeSelectionHandler extends PBasicInputEventHandler {
 			} else {
 				// left click - always select just this node
 				selectedNodes.setNode(displayNode);
-				// also select node in the tree explorer
-				JTree jTree = EntryPoint.getTopView().getjTree();
-				DefaultMutableTreeNode rootNode = (DefaultMutableTreeNode) jTree
-						.getModel().getRoot();
-				Enumeration<?> enumeration = rootNode.breadthFirstEnumeration();
-				while (enumeration.hasMoreElements()) {
-					DefaultMutableTreeNode node = (DefaultMutableTreeNode) enumeration
-							.nextElement();
-					GraphNode graphNode = (GraphNode) node.getUserObject();
-					if (graphNode.getUserObject() == displayNode
-							.getUserObject()) {
-						TreePath treePath = new TreePath(
-								((DefaultTreeModel) jTree.getModel())
-										.getPathToRoot(node));
-						jTree.scrollPathToVisible(treePath);
-						jTree.setSelectionPath(treePath);
-						// jTree.startEditingAtPath(treePath);
-					}
-				}
-
 			}
 		}
 		if (nodeAdded) {

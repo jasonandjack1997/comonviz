@@ -91,38 +91,8 @@ public class LayoutAction extends CajunAction {
 		Collection<GraphNode> nodes = graph.getModel().getVisibleNodes();
 		Collection<GraphArc> arcs = graph.getModel().getVisibleArcs();
 		
-		Collection<GraphArc> possibleArcs = new ArrayList<GraphArc>();
-		
-		int nodesAreaSum = 0;
-		int layoutArea = 0;
-		for(GraphNode graphNode : nodes){
-			nodesAreaSum += graphNode.getBounds().getWidth() * graphNode.getBounds().getHeight();
-			ComonvizGraphModel graphModel = (ComonvizGraphModel)graph.getModel();
-			possibleArcs.addAll(graphModel.loadChildren2((OWLEntity) graphNode.getUserObject(), false));
-		}
-		
-		layoutArea = nodesAreaSum * Parameters.LAYOUT_AREA_FACTOR;
-		
-//		int layoutWidth = (int) Math.sqrt(layoutArea);
-//		int layoutHeight = layoutWidth;
 		int dividerLocation = EntryPoint.getTopView().getTopHorizontalSplitPane().getDividerLocation();
 		
-		//int a = ((FlatGraph)graph).getGraphController().getView().getTopHorizontalSplitPane().getRightComponent().getWidth();
-
-		Collection<GraphArc> subclassArcs = new ArrayList<GraphArc>();
-		for(GraphArc arc: possibleArcs){
-			if(arc.getType().toString().contains("has subclass")){
-				GraphNode srcNode = arc.getSource();
-				GraphNode dstNode = arc.getDestination();
-				
-				if(nodes.contains(srcNode) && nodes.contains(dstNode)){
-					subclassArcs.add(arc);
-
-				}
-			}
-		}
-
-		arcs = subclassArcs;
 		
 		DefaultGraphNode[] entities = nodes.toArray(new DefaultGraphNode[nodes.size()]);
 		
@@ -147,11 +117,10 @@ public class LayoutAction extends CajunAction {
 
 		PCanvas canvas = graph.getCanvas();
 		
-		((FlatGraph)graph).getParent();
 
 		double x = 0, y = 0;
 		//double w = Math.max(0, canvas.getWidth());
-		double w = EntryPoint.frameSize.getWidth() - dividerLocation - 10;
+		double w = EntryPoint.getjFrame().getWidth() - dividerLocation - 10;
 		double h = Math.max(0, canvas.getHeight());
 
 		// to allow extra room for wide nodes
@@ -163,8 +132,6 @@ public class LayoutAction extends CajunAction {
 			h -= 30;
 		}
 		
-//		w = layoutWidth;
-//		h = layoutHeight;
 	
 		try {
 			// define a local version of the layout in order to avoid threading issues

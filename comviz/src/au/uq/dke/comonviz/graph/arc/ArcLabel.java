@@ -19,7 +19,6 @@ public class ArcLabel extends PText {
 	public ArcLabel(GraphArc graphArc, String text) {
 		super();
 
-		// make this node match the text size
 		setText(text);
 		setTextPaint(Color.black);
 
@@ -49,7 +48,8 @@ public class ArcLabel extends PText {
 		Graphics2D g2 = paintContext.getGraphics();
 		g2.setPaint(Color.white);
 		g2.fill(backgroundShape);
-		Color color = (Color) ((DefaultGraphArc)this.getParent()).getStrokePaint();
+//		Color color = (Color) ((DefaultGraphArc)this.getParent()).getStrokePaint();
+		Color color = Color.black;
 		this.setTextPaint(color.darker().darker().darker());
 		super.paintText(paintContext);
 

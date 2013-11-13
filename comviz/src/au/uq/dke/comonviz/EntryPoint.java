@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import org.eclipse.zest.layouts.algorithms.RadialLayoutAlgorithm;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -27,11 +28,13 @@ import au.uq.dke.comonviz.ui.StyleManager;
 import ca.uvic.cs.chisel.cajun.constants.LayoutConstants;
 import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;
 import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
+import ca.uvic.cs.chisel.cajun.resources.ResourceHandler;
 import database.service.OntologyAxiomService;
 import database.service.OntologyClassService;
 import database.service.OntologyRelationshipService;
 
 public class EntryPoint {
+	private static LayoutAction radicalLayoutAction;
 
 	static ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext(
 			"applicationContext.xml");
@@ -93,6 +96,7 @@ public class EntryPoint {
 		flatGraph = new FlatGraph();
 		topView = new TopView();
 		//graphController = new GraphController();
+		radicalLayoutAction =	new LayoutAction(LayoutConstants.LAYOUT_RADIAL, null, new RadialLayoutAlgorithm(1),EntryPoint.getFlatGraph());
 		
 //		graphModel.addListeners();
 //		flatGraph.addListeners();
@@ -105,7 +109,8 @@ public class EntryPoint {
 		jFrame.setExtendedState(jFrame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		jFrame.setVisible(true);
 		
-//		LayoutAction layoutAction = ((AbstractGraph) graphController.getGraph())
+		radicalLayoutAction.doAction();
+		//		LayoutAction layoutAction = ((AbstractGraph) graphController.getGraph())
 //				.getLayout(LayoutConstants.LAYOUT_RADIAL);
 		
 //		URL ontologyURL = null;

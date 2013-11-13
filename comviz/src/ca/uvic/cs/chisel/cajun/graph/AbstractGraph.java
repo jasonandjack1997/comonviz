@@ -137,34 +137,34 @@ public abstract class AbstractGraph extends PCanvas implements Graph {
 
 		@Override
 		public void treeExpanded(TreeExpansionEvent e) {
-			// TODO Auto-generated method stub
-			//find all visible nodes in tree (expanded), and show them all, don't call expand method!
-			JTree jTree = (JTree) e.getSource();
-			int visibleNodesCount = jTree.getRowCount();
-			for (int i = 0; i < visibleNodesCount; i++) {
-				TreePath treePath = jTree.getPathForRow(i);
-				DefaultMutableTreeNode selectedTreeNode = (DefaultMutableTreeNode) treePath
-						.getLastPathComponent();
-				GraphNode selectedGraphNode = (GraphNode) selectedTreeNode
-						.getUserObject();
-				try {
-					Object userObject = selectedGraphNode.getUserObject();
-					GraphNode realGraphNode = EntryPoint.getGraphModel().getNode(
-							userObject);
-					if (realGraphNode == null) {
-
-						EntryPoint.getGraphModel().showWithExsistingNodes((OWLEntity) userObject,
-								EntryPoint.getFlatGraph()
-												.getFilterManager());
-					} else {
-					}
-				} catch (NullPointerException e2) {
-					e2.printStackTrace();
-				}
-			}
-
-			EntryPoint.getFlatGraph().performLayout();
-			
+//			// TODO Auto-generated method stub
+//			//find all visible nodes in tree (expanded), and show them all, don't call expand method!
+//			JTree jTree = (JTree) e.getSource();
+//			int visibleNodesCount = jTree.getRowCount();
+//			for (int i = 0; i < visibleNodesCount; i++) {
+//				TreePath treePath = jTree.getPathForRow(i);
+//				DefaultMutableTreeNode selectedTreeNode = (DefaultMutableTreeNode) treePath
+//						.getLastPathComponent();
+//				GraphNode selectedGraphNode = (GraphNode) selectedTreeNode
+//						.getUserObject();
+//				try {
+//					Object userObject = selectedGraphNode.getUserObject();
+//					GraphNode realGraphNode = EntryPoint.getGraphModel().getNode(
+//							userObject);
+//					if (realGraphNode == null) {
+//
+//						EntryPoint.getGraphModel().showWithExsistingNodes((OWLEntity) userObject,
+//								EntryPoint.getFlatGraph()
+//												.getFilterManager());
+//					} else {
+//					}
+//				} catch (NullPointerException e2) {
+//					e2.printStackTrace();
+//				}
+//			}
+//
+//			EntryPoint.getFlatGraph().performLayout();
+//			
 		}
 
 		@Override

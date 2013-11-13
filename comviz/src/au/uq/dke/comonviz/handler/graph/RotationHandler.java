@@ -112,8 +112,9 @@ public class RotationHandler extends PBasicInputEventHandler {
 
 			// rotate all visible nodes
 			Collection<GraphNode> visibleNodes = EntryPoint.getGraphModel().getVisibleNodes();
-			List<OWLEntity> desendantsNode = EntryPoint.getGraphModel().getDesendantList(
-					(OWLEntity) anchorGraphNode.getUserObject(), false);
+			List<OWLEntity> desendantsNode = null;
+//			List<OWLEntity> desendantsNode = EntryPoint.getGraphModel().getDesendantList(
+//					(OWLEntity) anchorGraphNode.getUserObject(), false);
 
 			for (OWLEntity nodeEntity : desendantsNode) {
 				// if (graphNode.getText().contains("Compliance")) {
