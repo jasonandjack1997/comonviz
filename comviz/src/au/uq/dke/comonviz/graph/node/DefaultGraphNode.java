@@ -34,6 +34,7 @@ import au.uq.dke.comonviz.ui.StyleManager;
 import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNodeStyle;
+import database.model.ontology.OntologyClass;
 import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.PLayer;
 import edu.umd.cs.piccolo.PNode;
@@ -365,11 +366,12 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 
 	@Override
 	public String toString() {
+		return ((OntologyClass)this.getUserObject()).getName();
 
-		String temp = getText();
-		temp = temp.substring(temp.lastIndexOf("#") + 1);
-
-		return temp;
+//		String temp = getText();
+//		temp = temp.substring(temp.lastIndexOf("#") + 1);
+//
+//		return temp;
 
 	}
 

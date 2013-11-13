@@ -66,29 +66,7 @@ public class OntologyRelationshipService {
 		this.dao = dao;
 	}
 
-	//to be tested
 	
-	public DefaultMutableTreeNode generateMutableTree(){
-		
-		DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(this.findRoot());
-		
-		generateMutableTreeRecursively(rootNode);
-		
-		return rootNode;
-		
-	}
-	
-	//to be tested
-	
-	private void generateMutableTreeRecursively(DefaultMutableTreeNode rootNode){
-		List<OntologyClass> children = this.findChildren((OntologyClass) rootNode.getUserObject());
-		for(OntologyClass child: children){
-			DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(child);
-			rootNode.add(childNode);
-			generateMutableTreeRecursively(childNode);
-		}
-		
-	}
 	// Tested
 	public OntologyClass findSourceOntologyClass(
 			OntologyRelationship ontologyRelationship) {

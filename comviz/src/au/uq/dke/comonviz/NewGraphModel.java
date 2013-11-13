@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+
 import au.uq.dke.comonviz.graph.node.DefaultGraphNode;
 import au.uq.dke.comonviz.model.DatabaseModelListener;
 import ca.uvic.cs.chisel.cajun.graph.DefaultGraphModel;
@@ -103,17 +105,17 @@ public class NewGraphModel extends DefaultGraphModel {
 	public NewGraphModel() {
 		this.nodes = super.getNodes();
 		this.arcs = super.getArcs();
+		this.createNodes();
+		this.createArcs();
 	}
 
 //CRUD of node	
 	// tested
 	private GraphNode findGraphNode(OntologyClass ontologyClass) {
 		for (Map.Entry<Object, GraphNode> entry : nodes.entrySet()) {
-			if (((OntologyClass) entry.getKey()).getId() == ontologyClass
-					.getId()) {
+			if (((OntologyClass) entry.getKey()).equals(ontologyClass)) {
 				return entry.getValue();
 			}
-
 		}
 
 		return null;
@@ -197,14 +199,14 @@ public class NewGraphModel extends DefaultGraphModel {
 	
 	
 
-	private List<GraphNode> getChildren(GraphNode graphNode) {
-		List<OntologyClass> relationSrcClassList = this.ontologyRelationshipService
-				.findChildren((OntologyClass) graphNode.getUserObject());
-		List<GraphNode> graphNodeList = getGraphNodesFromClasses(relationSrcClassList);
-
-		return graphNodeList;
+//other methods
+	private List<GraphNode> getChildren(GraphNode graphNode){
+		
+		List<GraphNode> childrenGraphNodeList = getGraphNodesFromClasses(this.ontologyRelationshipService.findChildren((OntologyClass) graphNode.getUserObject()));
+		return childrenGraphNodeList;
 	}
 
+	
 	private List<GraphNode> getRelationSrcNodes(GraphNode graphNode) {
 		List<OntologyClass> relationSrcClassList = this.ontologyRelationshipService
 				.findRelSrcNeighbourClasses((OntologyClass) graphNode
@@ -237,6 +239,33 @@ public class NewGraphModel extends DefaultGraphModel {
 		}
 		return graphNodeList;
 
+	}
+	
+	//to be tested
+	
+	public DefaultMutableTreeNode generateMutableTree(){
+		
+		DefaultMutableTreeNode rootTreeNode = new DefaultMutableTreeNode(this.findRoot());
+		
+		generateMutableTreeRecursively(rootTreeNode);
+		
+		return rootTreeNode;
+		
+	}
+
+	public GraphNode findRoot() {
+		return this.findGraphNode(this.ontologyRelationshipService.findRoot());
+	}
+
+	//to be tested
+	
+	private void generateMutableTreeRecursively(DefaultMutableTreeNode rootTreeNode){
+		List<GraphNode> children = this.getChildren((GraphNode) rootTreeNode.getUserObject());
+		for(GraphNode child: children){
+			DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(child);
+			rootTreeNode.add(childNode);
+			generateMutableTreeRecursively(childNode);
+		}
 	}
 
 	public void test() {
