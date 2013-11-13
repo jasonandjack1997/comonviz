@@ -37,6 +37,9 @@ import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLClass;
 
 import au.uq.dke.comonviz.actions.CajunAction;
+import au.uq.dke.comonviz.actions.NoZoomAction;
+import au.uq.dke.comonviz.actions.ZoomInAction;
+import au.uq.dke.comonviz.actions.ZoomOutAction;
 import au.uq.dke.comonviz.filter.FilterManager;
 import au.uq.dke.comonviz.ui.ArcFilterPanel;
 import au.uq.dke.comonviz.ui.FilterPanel;
@@ -218,6 +221,17 @@ public class TopView extends JPanel {
 			this.add(topHorizontalSplitPane, BorderLayout.CENTER);
 			initializeToolBar();
 		}
+	
+	public void hideSubclassArcType(){
+		String subClass = "has subclass";
+		String subClassType = null;
+		for(Object arcType: EntryPoint.getFilterManager().getArcTypeFilter().getArcTypes()){
+			if(((String)arcType).equals(subClass)){
+				subClassType = (String)arcType;
+			}
+		}
+		this.arcFilterPanel.setTypeVisibility(subClassType, false);
+	}
 
 	public void addListeners(){
 		PBasicInputEventHandler graphListener = new PBasicInputEventHandler() {
@@ -281,9 +295,9 @@ public class TopView extends JPanel {
 		addToolBarAction(new OpenOntologyFileAction());
 		// addToolBarAction(new ClearOrphansAction(graph.getModel(), graph));
 		// zoom
-		//addToolBarAction(new ZoomInAction(graph.getCamera()));
-		//addToolBarAction(new NoZoomAction(graph.getCamera()));
-		//addToolBarAction(new ZoomOutAction(graph.getCamera()));
+		addToolBarAction(new ZoomInAction(graph.getCamera()));
+		addToolBarAction(new NoZoomAction(graph.getCamera()));
+		addToolBarAction(new ZoomOutAction(graph.getCamera()));
 
 		//getToolBar().addSeparator();
 
@@ -293,7 +307,7 @@ public class TopView extends JPanel {
 		final JToggleButton arcsToggle = addToolBarToggleAction(new ShowFilterPanelAction(
 				getArcFilterPanel()));
 		
-		arcsToggle.setVisible(false);
+		arcsToggle.setVisible(true);
 		// listen for panel close events - keep the toggle buttons in sync
 		/*
 		 * getNodeFilterPanel().getCloseButton().addActionListener(new
@@ -534,7 +548,7 @@ public class TopView extends JPanel {
 				getRightPanel().add(filterPanel);
 				getRightPanel().invalidate();
 
-				mainHorizontalSplitPane.setDividerLocation(1.0);
+				mainHorizontalSplitPane.setDividerLocation(0.5);
 			}
 		}
 	}

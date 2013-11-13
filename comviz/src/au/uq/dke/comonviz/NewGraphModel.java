@@ -105,8 +105,8 @@ public class NewGraphModel extends DefaultGraphModel {
 	public NewGraphModel() {
 		this.nodes = super.getNodes();
 		this.arcs = super.getArcs();
-		this.createNodes();
-		this.createArcs();
+		this.loadNodesFromDB();
+		this.loadArcsFromDB();
 	}
 
 //CRUD of node	
@@ -121,7 +121,7 @@ public class NewGraphModel extends DefaultGraphModel {
 		return null;
 	}
 	// tested
-	private void createNodes() {
+	private void loadNodesFromDB() {
 
 		List<OntologyClass> ontologyClassList = this.ontologyClassService
 				.findAll();
@@ -164,7 +164,7 @@ public class NewGraphModel extends DefaultGraphModel {
 		return null;
 	}
 
-	private void createArcs() {
+	private void loadArcsFromDB() {
 
 		List<OntologyRelationship> ontologyRelationshipList = this.ontologyRelationshipService
 				.findAll();
@@ -181,7 +181,7 @@ public class NewGraphModel extends DefaultGraphModel {
 				.findDestinationOntologyClass(ontologyRelationship);
 		GraphNode sourceNode = findGraphNode(sourceOntologyClass);
 		GraphNode destinationNode = findGraphNode(destinationOntologyClass);
-		super.addArc(ontologyRelationship, sourceNode, destinationNode, null);
+		super.addArc(ontologyRelationship, sourceNode, destinationNode, ontologyRelationship.getName());
 
 	}
 	private void removeArc(OntologyRelationship ontologyRelationship) {
@@ -269,8 +269,8 @@ public class NewGraphModel extends DefaultGraphModel {
 	}
 
 	public void test() {
-		createNodes();
-		createArcs();
+		loadNodesFromDB();
+		loadArcsFromDB();
 		return;
 	}
 

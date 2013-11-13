@@ -111,6 +111,8 @@ public class EntryPoint {
 //		topView.addListeners();
 		//graphController.addListeners();
 		
+		this.topView.hideSubclassArcType();
+		
 		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Display the window.
 		jFrame.setMinimumSize(new Dimension(800, 600));
