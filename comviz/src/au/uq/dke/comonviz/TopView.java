@@ -12,6 +12,8 @@ import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Collection;
+import java.util.Enumeration;
 import java.util.Map;
 
 import javax.swing.AbstractButton;
@@ -22,28 +24,36 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
+
+import org.semanticweb.owlapi.model.OWLAnnotation;
+import org.semanticweb.owlapi.model.OWLClass;
 
 import au.uq.dke.comonviz.actions.CajunAction;
 import au.uq.dke.comonviz.filter.FilterManager;
-import au.uq.dke.comonviz.handler.tree.MyTreeExpansionListener;
-import au.uq.dke.comonviz.handler.tree.MyTreeHirarchyChangeListener;
-import au.uq.dke.comonviz.handler.tree.MyTreeItemSelectionListener;
 import au.uq.dke.comonviz.ui.FilterPanel;
 import au.uq.dke.comonviz.ui.OpenOntologyFileAction;
 import au.uq.dke.comonviz.ui.StatusProgressBar;
-import uk.ac.manchester.cs.bhig.util.MutableTree;
 import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
 import ca.uvic.cs.chisel.cajun.graph.Graph;
 import ca.uvic.cs.chisel.cajun.graph.GraphModelAdapter;
+import ca.uvic.cs.chisel.cajun.graph.GraphModelListener;
+import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
+import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.NodeCollection;
 import ca.uvic.cs.chisel.cajun.resources.ResourceHandler;
+import edu.umd.cs.piccolo.PNode;
+import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
+import edu.umd.cs.piccolo.event.PInputEvent;
 import edu.umd.cs.piccolox.swing.PScrollPane;
 
 public class TopView extends JPanel {
@@ -74,7 +84,76 @@ public class TopView extends JPanel {
 
 	private JTree jTree;
 	private JTextPane  jTextArea;
+	
+	TreeSelectionListener treeSelectionListener = new TreeSelectionListener(){
 
+		@Override
+		public void valueChanged(TreeSelectionEvent e) {
+			// TODO Auto-generated method stub
+			DefaultMutableTreeNode selectedTreeNode = (DefaultMutableTreeNode) ((JTree)e.getSource()).getLastSelectedPathComponent();
+			GraphNode selectedGraphNode = (GraphNode) selectedTreeNode.getUserObject();
+			Object userObject = selectedGraphNode.getUserObject();
+			Collection <OWLAnnotation> owlAnnotationSet = ((OWLClass)userObject).getAnnotations(EntryPoint.ontology);
+			if(owlAnnotationSet.size() != 0){
+				String annotation = ((OWLAnnotation)owlAnnotationSet.toArray()[0]).getValue().toString();
+				annotation = annotation.substring(1, annotation.length() -1);
+				annotation = EntryPoint.getAnnotationManager().getStylizedAnnotation(annotation);
+				TopView.this.getjTextArea().setText(annotation);
+				TopView.this.getjTextArea().setCaretPosition(0);
+			}else{
+				TopView.this.getjTextArea().setText("");
+			}
+			
+		}
+		
+	};
+	
+	GraphModelListener graphModelListener = new GraphModelListener(){
+
+		@Override
+		public void graphCleared() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void graphNodeAdded(GraphNode node) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void graphNodeRemoved(GraphNode node) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void graphArcAdded(GraphArc arc) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void graphArcRemoved(GraphArc arc) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void graphNodeTypeAdded(Object nodeType) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void graphArcTypeAdded(Object arcType) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	};
+	
 	public JTextPane  getjTextArea() {
 		return jTextArea;
 	}
@@ -95,6 +174,55 @@ public class TopView extends JPanel {
 		EntryPoint.getjFrame().add(this);
 	}
 
+	public void addListeners(){
+		PBasicInputEventHandler graphListener = new PBasicInputEventHandler() {
+			@Override
+			public void mousePressed(PInputEvent e) {
+				PNode node = e.getPickedNode();
+				if (node instanceof GraphNode) {
+					node.moveToFront();
+					nodePressed(e, (GraphNode) node);
+				}
+				if (e.isLeftMouseButton()) {
+					if (e.getClickCount() == 2) {
+						if (e.getPickedNode() instanceof GraphNode) {
+							//expand this node in tree
+						}
+					}
+				}
+				super.mousePressed(e);
+			}
+			
+
+			private void nodePressed(PInputEvent e, GraphNode displayNode) {
+				// select node in the tree explorer
+				JTree jTree = EntryPoint.getTopView().getjTree();
+				DefaultMutableTreeNode rootNode = (DefaultMutableTreeNode) jTree
+						.getModel().getRoot();
+				Enumeration<?> enumeration = rootNode.breadthFirstEnumeration();
+				while (enumeration.hasMoreElements()) {
+					DefaultMutableTreeNode node = (DefaultMutableTreeNode) enumeration
+							.nextElement();
+					GraphNode graphNode = (GraphNode) node.getUserObject();
+					if (graphNode.getUserObject() == displayNode
+							.getUserObject()) {
+						TreePath treePath = new TreePath(
+								((DefaultTreeModel) jTree.getModel())
+										.getPathToRoot(node));
+						jTree.scrollPathToVisible(treePath);
+						jTree.setSelectionPath(treePath);
+					}
+				}
+
+			}
+
+		};
+		
+		
+		
+		EntryPoint.getFlatGraph().getCamera().addInputEventListener(graphListener);
+
+	}
 	public void initialize() {
 		// this.ontologyTree = ontologyTree;
 
@@ -114,12 +242,6 @@ public class TopView extends JPanel {
 		jTextArea.setMargin(new Insets(10,10,10,10));
 		jTree = new JTree(treeModel);
 
-		jTree.addTreeSelectionListener(new MyTreeItemSelectionListener(this,
-				selectedNodes));
-		jTree.addTreeExpansionListener(new MyTreeExpansionListener(
-				selectedNodes));
-		jTree.addHierarchyListener(new MyTreeHirarchyChangeListener());
-		
 		jTree.setSelectionRow(0);
 		
 		
@@ -185,7 +307,6 @@ public class TopView extends JPanel {
 			}
 		});
 
-		// this.add(horizontalSplitPane, BorderLayout.CENTER);
 		this.add(topHorizontalSplitPane, BorderLayout.CENTER);
 
 		this.addComponentListener(new ComponentAdapter() {

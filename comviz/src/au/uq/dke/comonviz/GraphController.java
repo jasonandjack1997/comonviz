@@ -465,4 +465,9 @@ public class GraphController {
 			}
 		};
 	}
+
+	public void addListeners() {
+		// TODO Auto-generated method stub
+		
+	}
 }

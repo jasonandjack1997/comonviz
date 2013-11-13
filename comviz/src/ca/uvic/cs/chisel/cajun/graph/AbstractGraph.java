@@ -8,13 +8,21 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolTip;
+import javax.swing.JTree;
 import javax.swing.border.Border;
+import javax.swing.event.TreeExpansionEvent;
+import javax.swing.event.TreeExpansionListener;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
 
 import org.eclipse.zest.layouts.LayoutStyles;
 import org.eclipse.zest.layouts.algorithms.DirectedGraphLayoutAlgorithm;
@@ -25,12 +33,17 @@ import org.eclipse.zest.layouts.algorithms.RadialLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
 import org.eclipse.zest.layouts.progress.ProgressListener;
+import org.semanticweb.owlapi.model.OWLAnnotation;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLEntity;
 
+import au.uq.dke.comonviz.EntryPoint;
 import au.uq.dke.comonviz.actions.LayoutAction;
 import au.uq.dke.comonviz.filter.FilterChangedEvent;
 import au.uq.dke.comonviz.filter.FilterChangedListener;
 import au.uq.dke.comonviz.filter.FilterManager;
 import au.uq.dke.comonviz.graph.arc.DefaultGraphArcStyle;
+import au.uq.dke.comonviz.graph.node.DefaultGraphNode;
 import au.uq.dke.comonviz.graph.node.DefaultGraphNodeStyle;
 import au.uq.dke.comonviz.handler.graph.GraphPopupListener;
 import au.uq.dke.comonviz.handler.graph.KeyHandlerDelegate;
@@ -98,6 +111,88 @@ public abstract class AbstractGraph extends PCanvas implements Graph {
 		public void graphArcRemoved(GraphArc arc) {
 			removeGraphArc(arc);
 		}
+	};
+	
+	private TreeSelectionListener treeSelectionListener = new TreeSelectionListener(){
+
+		@Override
+		public void valueChanged(TreeSelectionEvent e) {
+			// TODO Auto-generated method stub
+			try {
+				DefaultMutableTreeNode selectedTreeNode = (DefaultMutableTreeNode) ((JTree)e.getSource()).getLastSelectedPathComponent();
+				GraphNode selectedGraphNode = (GraphNode) selectedTreeNode.getUserObject();
+				Object userObject = selectedGraphNode.getUserObject();
+				GraphNode realGraphNode = EntryPoint.getGraphModel().getNode(userObject);
+				AbstractGraph.this.selectedNodes.setNode(realGraphNode);
+				EntryPoint.getGraphController().panTo((DefaultGraphNode) realGraphNode);
+			} catch(NullPointerException e2){
+				e2.printStackTrace();
+			}
+			
+		}
+		
+	};
+	
+	private TreeExpansionListener treeExpensionListener = new TreeExpansionListener(){
+
+		@Override
+		public void treeExpanded(TreeExpansionEvent e) {
+			// TODO Auto-generated method stub
+			//find all visible nodes in tree (expanded), and show them all, don't call expand method!
+			JTree jTree = (JTree) e.getSource();
+			int visibleNodesCount = jTree.getRowCount();
+			for (int i = 0; i < visibleNodesCount; i++) {
+				TreePath treePath = jTree.getPathForRow(i);
+				DefaultMutableTreeNode selectedTreeNode = (DefaultMutableTreeNode) treePath
+						.getLastPathComponent();
+				GraphNode selectedGraphNode = (GraphNode) selectedTreeNode
+						.getUserObject();
+				try {
+					Object userObject = selectedGraphNode.getUserObject();
+					GraphNode realGraphNode = EntryPoint.getGraphModel().getNode(
+							userObject);
+					if (realGraphNode == null) {
+
+						EntryPoint.getGraphModel().showWithExsistingNodes((OWLEntity) userObject,
+								EntryPoint.getFlatGraph()
+												.getFilterManager());
+					} else {
+					}
+				} catch (NullPointerException e2) {
+					e2.printStackTrace();
+				}
+			}
+
+			EntryPoint.getFlatGraph().performLayout();
+			
+		}
+
+		@Override
+		public void treeCollapsed(TreeExpansionEvent e) {
+			// TODO Auto-generated method stub
+			JTree jTree = (JTree) e.getSource();
+			int visibleNodesCount = jTree.getRowCount();
+			Collection userObjectCollection = new LinkedList();
+			for (int i = 0; i < visibleNodesCount; i++) {
+				TreePath treePath = jTree.getPathForRow(i);
+				DefaultMutableTreeNode selectedTreeNode = (DefaultMutableTreeNode) treePath
+						.getLastPathComponent();
+				GraphNode graphNode = (GraphNode) selectedTreeNode.getUserObject();
+				Object userObject = graphNode.getUserObject();
+				userObjectCollection.add(userObject);
+			}
+
+			for (GraphNode graphNodeToDelete : EntryPoint.getGraphModel().getVisibleNodes()) {
+				if(!userObjectCollection.contains(graphNodeToDelete.getUserObject())){
+					EntryPoint.getGraphModel().removeNode(graphNodeToDelete.getUserObject());
+				}
+
+			}
+
+			EntryPoint.getFlatGraph().performLayout();
+			
+		}
+		
 	};
 
 	private GraphNodeCollectionListener selectionListener = new GraphNodeCollectionListener() {
@@ -168,6 +263,9 @@ public abstract class AbstractGraph extends PCanvas implements Graph {
 
 		this.matchingNodes = new NodeCollection();
 		matchingNodes.addCollectionListener(matchingListener);
+		
+		EntryPoint.getTopView().getjTree().addTreeSelectionListener(treeSelectionListener);
+		EntryPoint.getTopView().getjTree().addTreeExpansionListener(treeExpensionListener);
 
 		this.nodeStyle = new DefaultGraphNodeStyle();
 		this.arcStyle = new DefaultGraphArcStyle();

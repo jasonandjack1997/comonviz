@@ -1442,4 +1442,9 @@ public class ComonvizGraphModel extends DefaultGraphModel {
 
 		return modelArcsSize >= frameArcsSize;
 	}
+
+	public void addListeners() {
+		// TODO Auto-generated method stub
+		
+	}
 }

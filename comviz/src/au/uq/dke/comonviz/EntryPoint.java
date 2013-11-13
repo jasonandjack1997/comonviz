@@ -100,7 +100,12 @@ public class EntryPoint {
 		flatGraph = new FlatGraph();
 		topView = new TopView();
 		graphController = new GraphController();
-
+		
+		graphModel.addListeners();
+		flatGraph.addListeners();
+		topView.addListeners();
+		graphController.addListeners();
+		
 		URL ontologyURL = null;
 		try {
 

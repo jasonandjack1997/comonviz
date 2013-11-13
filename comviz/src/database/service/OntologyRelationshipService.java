@@ -13,7 +13,6 @@ import com.googlecode.genericdao.search.ISearch;
 import com.googlecode.genericdao.search.Search;
 import com.googlecode.genericdao.search.SearchResult;
 
-import database.dao.OntologyClassDAO;
 import database.dao.OntologyRelationshipDAO;
 import database.model.ontology.OntologyClass;
 import database.model.ontology.OntologyRelationship;
@@ -65,6 +64,11 @@ public class OntologyRelationshipService {
 		this.dao = dao;
 	}
 
+	//to be test
+	
+	public DefaultMutableTree generateMutableTree(){
+		
+	}
 	// Tested
 	public OntologyClass findSourceOntologyClass(
 			OntologyRelationship ontologyRelationship) {
