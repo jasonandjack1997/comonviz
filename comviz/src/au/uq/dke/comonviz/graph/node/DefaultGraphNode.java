@@ -53,6 +53,15 @@ import edu.umd.cs.piccolox.util.PFixedWidthStroke;
  */
 public class DefaultGraphNode extends PNode implements GraphNode {
 
+	@Override
+	public boolean equals(Object obj) {
+		OntologyClass thisCls = (OntologyClass) this.getUserObject();
+		OntologyClass tgtCls = (OntologyClass) ((DefaultGraphNode)obj).getUserObject();
+		return thisCls.equals(tgtCls);
+		
+		// TODO Auto-generated method stub
+	}
+
 	private static final long serialVersionUID = 3223950711940456476L;
 
 	protected static final int MAX_TEXT_CHARS = 10;
