@@ -48,7 +48,7 @@ public class ArcTypeFilter implements GraphFilter {
 		}
 	}
 
-	protected void updateArcTypes() {
+	public void updateArcTypes() {
 		GraphModel model = EntryPoint.getGraphModel();
 		Collection<Object> newArcTypes = model.getArcTypes();
 		if (newArcTypes.isEmpty()) {

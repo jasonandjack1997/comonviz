@@ -139,7 +139,8 @@ public class DefaultGraphArcStyle implements GraphArcStyle {
 	 */
 	public Paint getTypePaint(Object type) {
 
-		Paint paint = StyleManager.getStyleManager().getArcColor(type);
+//		Paint paint = StyleManager.getStyleManager().getArcColor(type);
+		Paint paint = Color.blue;
 
 		if (paint != null) {
 			return paint;

@@ -102,6 +102,7 @@ public class EntryPoint {
 		filterManager = new FilterManager();
 		jFrame = new JFrame("CoMOnViz");
 		graphModel = new NewGraphModel();
+		this.getFilterManager().getArcTypeFilter().updateArcTypes();
 		flatGraph = new FlatGraph();
 		topView = new TopView();
 		//graphController = new GraphController();
@@ -111,9 +112,9 @@ public class EntryPoint {
 		//flatGraph.addInputEventListener(new ToolTipListener(flatGraph));
 		flatGraph.addInputEventListener(new NodeExpandCollapseListener());
 		filterManager.addListeners();
-//		graphModel.addListeners();
-//		flatGraph.addListeners();
-//		topView.addListeners();
+		graphModel.addListeners();
+		flatGraph.addListeners();
+		topView.addListeners();
 		//graphController.addListeners();
 		
 		this.topView.hideSubclassArcType();
