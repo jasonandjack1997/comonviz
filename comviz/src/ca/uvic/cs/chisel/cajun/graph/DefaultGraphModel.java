@@ -411,7 +411,7 @@ public class DefaultGraphModel implements GraphModel {
 				DefaultGraphArc arc = new DefaultGraphArc(userObject, src,
 						dest, icon, type);
 				addArcInternal(arc);
-				arrangeArcs(arc.getSource(), arc.getDestination());
+				//arrangeArcs(arc.getSource(), arc.getDestination());
 			}
 			GraphArc returnArc = arcs.get(userObject);
 			return returnArc;
@@ -469,7 +469,7 @@ public class DefaultGraphModel implements GraphModel {
 		// the initial curve factor
 		// if arcs are only in one direction then we use a straight line for the
 		// first arc
-		int startingCurve = 1;
+		int startingCurve = 0;
 		if ((srcToDestArcs.size() == 0) || (destToSrcArcs.size() == 0)) {
 			startingCurve = 0;
 		}
@@ -477,13 +477,13 @@ public class DefaultGraphModel implements GraphModel {
 		int curveFactor = startingCurve;
 		for (GraphArc arc : srcToDestArcs) {
 			arc.setCurveFactor(curveFactor);
-			curveFactor++;
+			//curveFactor++;
 		}
 
 		curveFactor = startingCurve;
 		for (GraphArc arc : destToSrcArcs) {
 			arc.setCurveFactor(curveFactor);
-			curveFactor++;
+			//curveFactor++;
 		}
 	}
 

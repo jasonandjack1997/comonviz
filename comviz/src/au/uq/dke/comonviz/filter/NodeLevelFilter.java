@@ -9,7 +9,7 @@ import database.model.ontology.OntologyClass;
 
 public class NodeLevelFilter implements GraphFilter {
 
-	private int visibleLevel = 2;
+	private int visibleLevel = 3;
 
 	public int getVisibleLevel() {
 		return visibleLevel;

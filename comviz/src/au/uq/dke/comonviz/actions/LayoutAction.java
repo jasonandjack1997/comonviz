@@ -32,7 +32,7 @@ import edu.umd.cs.piccolo.util.PUtil;
 
 public class LayoutAction extends CajunAction {
 	private static final long serialVersionUID = -7385859217531335673L;
-	
+
 	private static final int MAX_NODES_TO_ANIMATE = 200;
 	private static final double DELTA = 0.01;
 
@@ -41,27 +41,30 @@ public class LayoutAction extends CajunAction {
 	private boolean animate;
 	private int maxNodesToAnimate = MAX_NODES_TO_ANIMATE;
 	private boolean resizeNodes;
-	
+
 	private ActivityManager manager;
 
 	/** list of relationship types that the layout should be applied to */
 	private List<Object> layoutRelTypes;
-	
-	public LayoutAction(String name, Icon icon, LayoutAlgorithm layout, Graph graph) {
+
+	public LayoutAction(String name, Icon icon, LayoutAlgorithm layout,
+			Graph graph) {
 		this(name, icon, layout, graph, true);
 	}
 
-	public LayoutAction(String name, Icon icon, LayoutAlgorithm layout, Graph graph, boolean animate) {
+	public LayoutAction(String name, Icon icon, LayoutAlgorithm layout,
+			Graph graph, boolean animate) {
 		super(name, icon);
 		this.layout = layout;
 		this.graph = graph;
 		this.animate = animate;
 		this.resizeNodes = false;
 		this.layoutRelTypes = new ArrayList<Object>();
-		
-		this.manager = new ActivityManager(graph.getCanvas(), graph.getCanvas().getRoot().getActivityScheduler());
+
+		this.manager = new ActivityManager(graph.getCanvas(), graph.getCanvas()
+				.getRoot().getActivityScheduler());
 	}
-	
+
 	public LayoutAlgorithm getLayout() {
 		return layout;
 	}
@@ -73,7 +76,7 @@ public class LayoutAction extends CajunAction {
 	public void setLayoutRelTypes(List<Object> layoutRelTypes) {
 		this.layoutRelTypes = layoutRelTypes;
 	}
-	
+
 	public void addProgressListener(ProgressListener listener) {
 		manager.addProgressListener(listener);
 	}
@@ -84,21 +87,23 @@ public class LayoutAction extends CajunAction {
 		runLayout();
 
 	}
-	
+
 	@SuppressWarnings("unused")
 	public void runLayout() {
-		// run the layout only on the visible nodes?  Or all nodes?
+		// run the layout only on the visible nodes? Or all nodes?
 		Collection<GraphNode> nodes = graph.getModel().getVisibleNodes();
 		Collection<GraphArc> arcs = graph.getModel().getVisibleArcs();
-		
-		int dividerLocation = EntryPoint.getTopView().getTopHorizontalSplitPane().getDividerLocation();
-		
-		
-		DefaultGraphNode[] entities = nodes.toArray(new DefaultGraphNode[nodes.size()]);
-		
+
+		int dividerLocation = EntryPoint.getTopView()
+				.getTopHorizontalSplitPane().getDividerLocation();
+
+		DefaultGraphNode[] entities = nodes.toArray(new DefaultGraphNode[nodes
+				.size()]);
+
 		Collection<GraphArc> filteredArcs;
 		if (layoutRelTypes.isEmpty()) {
-			// no arcs in the list - so assume all arcs should be used in the layout
+			// no arcs in the list - so assume all arcs should be used in the
+			// layout
 			filteredArcs = arcs;
 		} else {
 			// remove arcs that have been filtered
@@ -109,17 +114,22 @@ public class LayoutAction extends CajunAction {
 				}
 			}
 		}
-		
-		
-		DefaultGraphArc[] rels = filteredArcs.toArray(new DefaultGraphArc[filteredArcs.size()]);
-		
-		
+
+		DefaultGraphArc[] rels = filteredArcs
+				.toArray(new DefaultGraphArc[filteredArcs.size()]);
+
+		DefaultGraphArc[] reversedRels = new DefaultGraphArc[rels.length];
+
+		for (int i = 0; i < rels.length; i++) {
+			DefaultGraphArc reversedArc = new DefaultGraphArc(rels[i].getUserObject(),
+					rels[i].getDestination(), rels[i].getSource());
+			reversedRels[i] = reversedArc;
+		}
 
 		PCanvas canvas = graph.getCanvas();
-		
 
 		double x = 0, y = 0;
-		//double w = Math.max(0, canvas.getWidth());
+		// double w = Math.max(0, canvas.getWidth());
 		double w = EntryPoint.getjFrame().getWidth() - dividerLocation - 10;
 		double h = Math.max(0, canvas.getHeight());
 
@@ -131,22 +141,24 @@ public class LayoutAction extends CajunAction {
 		if (h > 300) {
 			h -= 30;
 		}
-		
-	
+
 		try {
-			// define a local version of the layout in order to avoid threading issues
+			// define a local version of the layout in order to avoid threading
+			// issues
 			LayoutAlgorithm layout = getLayoutAlgorithm();
-			layout.applyLayout(entities, rels, x, y, w, h, false, false);
+			layout.applyLayout(entities, reversedRels, x, y, w, h, false, false);
 
 			if (animate && (nodes.size() > maxNodesToAnimate)) {
 				animate = false;
 			}
 
-			//PActivityScheduler scheduler = canvas.getRoot().getActivityScheduler();
-			ArrayList<PActivity> activities = new ArrayList<PActivity>(nodes.size());
-			
+			// PActivityScheduler scheduler =
+			// canvas.getRoot().getActivityScheduler();
+			ArrayList<PActivity> activities = new ArrayList<PActivity>(
+					nodes.size());
+
 			for (GraphNode node : nodes) {
-				if(!node.isFixedLocation()) {
+				if (!node.isFixedLocation()) {
 					if (animate) {
 						AffineTransform transform = createTransform(node);
 						PActivity activity = createActivity(node, transform);
@@ -154,34 +166,37 @@ public class LayoutAction extends CajunAction {
 							activities.add(activity);
 						}
 					} else {
-						node.setLocation(node.getXInLayout(), node.getYInLayout());
+						node.setLocation(node.getXInLayout(),
+								node.getYInLayout());
 					}
 				}
 			}
-			
+
 			if (animate) {
-				//ActivityManager manager = new ActivityManager(canvas, scheduler, activities);
+				// ActivityManager manager = new ActivityManager(canvas,
+				// scheduler, activities);
 				manager.setActivities(activities);
 				// wait until all nodes have finished moving
-				// @tag question : why did Chris put this in here?  it blocks the UI thread
-				//manager.waitForActivitiesToFinish();
+				// @tag question : why did Chris put this in here? it blocks the
+				// UI thread
+				// manager.waitForActivitiesToFinish();
 			} else {
 				canvas.repaint();
 			}
-			
+
 			// ensure that the first selected node is visible in the scroll pane
-//			Collection<GraphNode> selectedNodes = graph.getSelectedNodes();
-//			if (selectedNodes.size() > 0) {
-//				GraphNode first = selectedNodes.iterator().next();
-//				Rectangle2D bounds = first.getBounds();
-//				//graph.getCanvas().scrollRectToVisible(bounds.getBounds());
-//			}
+			// Collection<GraphNode> selectedNodes = graph.getSelectedNodes();
+			// if (selectedNodes.size() > 0) {
+			// GraphNode first = selectedNodes.iterator().next();
+			// Rectangle2D bounds = first.getBounds();
+			// //graph.getCanvas().scrollRectToVisible(bounds.getBounds());
+			// }
 
 		} catch (InvalidLayoutConfiguration e) {
 			e.printStackTrace();
 		}
-		
-//		((FlatGraph)graph).getAnimationHandler().focusOnExtents(true);
+
+		// ((FlatGraph)graph).getAnimationHandler().focusOnExtents(true);
 
 	}
 
@@ -203,7 +218,8 @@ public class LayoutAction extends CajunAction {
 			at.translate(dx, dy);
 			valid = true;
 		}
-		if (resizeNodes && ((oldW != 0) && (oldH != 0)) && ((Math.abs(dw) > DELTA) || (Math.abs(dh) > DELTA))) {
+		if (resizeNodes && ((oldW != 0) && (oldH != 0))
+				&& ((Math.abs(dw) > DELTA) || (Math.abs(dh) > DELTA))) {
 			double sx = (newW / oldW);
 			double sy = (newH / oldH);
 			// TODO I don't know if this actually works!
@@ -220,24 +236,30 @@ public class LayoutAction extends CajunAction {
 	 * See ca.uvic.csr.shrimp.DisplayBean.AbstractDisplayBean#
 	 * setTransformsOfNodesWithAnimation(java.util.List, java.util.List)
 	 */
-	protected PActivity createActivity(final GraphNode node, AffineTransform transform) {
+	protected PActivity createActivity(final GraphNode node,
+			AffineTransform transform) {
 		Rectangle2D bounds = node.getBounds();
 		final double startX = bounds.getX();
 		final double startY = bounds.getY();
 		PTransformActivity.Target t = new PTransformActivity.Target() {
 			public void setTransform(AffineTransform at) {
-				//node.setTransform(at);
-				node.setLocation(startX + at.getTranslateX(), startY + at.getTranslateY());
+				// node.setTransform(at);
+				node.setLocation(startX + at.getTranslateX(),
+						startY + at.getTranslateY());
 			}
 
 			public void getSourceMatrix(double[] aSource) {
 				if (node instanceof PNode) {
-					((PNode) node).getTransformReference(true).getMatrix(aSource);
+					((PNode) node).getTransformReference(true).getMatrix(
+							aSource);
 				}
 			}
 		};
-//		PActivity activity = new PTransformActivity(VizParameters.LAYOUT_ANIMATE_TIME, PUtil.DEFAULT_ACTIVITY_STEP_RATE, t, transform);
-		PActivity activity = new PTransformActivity(1000, PUtil.DEFAULT_ACTIVITY_STEP_RATE, t, transform);
+		// PActivity activity = new
+		// PTransformActivity(VizParameters.LAYOUT_ANIMATE_TIME,
+		// PUtil.DEFAULT_ACTIVITY_STEP_RATE, t, transform);
+		PActivity activity = new PTransformActivity(1000,
+				PUtil.DEFAULT_ACTIVITY_STEP_RATE, t, transform);
 		return activity;
 	}
 
@@ -250,16 +272,17 @@ public class LayoutAction extends CajunAction {
 	private LayoutAlgorithm getLayoutAlgorithm() {
 		Class<LayoutAlgorithm> c;
 		try {
-			c = (Class<LayoutAlgorithm>) Class.forName(layout.getClass().getName());
+			c = (Class<LayoutAlgorithm>) Class.forName(layout.getClass()
+					.getName());
 			return c.newInstance();
 		} catch (ClassNotFoundException e) {
-			//  Auto-generated catch block
+			// Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			//  Auto-generated catch block
+			// Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			//  Auto-generated catch block
+			// Auto-generated catch block
 			e.printStackTrace();
 		}
 

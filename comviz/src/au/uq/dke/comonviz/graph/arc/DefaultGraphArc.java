@@ -54,7 +54,7 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 	private GraphArcStyle style;
 
 	// private GeneralPath path;
-	private int curveFactor;
+	private int curveFactor = 0;
 
 	private boolean showArrowHead;
 	private ArrowHead endArrowHead;

@@ -1,0 +1,34 @@
+Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@75bb613c: startup date [Wed Nov 13 20:26:40 EST 2013]; root of context hierarchy
+Loading XML bean definitions from class path resource [applicationContext.xml]
+Loading XML bean definitions from class path resource [applicationContext-persistence.xml]
+Loading properties file from class path resource [target-h2.properties]
+Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@559c384e: defining beans [org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,org.springframework.context.annotation.internalPersistenceAnnotationProcessor,ontologyAxiomService,ontologyClassService,ontologyRelationshipService,ontologyAxiomDAOImpl,ontologyClassDAOImpl,ontologyRelationshipDAOImpl,org.springframework.context.support.PropertySourcesPlaceholderConfigurer#0,dataSource,sessionFactory,transactionManager,org.springframework.aop.config.internalAutoProxyCreator,org.springframework.transaction.annotation.AnnotationTransactionAttributeSource#0,org.springframework.transaction.interceptor.TransactionInterceptor#0,org.springframework.transaction.config.internalTransactionAdvisor,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+Loaded JDBC driver: org.h2.Driver
+HCANN000001: Hibernate Commons Annotations {4.0.2.Final}
+HHH000412: Hibernate Core {4.2.7.SP1}
+HHH000206: hibernate.properties not found
+HHH000021: Bytecode provider name : javassist
+HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+HHH000399: Using default transaction strategy (direct JDBC transactions)
+HHH000397: Using ASTQueryTranslatorFactory
+HHH000228: Running hbm2ddl schema update
+HHH000102: Fetching database metadata
+HHH000396: Updating schema
+HHH000261: Table found: DD5.PUBLIC.ONTOLOGYAXIOM
+HHH000037: Columns: [id, discription, iri]
+HHH000108: Foreign keys: [fk_3v9fk03r0iqyao5v99wm7qx9x]
+HHH000126: Indexes: [primary_key_8]
+HHH000261: Table found: DD5.PUBLIC.ONTOLOGYCLASS
+HHH000037: Columns: [id, level, name, siblingrank, discription, branchid, iri]
+HHH000108: Foreign keys: [fk_b73m6tq4i99lpo811dnelu6j]
+HHH000126: Indexes: [primary_key_8a]
+HHH000261: Table found: DD5.PUBLIC.ONTOLOGYRELATIONSHIP
+HHH000037: Columns: [id, srcclassid, axiomid, key, isbidirection, dstclassid]
+HHH000108: Foreign keys: [fk_3fc73nan0jci5t8v0o7ibf02h]
+HHH000126: Indexes: [primary_key_4]
+HHH000261: Table found: DD5.PUBLIC.TRACKABLE
+HHH000037: Columns: [creationuserid, id, modificationuserid, name, databaseversionid, modificationdatetime, creationdatetime]
+HHH000108: Foreign keys: []
+HHH000126: Indexes: [primary_key_d]
+HHH000232: Schema update complete
+Using DataSource [org.springframework.jdbc.datasource.DriverManagerDataSource@2009e632] of Hibernate SessionFactory for HibernateTransactionManager
