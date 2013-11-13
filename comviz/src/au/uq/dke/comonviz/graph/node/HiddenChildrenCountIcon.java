@@ -53,17 +53,17 @@ public class HiddenChildrenCountIcon extends PText {
 
 		Graphics2D g2 = paintContext.getGraphics();
 
-		if (!EntryPoint.getGraphModel().isExpanded(this.graphNode)) {
-			TreeInfoManager treeInforManager = TreeInfoManager.getTreeManager();
-			String childrenCount = String.valueOf(treeInforManager
-					.getChildrenCount(graphNode.getUserObject()));
-			this.setText(childrenCount);
-
-			g2.setPaint(Color.red);
-
-			g2.fill(circle);
-			super.paintText(paintContext);
-		}
+//		if (!EntryPoint.getGraphModel().isExpanded(this.graphNode)) {
+//			TreeInfoManager treeInforManager = TreeInfoManager.getTreeManager();
+//			String childrenCount = String.valueOf(treeInforManager
+//					.getChildrenCount(graphNode.getUserObject()));
+//			this.setText(childrenCount);
+//
+//			g2.setPaint(Color.red);
+//
+//			g2.fill(circle);
+//			super.paintText(paintContext);
+//		}
 
 	}
 

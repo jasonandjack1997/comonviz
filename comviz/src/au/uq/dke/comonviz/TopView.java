@@ -68,7 +68,7 @@ public class TopView extends JPanel {
 	private FilterPanel nodeFilterPanel;
 	private FilterPanel arcFilterPanel;
 
-	private JSplitPane horizontalSplitPane;
+	private JSplitPane mainHorizontalSplitPane;
 
 	private JSplitPane leftVerticalSplitPane;
 	private JSplitPane topHorizontalSplitPane;
@@ -203,42 +203,19 @@ public class TopView extends JPanel {
 			leftVerticalSplitPane.setOneTouchExpandable(true);
 			leftVerticalSplitPane.setDividerLocation(0.7f);
 			
-			horizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-			horizontalSplitPane.setMinimumSize(new Dimension(500, 500));
+			mainHorizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+			mainHorizontalSplitPane.setMinimumSize(new Dimension(500, 500));
 	
 			topHorizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 			topHorizontalSplitPane.add(leftVerticalSplitPane);
-			topHorizontalSplitPane.add(horizontalSplitPane);
+			topHorizontalSplitPane.add(mainHorizontalSplitPane);
 			topHorizontalSplitPane.setOneTouchExpandable(true);
 			topHorizontalSplitPane.setDividerLocation(400);
 			
-			horizontalSplitPane.add(getMainPanel());
-			horizontalSplitPane.add(getRightPanel());
+			mainHorizontalSplitPane.add(getMainPanel());
+			mainHorizontalSplitPane.add(getRightPanel());
 			this.add(topHorizontalSplitPane, BorderLayout.CENTER);
-//			this.addComponentListener(new ComponentAdapter() {
-//				@Override
-//				public void componentResized(ComponentEvent e) {
-//					horizontalSplitPane.setDividerLocation(1.0);
-//					TopView.this.removeComponentListener(this);
-//				}
-//			});
-//	
-//	
-//			this.addComponentListener(new ComponentAdapter() {
-//				@Override
-//				public void componentResized(ComponentEvent e) {
-//					if (getRightPanel().getTopComponent() == null
-//							&& getRightPanel().getBottomComponent() == null) {
-//						horizontalSplitPane.setDividerLocation(1.0);
-//					}
-//	
-//					super.componentResized(e);
-//				}
-//			});
-//	
-//			// this.add(getRightPanel(), BorderLayout.EAST);
-//	
-//			initializeToolBar();
+			initializeToolBar();
 		}
 
 	public void addListeners(){
@@ -391,7 +368,7 @@ public class TopView extends JPanel {
 
 		if (rightPanel.getTopComponent() == null
 				&& rightPanel.getBottomComponent() == null) {
-			horizontalSplitPane.setDividerLocation(1.0);
+			mainHorizontalSplitPane.setDividerLocation(1.0);
 		}
 
 		if (rightPanel.getTopComponent() == null
@@ -565,7 +542,7 @@ public class TopView extends JPanel {
 				getRightPanel().add(filterPanel);
 				getRightPanel().invalidate();
 
-				horizontalSplitPane.setDividerLocation(1.0);
+				mainHorizontalSplitPane.setDividerLocation(1.0);
 			}
 		}
 	}

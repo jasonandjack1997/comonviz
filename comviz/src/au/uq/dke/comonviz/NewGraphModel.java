@@ -105,7 +105,7 @@ public class NewGraphModel extends DefaultGraphModel {
 	public NewGraphModel() {
 		this.nodes = super.getNodes();
 		this.arcs = super.getArcs();
-		//this.createNodes();
+		this.createNodes();
 		//this.createArcs();
 	}
 
