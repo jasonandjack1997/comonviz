@@ -21,10 +21,10 @@ import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 public class FilterManager {
 
 	private Graph graph;
-
 	private List<FilterChangedListener> listeners;
 	private List<GraphFilter> filters;
 
+	private NodeLevelFilter nodeLevelFilter = new NodeLevelFilter();
 	private ArcTypeFilter arcTypeFilter = new ArcTypeFilter();
 
 	public ArcTypeFilter getArcTypeFilter() {
@@ -58,6 +58,8 @@ public class FilterManager {
 		// add the node and arc type filters
 		filters.add(new NodeTypeFilter());
 		filters.add(arcTypeFilter);
+		filters.add(nodeLevelFilter);
+		
 
 	}
 
