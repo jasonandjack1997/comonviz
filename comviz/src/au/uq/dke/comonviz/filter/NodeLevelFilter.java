@@ -35,7 +35,7 @@ public class NodeLevelFilter implements GraphFilter {
 	public boolean isVisible(GraphItem item) {
 		OntologyClass cls = (OntologyClass) item.getUserObject();
 		if (cls.getLevel() <= visibleLevel) {
-			return true;
+			return ((GraphNode)item).isVisible();//don't change visiblity
 		}
 		return false;
 	}

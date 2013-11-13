@@ -20,6 +20,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import uk.ac.manchester.cs.bhig.util.MutableTree;
 import au.uq.dke.comonviz.actions.LayoutAction;
 import au.uq.dke.comonviz.filter.FilterManager;
+import au.uq.dke.comonviz.handler.graph.NodeExpandCollapseListener;
+import au.uq.dke.comonviz.handler.graph.ToolTipListener;
 import au.uq.dke.comonviz.misc.OwlApi;
 import au.uq.dke.comonviz.model.AnnotationManager;
 import au.uq.dke.comonviz.treeUtils.TreeInfoManager;
@@ -105,6 +107,9 @@ public class EntryPoint {
 		//graphController = new GraphController();
 		radicalLayoutAction =	new LayoutAction(LayoutConstants.LAYOUT_RADIAL, null, new RadialLayoutAlgorithm(1),EntryPoint.getFlatGraph());
 		
+		
+		//flatGraph.addInputEventListener(new ToolTipListener(flatGraph));
+		flatGraph.addInputEventListener(new NodeExpandCollapseListener());
 		filterManager.addListeners();
 //		graphModel.addListeners();
 //		flatGraph.addListeners();

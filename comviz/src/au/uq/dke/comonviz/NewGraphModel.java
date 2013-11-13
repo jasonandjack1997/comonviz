@@ -200,7 +200,7 @@ public class NewGraphModel extends DefaultGraphModel {
 	
 
 //other methods
-	private List<GraphNode> getChildren(GraphNode graphNode){
+	public List<GraphNode> getChildren(GraphNode graphNode){
 		
 		List<GraphNode> childrenGraphNodeList = getGraphNodesFromClasses(this.ontologyRelationshipService.findChildren((OntologyClass) graphNode.getUserObject()));
 		return childrenGraphNodeList;
@@ -223,7 +223,7 @@ public class NewGraphModel extends DefaultGraphModel {
 		return graphNodeList;
 	}
 
-	private List<GraphNode> getDesendants(GraphNode graphNode) {
+	public List<GraphNode> getDesendants(GraphNode graphNode) {
 		List<OntologyClass> desendantsClassList = this.ontologyRelationshipService
 				.findDesendants((OntologyClass) graphNode.getUserObject());
 		List<GraphNode> graphNodeList = getGraphNodesFromClasses(desendantsClassList);

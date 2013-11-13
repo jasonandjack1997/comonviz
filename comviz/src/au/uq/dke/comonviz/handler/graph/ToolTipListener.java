@@ -17,17 +17,15 @@ import edu.umd.cs.piccolo.event.PInputEventFilter;
  * 
  * @author seanf
  */
-public class ProtegeInputEventHandler extends PBasicInputEventHandler {
+public class ToolTipListener extends PBasicInputEventHandler {
 	private static final int DOUBLE_CLICK = 2;
 
-	private ComonvizGraphModel graphModel;
 	private AbstractGraph graph;
 	
 	private FrameTooltipNode toolTip;
 	private DefaultGraphNode currentNode;
 
-	public ProtegeInputEventHandler(ComonvizGraphModel graphModel, AbstractGraph graph) {
-		this.graphModel = graphModel;
+	public ToolTipListener(AbstractGraph graph) {
 		this.graph = graph;
 
 		PInputEventFilter filter = new PInputEventFilter();
@@ -54,13 +52,7 @@ public class ProtegeInputEventHandler extends PBasicInputEventHandler {
 		hideToolTip(currentNode);
 		
 		if (event.isLeftMouseButton()) {
-			if (event.getClickCount() == DOUBLE_CLICK) {
-				if (event.getPickedNode() instanceof GraphNode) {
-					expandCollapseNode((GraphNode) event.getPickedNode());
-					//((FlatGraph) graph).getAnimationHandler().moveViewToCenterBounds(graph.getBounds(), false, 1000, true);
-				}
-			}
-			else if(event.getClickCount() == 1 && event.isControlDown()) {
+			if(event.getClickCount() == 1 && event.isControlDown()) {
 				showToolTip((DefaultGraphNode)event.getPickedNode());
 				currentNode = null;
 			}
@@ -90,31 +82,6 @@ public class ProtegeInputEventHandler extends PBasicInputEventHandler {
 		camera.repaint();
 		
 		currentNode = node;
-	}
-	
-	/**
-	 * Expands a node if it is not already expanded, otherwise it collapses it.
-	 * 
-	 * @param graphNode The node to expand or collapse.
-	 */
-	private void expandCollapseNode(GraphNode graphNode) {
-		OWLEntity entity = (OWLEntity)graphNode.getUserObject();
-		graphNode.setHighlighted(false);
-		graphNode.moveToFront();
-
-		if (graphModel.isExpanded(graphNode)) {
-			//graphModel.collapseNode(graphNode);
-			graphModel.collapseNode2(entity);
-			//graphModel.hideAllDesendants(graphNode);
-		} else {
-			graphModel.expandNode(graphNode);
-			//graphModel.showNewLeaves(entity);
-			//graphModel.showAllDesendants(entity);
-			
-		}
-
-		graph.performLayout();
-		return;
 	}
 
 }
