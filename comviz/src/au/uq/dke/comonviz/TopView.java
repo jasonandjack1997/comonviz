@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
 import java.beans.PropertyChangeEvent;
@@ -169,10 +167,79 @@ public class TopView extends JPanel {
 	public TopView() {
 		super(new BorderLayout());
 		this.graph = EntryPoint.getFlatGraph();
-		this.selectedNodes = graph.getNodeSelection();
+		//this.selectedNodes = graph.getNodeSelection();
 		initialize();
 		EntryPoint.getjFrame().add(this);
 	}
+
+	public void initialize() {
+			// this.ontologyTree = ontologyTree;
+	
+			this.add(getToolBar(), BorderLayout.NORTH);
+	
+			DefaultMutableTreeNode root = new DefaultMutableTreeNode("heheNode");
+			root.add(new DefaultMutableTreeNode("child"));
+	
+			treeModel = new DefaultTreeModel(root);
+	
+			jTextArea = new JTextPane ();
+			jTextArea.setContentType("text/html");
+			jTextArea.setMinimumSize(new Dimension(200, 100));
+			jTextArea.setText("hehe");
+			jTextArea.setEditable(true);
+			jTextArea.setMargin(new Insets(10,10,10,10));
+			jTree = new JTree(treeModel);
+			jTree.setSelectionRow(0);
+			jTree.setCellRenderer(treeCellRender);
+			JScrollPane leftTopJScrollPane = new JScrollPane(jTree);
+			
+			leftTopJScrollPane.setMinimumSize(new Dimension(200, 200));
+			JScrollPane leftBottomJScrollPane = new JScrollPane(jTextArea);
+			leftBottomJScrollPane.setMinimumSize(new Dimension(100, 200));
+			leftVerticalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+			leftVerticalSplitPane.setMinimumSize(new Dimension(200, 200));
+			leftVerticalSplitPane.add(leftTopJScrollPane);
+			leftVerticalSplitPane.add(leftBottomJScrollPane);
+			leftVerticalSplitPane.setOneTouchExpandable(true);
+			leftVerticalSplitPane.setDividerLocation(0.7f);
+			
+			horizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+			horizontalSplitPane.setMinimumSize(new Dimension(500, 500));
+	
+			topHorizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+			topHorizontalSplitPane.add(leftVerticalSplitPane);
+			topHorizontalSplitPane.add(horizontalSplitPane);
+			topHorizontalSplitPane.setOneTouchExpandable(true);
+			topHorizontalSplitPane.setDividerLocation(400);
+			
+			horizontalSplitPane.add(getMainPanel());
+			horizontalSplitPane.add(getRightPanel());
+			this.add(topHorizontalSplitPane, BorderLayout.CENTER);
+//			this.addComponentListener(new ComponentAdapter() {
+//				@Override
+//				public void componentResized(ComponentEvent e) {
+//					horizontalSplitPane.setDividerLocation(1.0);
+//					TopView.this.removeComponentListener(this);
+//				}
+//			});
+//	
+//	
+//			this.addComponentListener(new ComponentAdapter() {
+//				@Override
+//				public void componentResized(ComponentEvent e) {
+//					if (getRightPanel().getTopComponent() == null
+//							&& getRightPanel().getBottomComponent() == null) {
+//						horizontalSplitPane.setDividerLocation(1.0);
+//					}
+//	
+//					super.componentResized(e);
+//				}
+//			});
+//	
+//			// this.add(getRightPanel(), BorderLayout.EAST);
+//	
+//			initializeToolBar();
+		}
 
 	public void addListeners(){
 		PBasicInputEventHandler graphListener = new PBasicInputEventHandler() {
@@ -223,109 +290,6 @@ public class TopView extends JPanel {
 		EntryPoint.getFlatGraph().getCamera().addInputEventListener(graphListener);
 
 	}
-	public void initialize() {
-		// this.ontologyTree = ontologyTree;
-
-		this.add(getToolBar(), BorderLayout.NORTH);
-
-		//this.add(getStatusBar(), BorderLayout.SOUTH);
-
-		treeModel = new DefaultTreeModel(null);
-
-		jTextArea = new JTextPane ();
-		jTextArea.setContentType("text/html");
-		jTextArea.setMinimumSize(new Dimension(200, 100));
-		jTextArea.setText("");
-		jTextArea.setEditable(true);
-		//jTextArea.setLineWrap(true);
-		//jTextArea.setWrapStyleWord(true);
-		jTextArea.setMargin(new Insets(10,10,10,10));
-		jTree = new JTree(treeModel);
-
-		jTree.setSelectionRow(0);
-		
-		
-		jTree.setCellRenderer(new DefaultTreeCellRenderer() {
-		        /**
-				 * 
-				 */
-				private static final long serialVersionUID = 1L;
-
-				@Override
-		        public Component getTreeCellRendererComponent(JTree tree,
-		                Object value, boolean sel, boolean expanded, boolean leaf,
-		                int row, boolean hasFocus) {
-					
-					this.setLeafIcon(null);
-					this.setOpenIcon(null);
-					this.setClosedIcon(null);
-
-
-		            
-//					StringBuffer html = new StringBuffer("<html><b style= \"color: #000000; background-color: #fff3ff\">T</b>  ");
-//					StringBuffer html.append(value.toString());
-//					html.append("</html>");
-		            return super.getTreeCellRendererComponent(
-		                    tree, value.toString(), sel, expanded, leaf, row, hasFocus);
-		        }
-		    });
-		
-		JScrollPane leftTopJScrollPane = new JScrollPane(jTree);
-		leftTopJScrollPane.setMinimumSize(new Dimension(200, 200));
-		
-
-		
-		JScrollPane leftBottomJScrollPane = new JScrollPane(jTextArea);
-		leftBottomJScrollPane.setMinimumSize(new Dimension(100, 200));
-		
-		leftVerticalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-		leftVerticalSplitPane.setMinimumSize(new Dimension(200, 200));
-		leftVerticalSplitPane.add(leftTopJScrollPane);
-		leftVerticalSplitPane.add(leftBottomJScrollPane);
-		leftVerticalSplitPane.setOneTouchExpandable(true);
-		leftVerticalSplitPane.setDividerLocation(0.7f);
-
-		horizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-		horizontalSplitPane.setMinimumSize(new Dimension(500, 500));
-
-		topHorizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-		topHorizontalSplitPane.add(leftVerticalSplitPane);
-		topHorizontalSplitPane.add(horizontalSplitPane);
-		topHorizontalSplitPane.setOneTouchExpandable(true);
-		topHorizontalSplitPane.setDividerLocation(400);
-
-		
-		horizontalSplitPane.add(getMainPanel());
-		horizontalSplitPane.add(getRightPanel());
-		
-		
-		this.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				horizontalSplitPane.setDividerLocation(1.0);
-				TopView.this.removeComponentListener(this);
-			}
-		});
-
-		this.add(topHorizontalSplitPane, BorderLayout.CENTER);
-
-		this.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				if (getRightPanel().getTopComponent() == null
-						&& getRightPanel().getBottomComponent() == null) {
-					horizontalSplitPane.setDividerLocation(1.0);
-				}
-
-				super.componentResized(e);
-			}
-		});
-
-		// this.add(getRightPanel(), BorderLayout.EAST);
-
-		initializeToolBar();
-	}
-
 	public void changeDividerLocation(){
 		topHorizontalSplitPane.setDividerLocation(300);
 
@@ -605,5 +569,30 @@ public class TopView extends JPanel {
 			}
 		}
 	}
+	
+	DefaultTreeCellRenderer treeCellRender = new DefaultTreeCellRenderer() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		@Override
+        public Component getTreeCellRendererComponent(JTree tree,
+                Object value, boolean sel, boolean expanded, boolean leaf,
+                int row, boolean hasFocus) {
+			
+			this.setLeafIcon(null);
+			this.setOpenIcon(null);
+			this.setClosedIcon(null);
+
+
+            
+//					StringBuffer html = new StringBuffer("<html><b style= \"color: #000000; background-color: #fff3ff\">T</b>  ");
+//					StringBuffer html.append(value.toString());
+//					html.append("</html>");
+            return super.getTreeCellRendererComponent(
+                    tree, value.toString(), sel, expanded, leaf, row, hasFocus);
+        }
+    };
 
 }

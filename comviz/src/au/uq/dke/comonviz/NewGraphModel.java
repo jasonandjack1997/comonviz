@@ -105,8 +105,8 @@ public class NewGraphModel extends DefaultGraphModel {
 	public NewGraphModel() {
 		this.nodes = super.getNodes();
 		this.arcs = super.getArcs();
-		this.createNodes();
-		this.createArcs();
+		//this.createNodes();
+		//this.createArcs();
 	}
 
 //CRUD of node	
@@ -278,6 +278,11 @@ public class NewGraphModel extends DefaultGraphModel {
 		NewGraphModel ngm = new NewGraphModel();
 		ngm.test();
 
+	}
+
+	public void addListeners() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

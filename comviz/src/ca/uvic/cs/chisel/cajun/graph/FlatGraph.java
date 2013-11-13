@@ -91,8 +91,4 @@ public class FlatGraph extends AbstractGraph {
 		this.animationHandler = animationHandler;
 	}
 
-	public void addListeners() {
-		// TODO Auto-generated method stub
-		
-	}
 }

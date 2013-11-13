@@ -60,7 +60,7 @@ public class EntryPoint {
 	private static FlatGraph flatGraph;
 
 	/** the model representation of the graph, nodes and edges */
-	private static ComonvizGraphModel graphModel;
+	private static NewGraphModel graphModel;
 
 	private static TopView topView;
 
@@ -87,40 +87,42 @@ public class EntryPoint {
      */
 	@SuppressWarnings({ "unused", "static-access", "static-access" })
 	public void start() {
+
 		jFrame = new JFrame("CoMOnViz");
+		graphModel = new NewGraphModel();
+		flatGraph = new FlatGraph();
+		topView = new TopView();
+		//graphController = new GraphController();
+		
+//		graphModel.addListeners();
+//		flatGraph.addListeners();
+//		topView.addListeners();
+		//graphController.addListeners();
 		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Display the window.
 		jFrame.setMinimumSize(new Dimension(800, 600));
 		jFrame.pack();
 		jFrame.setExtendedState(jFrame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		jFrame.setVisible(true);
-		frameSize = jFrame.getSize();
-
-		graphModel = new ComonvizGraphModel();
-		flatGraph = new FlatGraph();
-		topView = new TopView();
-		graphController = new GraphController();
 		
-		graphModel.addListeners();
-		flatGraph.addListeners();
-		topView.addListeners();
-		graphController.addListeners();
+//		LayoutAction layoutAction = ((AbstractGraph) graphController.getGraph())
+//				.getLayout(LayoutConstants.LAYOUT_RADIAL);
 		
-		URL ontologyURL = null;
-		try {
-
-			ontologyURL = this.getClass().getResource(internalOWLFilePath);
-			//ontologyURL = this.getClass().getResource("/annotationTest.owl");
-		} catch (NullPointerException e3) {
-			e3.printStackTrace();
-		}
-		
-		try {
-			loadOntologyFile(ontologyURL.toURI());
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		URL ontologyURL = null;
+//		try {
+//
+//			ontologyURL = this.getClass().getResource(internalOWLFilePath);
+//			//ontologyURL = this.getClass().getResource("/annotationTest.owl");
+//		} catch (NullPointerException e3) {
+//			e3.printStackTrace();
+//		}
+//		
+//		try {
+//			loadOntologyFile(ontologyURL.toURI());
+//		} catch (URISyntaxException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 	}
 
@@ -132,7 +134,7 @@ public class EntryPoint {
 		return flatGraph;
 	}
 
-	public static ComonvizGraphModel getGraphModel() {
+	public static NewGraphModel getGraphModel() {
 		return graphModel;
 	}
 
@@ -221,14 +223,6 @@ public class EntryPoint {
 
 	public static void main(String[] args) {
 		new EntryPoint().start();
-		// TODO Auto-generated method stub
-		// Schedule a job for the event-dispatching thread:
-		// creating and showing this application's GUI.
-//		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//			public void run() {
-//				new EntryPoint().start();
-//			}
-//		});
 
 	}
 

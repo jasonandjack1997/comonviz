@@ -368,11 +368,6 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 	public String toString() {
 		return ((OntologyClass)this.getUserObject()).getName();
 
-//		String temp = getText();
-//		temp = temp.substring(temp.lastIndexOf("#") + 1);
-//
-//		return temp;
-
 	}
 
 	public String getTooltip() {

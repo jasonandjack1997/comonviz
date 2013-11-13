@@ -264,8 +264,6 @@ public abstract class AbstractGraph extends PCanvas implements Graph {
 		this.matchingNodes = new NodeCollection();
 		matchingNodes.addCollectionListener(matchingListener);
 		
-		EntryPoint.getTopView().getjTree().addTreeSelectionListener(treeSelectionListener);
-		EntryPoint.getTopView().getjTree().addTreeExpansionListener(treeExpensionListener);
 
 		this.nodeStyle = new DefaultGraphNodeStyle();
 		this.arcStyle = new DefaultGraphArcStyle();
@@ -281,6 +279,11 @@ public abstract class AbstractGraph extends PCanvas implements Graph {
 		getRoot().getDefaultInputManager().setKeyboardFocus(new KeyHandlerDelegate(getCamera()));
 	}
 
+	public void addListeners(){
+		EntryPoint.getTopView().getjTree().addTreeSelectionListener(treeSelectionListener);
+		EntryPoint.getTopView().getjTree().addTreeExpansionListener(treeExpensionListener);
+
+	}
 	protected void initializeLayers() {
 		// one layer is automatically created (layer 0), see the PCanvas constructor
 		// we'll let that one be the arc layer
