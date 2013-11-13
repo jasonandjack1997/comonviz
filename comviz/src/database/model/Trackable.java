@@ -8,13 +8,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.ManyToOne;
 
-import database.model.ontology.OntologyClass;
+import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
+import edu.umd.cs.piccolo.PNode;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
-public class Trackable {
+public class Trackable   extends PNode {
 	
 
 	@Id

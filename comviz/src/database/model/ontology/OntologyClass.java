@@ -9,11 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrimaryKeyJoinColumn;
 
+import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import database.model.Trackable;
+import edu.umd.cs.piccolo.PNode;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "ID")
-public class OntologyClass extends Trackable {
+public class OntologyClass extends Trackable{
 	private Long branchId;
 	@Column(columnDefinition = "TEXT")
 	private String discription;
