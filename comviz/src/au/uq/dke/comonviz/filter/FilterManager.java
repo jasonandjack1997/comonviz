@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import au.uq.dke.comonviz.filter.FilterChangedEvent;
+import au.uq.dke.comonviz.EntryPoint;
 import ca.uvic.cs.chisel.cajun.graph.Graph;
 import ca.uvic.cs.chisel.cajun.graph.GraphItem;
 import ca.uvic.cs.chisel.cajun.graph.GraphModel;
@@ -25,32 +25,40 @@ public class FilterManager {
 	private List<FilterChangedListener> listeners;
 	private List<GraphFilter> filters;
 
-	// maps the node types to their visibilities
-	private Map<Object, Boolean> nodeTypesVisibilityMap;
-	// maps the arc types to their visibilities
-	private Map<Object, Boolean> arcTypesVisibilityMap;
+	private ArcTypeFilter arcTypeFilter = new ArcTypeFilter();
 
-	public FilterManager(Graph graph) {
-		this.graph = graph;
-		NodeAndArcTypeListener listener = new NodeAndArcTypeListener();
+	public ArcTypeFilter getArcTypeFilter() {
+		return arcTypeFilter;
+	}
+
+	// maps the node types to their visibilities
+	protected static Map<Object, Boolean> nodeTypesVisibilityMap = new HashMap<Object, Boolean>();
+
+	public FilterManager() {
 		// this listens for when a new model is set
-		this.graph.addPropertyChangeListener(listener);
-		// this listens for changes to the model (node/arc types added etc)
-		// by adding it to the graph it will always be attached to the current model even when a new model is set
-		this.graph.addGraphModelListener(listener);
 
 		this.listeners = new ArrayList<FilterChangedListener>();
 		this.filters = new ArrayList<GraphFilter>();
 
-		this.nodeTypesVisibilityMap = new HashMap<Object, Boolean>();
-		this.arcTypesVisibilityMap = new HashMap<Object, Boolean>();
+		// this.nodeTypesVisibilityMap = new HashMap<Object, Boolean>();
 
 		// populate the node and arc types map (all visible by default)
+	}
+
+	public void addListeners() {
+		this.graph = EntryPoint.getFlatGraph();
+		NodeAndArcTypeListener listener = new NodeAndArcTypeListener();
+		this.graph.addPropertyChangeListener(listener);
+		// this listens for changes to the model (node/arc types added etc)
+		// by adding it to the graph it will always be attached to the current
+		// model even when a new model is set
+		this.graph.addGraphModelListener(listener);
 		updateNodeAndArcTypes();
 
 		// add the node and arc type filters
 		filters.add(new NodeTypeFilter());
-		filters.add(new ArcTypeFilter());
+		filters.add(arcTypeFilter);
+
 	}
 
 	public void addFilterChangedListener(FilterChangedListener listener) {
@@ -78,7 +86,8 @@ public class FilterManager {
 
 	protected void fireFiltersChanged() {
 		if (listeners.size() > 0) {
-			ArrayList<FilterChangedListener> copy = new ArrayList<FilterChangedListener>(listeners);
+			ArrayList<FilterChangedListener> copy = new ArrayList<FilterChangedListener>(
+					listeners);
 			FilterChangedEvent fce = new FilterChangedEvent(this);
 			for (FilterChangedListener listener : copy) {
 				listener.filtersChanged(fce);
@@ -102,7 +111,7 @@ public class FilterManager {
 	private void applyNodeFilters(GraphModel model) {
 		Collection<GraphNode> nodes = model.getAllNodes();
 		for (GraphNode node : nodes) {
-			//boolean oldVisibility = node.isVisible();
+			// boolean oldVisibility = node.isVisible();
 			boolean newVisibility = true; // visible by default
 			for (GraphFilter filter : filters) {
 				// only apply this filter if it is a node filter
@@ -115,9 +124,9 @@ public class FilterManager {
 					}
 				}
 			}
-			//if (oldVisibility != newVisibility) {
+			// if (oldVisibility != newVisibility) {
 			node.setVisible(newVisibility);
-			//}
+			// }
 		}
 	}
 
@@ -171,64 +180,19 @@ public class FilterManager {
 		}
 	}
 
-	public Collection<Object> getArcTypes() {
-		return new HashSet<Object>(arcTypesVisibilityMap.keySet());
-	}
-
-	public Map<Object, Boolean> getArcTypesMap() {
-		return new HashMap<Object, Boolean>(arcTypesVisibilityMap);
-	}
-
-	public boolean isArcTypeVisible(Object arcType) {
-		if (arcTypesVisibilityMap.containsKey(arcType)) {
-			return arcTypesVisibilityMap.get(arcType);
-		}
-		// visible by default
-		return true;
-	}
-
-	public void setArcTypeVisible(Object arcType, boolean visible) {
-		// visible by default
-		boolean old = true;
-		if (arcTypesVisibilityMap.containsKey(arcType)) {
-			old = arcTypesVisibilityMap.get(arcType);
-		}
-		if (old != visible) {
-			arcTypesVisibilityMap.put(arcType, visible);
-			fireFiltersChanged();
-		}
-	}
-
 	/**
-	 * This gets called when either the graph gets a new model, or when the model changes (a node or
-	 * arc is added). In this case the node and arc types might have been updated, so we need to
-	 * update our mappings. This method preserves the current node and arc type visibilities.
+	 * This gets called when either the graph gets a new model, or when the
+	 * model changes (a node or arc is added). In this case the node and arc
+	 * types might have been updated, so we need to update our mappings. This
+	 * method preserves the current node and arc type visibilities.
 	 */
 	protected void updateNodeAndArcTypes() {
 		updateNodeTypes();
 		updateArcTypes();
 	}
 
-	protected void updateArcTypes() {
-		GraphModel model = graph.getModel();
-		Collection<Object> newArcTypes = model.getArcTypes();
-		if (newArcTypes.isEmpty()) {
-			arcTypesVisibilityMap.clear();
-		} else {
-			// first remove any node types that no longer exist
-			for (Iterator<Object> iter = arcTypesVisibilityMap.keySet().iterator(); iter.hasNext();) {
-				Object oldArcType = iter.next();
-				if (!newArcTypes.contains(oldArcType)) {
-					iter.remove();
-				}
-			}
-			// now add any that don't already exist (visible by default)
-			for (Object arcType : newArcTypes) {
-				if (!arcTypesVisibilityMap.containsKey(arcType)) {
-					arcTypesVisibilityMap.put(arcType, true);
-				}
-			}
-		}
+	private void updateArcTypes() {
+		this.getArcTypeFilter().updateArcTypes();
 	}
 
 	protected void updateNodeTypes() {
@@ -240,7 +204,8 @@ public class FilterManager {
 			nodeTypesVisibilityMap.clear();
 		} else {
 			// first remove any node types that no longer exist
-			for (Iterator<Object> iter = nodeTypesVisibilityMap.keySet().iterator(); iter.hasNext();) {
+			for (Iterator<Object> iter = nodeTypesVisibilityMap.keySet()
+					.iterator(); iter.hasNext();) {
 				Object oldNodeType = iter.next();
 				if (!newNodeTypes.contains(oldNodeType)) {
 					iter.remove();
@@ -256,13 +221,14 @@ public class FilterManager {
 	}
 
 	/**
-	 * Listens for {@link Graph} property change events, and for graph model events and updates the
-	 * node and arc types visibility maps.
+	 * Listens for {@link Graph} property change events, and for graph model
+	 * events and updates the node and arc types visibility maps.
 	 * 
 	 * @author Chris
-	 * @since  20-Dec-07
+	 * @since 20-Dec-07
 	 */
-	private class NodeAndArcTypeListener extends GraphModelAdapter implements PropertyChangeListener {
+	private class NodeAndArcTypeListener extends GraphModelAdapter implements
+			PropertyChangeListener {
 
 		public void propertyChange(PropertyChangeEvent evt) {
 			if (Graph.GRAPH_MODEL_PROPERTY.equals(evt.getPropertyName())) {
@@ -300,23 +266,6 @@ public class FilterManager {
 		public boolean isVisible(GraphItem item) {
 			return isNodeTypeVisible(item.getType());
 		}
-
-	}
-
-	private class ArcTypeFilter implements GraphFilter {
-
-		public boolean isArcFilter() {
-			return true;
-		}
-
-		public boolean isNodeFilter() {
-			return false;
-		}
-
-		public boolean isVisible(GraphItem item) {
-			return isArcTypeVisible(item.getType());
-		}
-
 	}
 
 }

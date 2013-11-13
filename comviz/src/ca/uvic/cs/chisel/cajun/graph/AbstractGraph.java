@@ -255,7 +255,7 @@ public abstract class AbstractGraph extends PCanvas implements Graph {
 		this.graphPopupListener = new GraphPopupListener();
 		getCamera().addInputEventListener(graphPopupListener);
 
-		this.filterManager = new FilterManager(this);
+		this.filterManager = EntryPoint.getFilterManager();
 		this.filterManager.addFilterChangedListener(filterListener);
 
 		this.selectedNodes = new NodeCollection();

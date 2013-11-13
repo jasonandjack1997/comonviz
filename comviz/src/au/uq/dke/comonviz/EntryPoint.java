@@ -3,8 +3,6 @@ package au.uq.dke.comonviz;
 import java.awt.Dimension;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Collection;
 
 import javax.swing.JFrame;
@@ -21,6 +19,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import uk.ac.manchester.cs.bhig.util.MutableTree;
 import au.uq.dke.comonviz.actions.LayoutAction;
+import au.uq.dke.comonviz.filter.FilterManager;
 import au.uq.dke.comonviz.misc.OwlApi;
 import au.uq.dke.comonviz.model.AnnotationManager;
 import au.uq.dke.comonviz.treeUtils.TreeInfoManager;
@@ -28,13 +27,14 @@ import au.uq.dke.comonviz.ui.StyleManager;
 import ca.uvic.cs.chisel.cajun.constants.LayoutConstants;
 import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;
 import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
-import ca.uvic.cs.chisel.cajun.resources.ResourceHandler;
 import database.service.OntologyAxiomService;
 import database.service.OntologyClassService;
 import database.service.OntologyRelationshipService;
 
 public class EntryPoint {
 	private static LayoutAction radicalLayoutAction;
+	
+	
 
 	static ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext(
 			"applicationContext.xml");
@@ -58,6 +58,7 @@ public class EntryPoint {
 
 	public static OWLOntology ontology = null;
 	private final String internalOWLFilePath = "/COMON_v8_HenryNewRel.owl";
+	
 
 	/** the graph object, performs layouts and renders the model */
 	private static FlatGraph flatGraph;
@@ -70,6 +71,11 @@ public class EntryPoint {
 	private static GraphController graphController;
 
 	private static JFrame jFrame;
+	private static FilterManager filterManager;
+
+	public static FilterManager getFilterManager() {
+		return filterManager;
+	}
 
 	public static JFrame getjFrame() {
 		return jFrame;
@@ -91,6 +97,7 @@ public class EntryPoint {
 	@SuppressWarnings({ "unused", "static-access", "static-access" })
 	public void start() {
 
+		filterManager = new FilterManager();
 		jFrame = new JFrame("CoMOnViz");
 		graphModel = new NewGraphModel();
 		flatGraph = new FlatGraph();
@@ -98,10 +105,12 @@ public class EntryPoint {
 		//graphController = new GraphController();
 		radicalLayoutAction =	new LayoutAction(LayoutConstants.LAYOUT_RADIAL, null, new RadialLayoutAlgorithm(1),EntryPoint.getFlatGraph());
 		
+		filterManager.addListeners();
 //		graphModel.addListeners();
 //		flatGraph.addListeners();
 //		topView.addListeners();
 		//graphController.addListeners();
+		
 		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Display the window.
 		jFrame.setMinimumSize(new Dimension(800, 600));

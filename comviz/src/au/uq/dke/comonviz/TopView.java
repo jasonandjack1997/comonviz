@@ -38,6 +38,7 @@ import org.semanticweb.owlapi.model.OWLClass;
 
 import au.uq.dke.comonviz.actions.CajunAction;
 import au.uq.dke.comonviz.filter.FilterManager;
+import au.uq.dke.comonviz.ui.ArcFilterPanel;
 import au.uq.dke.comonviz.ui.FilterPanel;
 import au.uq.dke.comonviz.ui.OpenOntologyFileAction;
 import au.uq.dke.comonviz.ui.StatusProgressBar;
@@ -420,18 +421,9 @@ public class TopView extends JPanel {
 		if (arcFilterPanel == null) {
 			Icon icon = ResourceHandler.getIcon("icon_arc_filter.gif");
 			final FilterManager filterManager = graph.getFilterManager();
-			arcFilterPanel = new FilterPanel("Arc Types", icon,
-					graph.getGraphArcStyle()) {
-				private static final long serialVersionUID = -1656466039034202473L;
+			arcFilterPanel = 	new ArcFilterPanel("Arc Types", icon,
+					graph.getGraphArcStyle());
 
-				public void setTypeVisibility(Object arcType, boolean visible) {
-					filterManager.setArcTypeVisible(arcType, visible);
-				}
-
-				public Map<Object, Boolean> getTypes() {
-					return filterManager.getArcTypesMap();
-				}
-			};
 			graph.addPropertyChangeListener(new PropertyChangeListener() {
 				public void propertyChange(PropertyChangeEvent evt) {
 					if (Graph.GRAPH_ARC_STYLE_PROPERTY.equals(evt
