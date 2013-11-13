@@ -2,7 +2,7 @@ package au.uq.dke.comonviz.actions;
 
 import java.awt.event.ActionEvent;
 
-import au.uq.dke.comonviz.handler.graph.PNormalZoomHandler;
+import au.uq.dke.comonviz.handler.PNormalZoomHandler;
 import ca.uvic.cs.chisel.cajun.resources.ResourceHandler;
 import edu.umd.cs.piccolo.PCamera;
 

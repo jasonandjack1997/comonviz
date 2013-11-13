@@ -1,4 +1,4 @@
-package au.uq.dke.comonviz.handler.graph;
+package au.uq.dke.comonviz.handler;
 
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import au.uq.dke.comonviz.graph.node.DefaultGraphNode;

@@ -20,8 +20,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import uk.ac.manchester.cs.bhig.util.MutableTree;
 import au.uq.dke.comonviz.actions.LayoutAction;
 import au.uq.dke.comonviz.filter.FilterManager;
-import au.uq.dke.comonviz.handler.graph.NodeExpandCollapseListener;
-import au.uq.dke.comonviz.handler.graph.ToolTipListener;
+import au.uq.dke.comonviz.handler.NodeExpandCollapseListener;
+import au.uq.dke.comonviz.handler.ToolTipListener;
 import au.uq.dke.comonviz.misc.OwlApi;
 import au.uq.dke.comonviz.model.AnnotationManager;
 import au.uq.dke.comonviz.treeUtils.TreeInfoManager;
@@ -108,16 +108,21 @@ public class EntryPoint {
 		//graphController = new GraphController();
 		radicalLayoutAction =	new LayoutAction(LayoutConstants.LAYOUT_RADIAL, null, new RadialLayoutAlgorithm(1),EntryPoint.getFlatGraph());
 		
+		graphModel.init();
+		topView.initialize();
 		
-		//flatGraph.addInputEventListener(new ToolTipListener(flatGraph));
 		flatGraph.addInputEventListener(new NodeExpandCollapseListener());
 		filterManager.addListeners();
 		graphModel.addListeners();
-		flatGraph.addListeners();
 		topView.addListeners();
-		//graphController.addListeners();
+		flatGraph.addListeners();
 		
+		
+	
+		this.filterManager.getNodeLevelFilter().updateNodeLevels();
 		this.topView.hideSubclassArcType();
+		this.topView.getArcTypeFilterPanel().reload();
+		this.topView.getNodeLevelFilterPanel().reload();
 		
 		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Display the window.
@@ -126,7 +131,8 @@ public class EntryPoint {
 		jFrame.setExtendedState(jFrame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		jFrame.setVisible(true);
 		
-		radicalLayoutAction.doAction();
+		this.flatGraph.performLayout();
+		//radicalLayoutAction.doAction();
 		//		LayoutAction layoutAction = ((AbstractGraph) graphController.getGraph())
 //				.getLayout(LayoutConstants.LAYOUT_RADIAL);
 		
@@ -146,6 +152,10 @@ public class EntryPoint {
 //			e.printStackTrace();
 //		}
 		
+	}
+
+	public static LayoutAction getRadicalLayoutAction() {
+		return radicalLayoutAction;
 	}
 
 	public static OWLOntology getOntology() {

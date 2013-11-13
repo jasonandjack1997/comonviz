@@ -25,6 +25,10 @@ public class FilterManager {
 	private List<GraphFilter> filters;
 
 	private NodeLevelFilter nodeLevelFilter = new NodeLevelFilter();
+	public NodeLevelFilter getNodeLevelFilter() {
+		return nodeLevelFilter;
+	}
+
 	private ArcTypeFilter arcTypeFilter = new ArcTypeFilter();
 
 	public ArcTypeFilter getArcTypeFilter() {
@@ -246,6 +250,16 @@ public class FilterManager {
 		@Override
 		public void graphNodeTypeAdded(Object nodeType) {
 			updateNodeTypes();
+		}
+
+		@Override
+		public void graphNodeAdded(GraphNode node) {
+			FilterManager.this.getNodeLevelFilter().addNodeLevel(node);
+		}
+
+		@Override
+		public void graphNodeRemoved(GraphNode node) {
+			FilterManager.this.getNodeLevelFilter().removeNodeLevel(node);
 		}
 
 		@Override

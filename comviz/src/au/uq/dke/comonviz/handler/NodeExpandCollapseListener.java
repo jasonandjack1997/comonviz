@@ -1,4 +1,4 @@
-package au.uq.dke.comonviz.handler.graph;
+package au.uq.dke.comonviz.handler;
 
 import java.util.List;
 
@@ -59,6 +59,7 @@ public class NodeExpandCollapseListener extends PBasicInputEventHandler {
 			for (GraphNode child : children) {
 				child.setVisible(true);
 			}
+			//EntryPoint.getFilterManager().getNodeLevelFilter().setVisibleLevel(visibleLevel);
 		}
 
 		EntryPoint.getFlatGraph().performLayout();

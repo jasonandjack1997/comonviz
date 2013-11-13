@@ -103,15 +103,19 @@ public class NewGraphModel extends DefaultGraphModel {
 	private Map<Object, GraphArc> arcs;
 
 	public NewGraphModel() {
+	}
+	
+	public void init(){
 		this.nodes = super.getNodes();
 		this.arcs = super.getArcs();
 		this.loadNodesFromDB();
 		this.loadArcsFromDB();
+
 	}
 
 //CRUD of node	
 	// tested
-	private GraphNode findGraphNode(OntologyClass ontologyClass) {
+	public GraphNode findGraphNode(OntologyClass ontologyClass) {
 		for (Map.Entry<Object, GraphNode> entry : nodes.entrySet()) {
 			if (((OntologyClass) entry.getKey()).equals(ontologyClass)) {
 				return entry.getValue();

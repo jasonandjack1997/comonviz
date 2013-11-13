@@ -45,7 +45,7 @@ import au.uq.dke.comonviz.filter.FilterChangedListener;
 import au.uq.dke.comonviz.graph.arc.DefaultGraphArcStyle;
 import au.uq.dke.comonviz.graph.node.DefaultGraphNode;
 import au.uq.dke.comonviz.graph.node.DefaultGraphNodeStyle;
-import au.uq.dke.comonviz.handler.graph.ToolTipListener;
+import au.uq.dke.comonviz.handler.ToolTipListener;
 import ca.uvic.cs.chisel.cajun.constants.LayoutConstants;
 import uk.ac.manchester.cs.bhig.util.MutableTree;
 import edu.umd.cs.piccolo.util.PBounds;

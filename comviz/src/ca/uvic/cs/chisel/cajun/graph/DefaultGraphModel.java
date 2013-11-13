@@ -83,7 +83,6 @@ public class DefaultGraphModel implements GraphModel {
 			}
 		}
 	}
-
 	protected void fireNodeAddedEvent(GraphNode node) {
 		if (listeners.size() > 0) {
 			ArrayList<GraphModelListener> clonedListeners = new ArrayList<GraphModelListener>(

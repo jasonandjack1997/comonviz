@@ -2,7 +2,7 @@
  * Copyright 1998-2007, CHISEL Group, University of Victoria, Victoria, BC, Canada.
  * All rights reserved.
  */
-package au.uq.dke.comonviz.handler.graph;
+package au.uq.dke.comonviz.handler;
 
 
 import javax.swing.SwingUtilities;

@@ -1,4 +1,4 @@
-package au.uq.dke.comonviz.handler.graph;
+package au.uq.dke.comonviz.handler;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;

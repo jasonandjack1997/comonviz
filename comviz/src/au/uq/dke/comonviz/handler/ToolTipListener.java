@@ -1,4 +1,4 @@
-package au.uq.dke.comonviz.handler.graph;
+package au.uq.dke.comonviz.handler;
 
 import org.semanticweb.owlapi.model.OWLEntity;
 

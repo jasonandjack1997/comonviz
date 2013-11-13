@@ -43,8 +43,9 @@ import au.uq.dke.comonviz.actions.NoZoomAction;
 import au.uq.dke.comonviz.actions.ZoomInAction;
 import au.uq.dke.comonviz.actions.ZoomOutAction;
 import au.uq.dke.comonviz.filter.FilterManager;
-import au.uq.dke.comonviz.ui.ArcFilterPanel;
+import au.uq.dke.comonviz.ui.ArcTypeFilterPanel;
 import au.uq.dke.comonviz.ui.FilterPanel;
+import au.uq.dke.comonviz.ui.NodeLevelFilterPanel;
 import au.uq.dke.comonviz.ui.OpenOntologyFileAction;
 import au.uq.dke.comonviz.ui.StatusProgressBar;
 import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
@@ -72,7 +73,8 @@ public class TopView extends JPanel {
 
 	private JSplitPane rightFilterSplitPane;
 	private FilterPanel nodeFilterPanel;
-	private FilterPanel arcFilterPanel;
+	private FilterPanel arcTypeFilterPanel;
+	private FilterPanel nodeLevelFilterPanel;
 
 	private JSplitPane centerAndRightHorizontalSplitPane;
 
@@ -180,17 +182,16 @@ public class TopView extends JPanel {
 		super(new BorderLayout());
 		this.graph = EntryPoint.getFlatGraph();
 		// this.selectedNodes = graph.getNodeSelection();
-		initialize();
-		EntryPoint.getjFrame().add(this);
+		//initialize();
 	}
 
 	public void initialize() {
 		// this.ontologyTree = ontologyTree;
 
+		EntryPoint.getjFrame().add(this);
 		this.add(getToolBar(), BorderLayout.NORTH);
 
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode("heheNode");
-		root.add(new DefaultMutableTreeNode("child"));
+		DefaultMutableTreeNode root = EntryPoint.getGraphModel().generateMutableTree();
 
 		treeModel = new DefaultTreeModel(root);
 
@@ -228,9 +229,11 @@ public class TopView extends JPanel {
 		initializeToolBar();
 
 		// arcFilterPanel
-		arcFilterPanel = new ArcFilterPanel("Arc Types", null,
+		arcTypeFilterPanel = new ArcTypeFilterPanel("Arc Types", null,
 				graph.getGraphArcStyle());
-		arcFilterPanel.setMaximumSize(new Dimension(200,800));
+		nodeLevelFilterPanel = new NodeLevelFilterPanel("Node Levels", null,
+				graph.getGraphArcStyle());
+		
 		// right panel
 		centerGraphPanel = new JPanel(new BorderLayout());
 		centerGraphPanel.add(new PScrollPane(graph.getCanvas()),
@@ -240,8 +243,11 @@ public class TopView extends JPanel {
 		rightFilterSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT); // new
 		//rightFilterSplitPane.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
 		rightFilterSplitPane.setVisible(true);
-		rightFilterSplitPane.add(arcFilterPanel);
+		rightFilterSplitPane.add(arcTypeFilterPanel);
+		rightFilterSplitPane.add(nodeLevelFilterPanel);
 		rightFilterSplitPane.setMaximumSize(new Dimension(300,800));
+		rightFilterSplitPane.setDividerLocation(0.5f);
+		rightFilterSplitPane.setDividerSize(20);
 		centerAndRightHorizontalSplitPane.add(centerGraphPanel);
 		centerAndRightHorizontalSplitPane.add(rightFilterSplitPane);
 		centerAndRightHorizontalSplitPane.setOneTouchExpandable(true);
@@ -249,6 +255,14 @@ public class TopView extends JPanel {
 
 
 
+	}
+
+	public FilterPanel getArcTypeFilterPanel() {
+		return arcTypeFilterPanel;
+	}
+
+	public FilterPanel getNodeLevelFilterPanel() {
+		return nodeLevelFilterPanel;
 	}
 
 	public void hideSubclassArcType() {
@@ -260,7 +274,7 @@ public class TopView extends JPanel {
 				subClassType = (String) arcType;
 			}
 		}
-		this.arcFilterPanel.setTypeVisibility(subClassType, false);
+		this.arcTypeFilterPanel.setTypeVisibility(subClassType, false);
 	}
 
 	public void addListeners() {
@@ -311,15 +325,15 @@ public class TopView extends JPanel {
 		graph.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (Graph.GRAPH_ARC_STYLE_PROPERTY.equals(evt.getPropertyName())) {
-					arcFilterPanel.setStyle(graph.getGraphArcStyle());
+					arcTypeFilterPanel.setStyle(graph.getGraphArcStyle());
 				}
 			}
 		});
-		EntryPoint.getFilterManager().addFilterChangedListener(arcFilterPanel);
+		EntryPoint.getFilterManager().addFilterChangedListener(arcTypeFilterPanel);
 		graph.getModel().addGraphModelListener(new GraphModelAdapter() {
 			@Override
 			public void graphArcTypeAdded(Object arcType) {
-				arcFilterPanel.reload();
+				arcTypeFilterPanel.reload();
 			}
 		});
 		

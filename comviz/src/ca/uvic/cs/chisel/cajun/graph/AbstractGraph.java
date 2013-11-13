@@ -33,9 +33,6 @@ import org.eclipse.zest.layouts.algorithms.RadialLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
 import org.eclipse.zest.layouts.progress.ProgressListener;
-import org.semanticweb.owlapi.model.OWLAnnotation;
-import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLEntity;
 
 import au.uq.dke.comonviz.EntryPoint;
 import au.uq.dke.comonviz.actions.LayoutAction;
@@ -45,8 +42,8 @@ import au.uq.dke.comonviz.filter.FilterManager;
 import au.uq.dke.comonviz.graph.arc.DefaultGraphArcStyle;
 import au.uq.dke.comonviz.graph.node.DefaultGraphNode;
 import au.uq.dke.comonviz.graph.node.DefaultGraphNodeStyle;
-import au.uq.dke.comonviz.handler.graph.GraphPopupListener;
-import au.uq.dke.comonviz.handler.graph.KeyHandlerDelegate;
+import au.uq.dke.comonviz.handler.GraphPopupListener;
+import au.uq.dke.comonviz.handler.KeyHandlerDelegate;
 import ca.uvic.cs.chisel.cajun.constants.LayoutConstants;
 import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
 import ca.uvic.cs.chisel.cajun.graph.arc.GraphArcStyle;
@@ -58,6 +55,7 @@ import ca.uvic.cs.chisel.cajun.graph.node.NodeCollection;
 import ca.uvic.cs.chisel.cajun.resources.ResourceHandler;
 import ca.uvic.cs.chisel.cajun.util.CustomToolTip;
 import ca.uvic.cs.chisel.cajun.util.CustomToolTipManager;
+import database.model.ontology.OntologyClass;
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PLayer;
 import edu.umd.cs.piccolo.PNode;
@@ -121,8 +119,8 @@ public abstract class AbstractGraph extends PCanvas implements Graph {
 			try {
 				DefaultMutableTreeNode selectedTreeNode = (DefaultMutableTreeNode) ((JTree)e.getSource()).getLastSelectedPathComponent();
 				GraphNode selectedGraphNode = (GraphNode) selectedTreeNode.getUserObject();
-				Object userObject = selectedGraphNode.getUserObject();
-				GraphNode realGraphNode = EntryPoint.getGraphModel().getNode(userObject);
+				OntologyClass ontologyClass = (OntologyClass) selectedGraphNode.getUserObject();
+				GraphNode realGraphNode = EntryPoint.getGraphModel().findGraphNode(ontologyClass);
 				AbstractGraph.this.selectedNodes.setNode(realGraphNode);
 				EntryPoint.getGraphController().panTo((DefaultGraphNode) realGraphNode);
 			} catch(NullPointerException e2){
@@ -603,10 +601,8 @@ public abstract class AbstractGraph extends PCanvas implements Graph {
 	}
 
 	public void performLayout() {
-		if (getLastLayout() != null) {
 			filterManager.applyFilters(model);
-			getLastLayout().runLayout();
-		}
+			EntryPoint.getRadicalLayoutAction().runLayout();
 	}
 
 	public void performLayout(LayoutAction layout) {
