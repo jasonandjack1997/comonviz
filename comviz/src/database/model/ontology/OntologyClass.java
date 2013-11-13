@@ -66,4 +66,5 @@ public class OntologyClass extends Trackable {
 		return super.toString() + ", iri: " + iri;
 	}
 
+
 }

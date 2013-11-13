@@ -10,6 +10,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 
+import database.model.ontology.OntologyClass;
+
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
 public class Trackable {
@@ -38,6 +40,14 @@ public class Trackable {
 	
 	public String toString(){
 		return "id: " + id + "," + "name: " + name ;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(((Trackable)obj).getId() == this.getId()){
+			return true;
+		}
+		return false;
 	}
 
 	private Timestamp creationDateTime;
