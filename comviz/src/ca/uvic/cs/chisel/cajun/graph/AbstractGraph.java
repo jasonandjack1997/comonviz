@@ -150,72 +150,32 @@ public abstract class AbstractGraph extends PCanvas implements Graph {
 	}
 	
 	private TreeExpansionListener treeExpansionListener = new TreeExpansionListener(){
+		
+		private void updateGraph(TreeExpansionEvent e){
+			JTree jTree = (JTree) e.getSource();
+			int visibleNodesCount = jTree.getRowCount();
+			for	(GraphNode graphNode : EntryPoint.getGraphModel().getAllNodes()){
+				graphNode.setVisible(false);
+			}
+			for (int i = 0; i < visibleNodesCount; i++) {
+				TreePath treePath = jTree.getPathForRow(i);
+				DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode) treePath
+						.getLastPathComponent();
+				GraphNode graphNode = (GraphNode) treeNode.getUserObject();
+				graphNode.setVisible(true);
+			}
+			AbstractGraph.this.performLayoutWithoutNodeFilters();
+		}
 
 		@Override
 		public void treeExpanded(TreeExpansionEvent e) {
-			// TODO Auto-generated method stub
-			//find all visible nodes in tree (expanded), and show them all, don't call expand method!
-//			JTree jTree = (JTree) e.getSource();
-//			int visibleNodesCount = jTree.getRowCount();
-//			for (int i = 0; i < visibleNodesCount; i++) {
-//				TreePath treePath = jTree.getPathForRow(i);
-//				DefaultMutableTreeNode selectedTreeNode = (DefaultMutableTreeNode) treePath
-//						.getLastPathComponent();
-//				GraphNode selectedGraphNode = (GraphNode) selectedTreeNode
-//						.getUserObject();
-//				
-//				List<GraphNode> children = EntryPoint.getGraphModel().getChildren(selectedGraphNode);
-//				for(GraphNode graphNode: children){
-//					graphNode.setVisible(true);
-//				}
-//				
-//				EntryPoint.getFlatGraph().performLayoutWithoutNodeFilters();
-//				
-//				
-////				try {
-////					Object userObject = selectedGraphNode.getUserObject();
-////					GraphNode realGraphNode = EntryPoint.getGraphModel().getNode(
-////							userObject);
-////					if (realGraphNode == null) {
-////
-////						EntryPoint.getGraphModel().showWithExsistingNodes((OWLEntity) userObject,
-////								EntryPoint.getFlatGraph()
-////												.getFilterManager());
-////					} else {
-////					}
-////				} catch (NullPointerException e2) {
-////					e2.printStackTrace();
-////				}
-//			}
-
-			//EntryPoint.getFlatGraph().performLayout();
-			
+			updateGraph(e);
 		}
 
 		@Override
 		public void treeCollapsed(TreeExpansionEvent e) {
-			// TODO Auto-generated method stub
-			JTree jTree = (JTree) e.getSource();
-			int visibleNodesCount = jTree.getRowCount();
-			Collection userObjectCollection = new LinkedList();
-			for (int i = 0; i < visibleNodesCount; i++) {
-				TreePath treePath = jTree.getPathForRow(i);
-				DefaultMutableTreeNode selectedTreeNode = (DefaultMutableTreeNode) treePath
-						.getLastPathComponent();
-				GraphNode graphNode = (GraphNode) selectedTreeNode.getUserObject();
-				Object userObject = graphNode.getUserObject();
-				userObjectCollection.add(userObject);
-			}
-
-			for (GraphNode graphNodeToDelete : EntryPoint.getGraphModel().getVisibleNodes()) {
-				if(!userObjectCollection.contains(graphNodeToDelete.getUserObject())){
-					EntryPoint.getGraphModel().removeNode(graphNodeToDelete.getUserObject());
-				}
-
-			}
-
-			EntryPoint.getFlatGraph().performLayout();
 			
+			updateGraph(e);
 		}
 		
 	};
