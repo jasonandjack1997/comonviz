@@ -20,6 +20,7 @@ public class NodeLevelFilterPanel extends FilterPanel {
 		EntryPoint.getFilterManager().getNodeLevelFilter()
 				.setNodeLevelVisible(nodeLevel, visible);
 		EntryPoint.getFlatGraph().performLayout();
+		//EntryPoint.getTopView().getTreeModel();
 	}
 
 	public Map<Object, Boolean> getTypes() {

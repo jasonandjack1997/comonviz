@@ -200,6 +200,7 @@ public class TopView extends JPanel {
 		jTextArea.setEditable(true);
 		jTextArea.setMargin(new Insets(10, 10, 10, 10));
 		jTree = new JTree(treeModel);
+		//jTree.scrollPathToVisible(path);
 		jTree.setSelectionRow(0);
 		jTree.setCellRenderer(treeCellRender);
 		jTree.addTreeSelectionListener(textFieldtreeSelectionListener);

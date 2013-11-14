@@ -3,6 +3,7 @@ package au.uq.dke.comonviz;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -287,18 +288,21 @@ public class EntryPoint {
 	}
 
 	private void initDataBase() throws URISyntaxException, IOException {
-		File innerDatabaseResourceFile = new File(this.getClass()
-				.getResource("/database/" + dataBaseFileName).toURI());
-		boolean ok = innerDatabaseResourceFile.exists();
+//		File innerDatabaseResourceFile = new File(this.getClass()
+//				.getResource("/database/" + dataBaseFileName).toURI());
+		
+		InputStream innerSourceFileStream = this.getClass()
+				.getResourceAsStream("/database/" + dataBaseFileName);
 		FileUtils.forceMkdir(new File(outerDatabaseDirectory));
 		if (outerDatabaseFile.exists()) {
-			if (FileUtils.isFileNewer(innerDatabaseResourceFile,
-					outerDatabaseFile)) {
-				FileUtils
-						.copyFile(innerDatabaseResourceFile, outerDatabaseFile);
-			}
+//			if (FileUtils.isFileNewer(innerDatabaseResourceFile,
+//					outerDatabaseFile)) {
+//				FileUtils
+//						.copyFile(innerDatabaseResourceFile, outerDatabaseFile);
+//			}
 		} else {
-			FileUtils.copyFile(innerDatabaseResourceFile, outerDatabaseFile);
+			FileUtils.copyInputStreamToFile(innerSourceFileStream, outerDatabaseFile);
+			//FileUtils.copyFile(innerDatabaseResourceFile, outerDatabaseFile);
 		}
 	}
 }
