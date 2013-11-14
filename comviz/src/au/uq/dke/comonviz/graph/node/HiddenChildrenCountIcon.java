@@ -4,10 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.geom.Ellipse2D;
+import java.util.List;
 
 import au.uq.dke.comonviz.EntryPoint;
-import au.uq.dke.comonviz.GraphController;
-import au.uq.dke.comonviz.treeUtils.TreeInfoManager;
 import au.uq.dke.comonviz.ui.StyleManager;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import edu.umd.cs.piccolo.nodes.PText;
@@ -26,8 +25,8 @@ public class HiddenChildrenCountIcon extends PText {
 		// make this node match the text size
 		setText(text);
 		setTextPaint(Color.white);
-		this.setFont(getFont().deriveFont(StyleManager.DEFAULT_HIDDEN_CHILDREN_COUNT_TEXT_FONT_SIZE));
-
+		this.setFont(getFont().deriveFont(
+				StyleManager.DEFAULT_HIDDEN_CHILDREN_COUNT_TEXT_FONT_SIZE));
 
 	}
 
@@ -53,18 +52,33 @@ public class HiddenChildrenCountIcon extends PText {
 
 		Graphics2D g2 = paintContext.getGraphics();
 
-//		if (!EntryPoint.getGraphModel().isExpanded(this.graphNode)) {
-//			TreeInfoManager treeInforManager = TreeInfoManager.getTreeManager();
-//			String childrenCount = String.valueOf(treeInforManager
-//					.getChildrenCount(graphNode.getUserObject()));
-//			this.setText(childrenCount);
-//
-//			g2.setPaint(Color.red);
-//
-//			g2.fill(circle);
-//			super.paintText(paintContext);
-//		}
+		List<GraphNode> children = EntryPoint.getGraphModel().getChildren(
+				this.graphNode);
 
+		boolean isExpanded = false;// if any one of the children is visible,
+									// then it is expanded
+
+		for (GraphNode child : children) {
+			if(child == null){
+				int a = 1;
+			}
+			if (child.isVisible() == true) {
+				isExpanded = true;
+				break;
+			}
+		}
+		
+		if(children == null || children.size() == 0){
+			isExpanded = true;
+		}
+
+		if (!isExpanded) {
+			String childrenCount = String.valueOf(children.size());
+			this.setText(childrenCount);
+			g2.setPaint(Color.red);
+			g2.fill(circle);
+			super.paintText(paintContext);
+		}
 	}
 
 	@Override

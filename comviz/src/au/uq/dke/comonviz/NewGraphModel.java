@@ -250,7 +250,12 @@ public class NewGraphModel extends DefaultGraphModel {
 		List<GraphNode> graphNodeList = new ArrayList<GraphNode>();
 		for (OntologyClass cls : classList) {
 			GraphNode node = this.findGraphNode(cls);
-			graphNodeList.add(node);
+			if (node == null) {
+				throw new NullPointerException(
+						"can't find peer graphNode by ontology class");
+			} else {
+				graphNodeList.add(node);
+			}
 		}
 		return graphNodeList;
 

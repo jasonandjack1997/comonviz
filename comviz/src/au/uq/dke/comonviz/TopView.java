@@ -247,13 +247,13 @@ public class TopView extends JPanel {
 		rightFilterSplitPane.setVisible(true);
 		rightFilterSplitPane.add(arcTypeFilterPanel);
 		rightFilterSplitPane.add(nodeLevelFilterPanel);
-		rightFilterSplitPane.setMaximumSize(new Dimension(300, 800));
 		rightFilterSplitPane.setDividerLocation(0.5f);
-		rightFilterSplitPane.setDividerSize(20);
+		//rightFilterSplitPane.setMaximumSize(new Dimension(400,1000));
 		centerAndRightHorizontalSplitPane.add(centerGraphPanel);
 		centerAndRightHorizontalSplitPane.add(rightFilterSplitPane);
+		centerAndRightHorizontalSplitPane.setVisible(true);
 		centerAndRightHorizontalSplitPane.setOneTouchExpandable(true);
-		centerAndRightHorizontalSplitPane.setDividerLocation(900);
+		centerAndRightHorizontalSplitPane.setDividerLocation(100000);
 
 	}
 
@@ -364,9 +364,9 @@ public class TopView extends JPanel {
 		addToolBarAction(new OpenOntologyFileAction());
 		// addToolBarAction(new ClearOrphansAction(graph.getModel(), graph));
 		// zoom
-		addToolBarAction(new ZoomInAction(graph.getCamera()));
-		addToolBarAction(new NoZoomAction(graph.getCamera()));
-		addToolBarAction(new ZoomOutAction(graph.getCamera()));
+//		addToolBarAction(new ZoomInAction(graph.getCamera()));
+//		addToolBarAction(new NoZoomAction(graph.getCamera()));
+//		addToolBarAction(new ZoomOutAction(graph.getCamera()));
 
 		// getToolBar().addSeparator();
 
