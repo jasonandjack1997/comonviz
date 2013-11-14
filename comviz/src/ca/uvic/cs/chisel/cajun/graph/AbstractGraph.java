@@ -139,7 +139,8 @@ public abstract class AbstractGraph extends PCanvas implements Graph {
 			double y = node.getFullBoundsReference().getY();
 			double w = node.getFullBoundsReference().getWidth();
 			double h = node.getFullBoundsReference().getHeight();
-			PBounds bounds = new PBounds(x - w * .01, y - h * .02, w + w * .02, h + h * .04);
+//			PBounds bounds = new PBounds(x - w * .01, y - h * .02, w + w * .02, h + h * .04);
+			PBounds bounds = new PBounds(x, y, w, h);
 			// only pan to the bounds if the node is not already visible
 			if(!this.getCamera().getViewBounds().contains(bounds.getBounds2D())) {
 				this.getRoot().getActivityScheduler().addActivity(
