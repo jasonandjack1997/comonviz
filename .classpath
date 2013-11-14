@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="unused/|test/|database/model/user/" kind="src" path="comviz/src"/>
+	<classpathentry excluding="database/model/user/|test/|unused/" kind="src" path="comviz/src"/>
 	<classpathentry kind="src" path="comviz/resources"/>
 	<classpathentry kind="lib" path="comviz/jar/comonviz.jar"/>
 	<classpathentry kind="lib" path="comviz/lib/database/genericdao/dao-1.2.0-sources.jar"/>
