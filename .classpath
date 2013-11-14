@@ -85,6 +85,7 @@
 	<classpathentry kind="lib" path="comviz/lib/spring/spring-web-3.2.1.RELEASE.jar"/>
 	<classpathentry kind="lib" path="comviz/lib/spring/spring-webmvc-3.2.1.RELEASE.jar"/>
 	<classpathentry kind="lib" path="comviz/lib/misc/slf4j-api-1.6.4.jar"/>
+	<classpathentry kind="lib" path="comviz/lib/commons-io-2.4.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>

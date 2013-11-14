@@ -1,14 +1,20 @@
 package au.uq.dke.comonviz;
 
 import java.awt.Dimension;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Collection;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.zest.layouts.algorithms.RadialLayoutAlgorithm;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -21,7 +27,6 @@ import uk.ac.manchester.cs.bhig.util.MutableTree;
 import au.uq.dke.comonviz.actions.LayoutAction;
 import au.uq.dke.comonviz.filter.FilterManager;
 import au.uq.dke.comonviz.handler.NodeExpandCollapseListener;
-import au.uq.dke.comonviz.handler.ToolTipListener;
 import au.uq.dke.comonviz.misc.OwlApi;
 import au.uq.dke.comonviz.model.AnnotationManager;
 import au.uq.dke.comonviz.treeUtils.TreeInfoManager;
@@ -34,18 +39,17 @@ import database.service.OntologyClassService;
 import database.service.OntologyRelationshipService;
 
 public class EntryPoint {
+	private final String dataBaseFileName = "database.h2.db";
+	private final String outerDatabaseDirectory = "C:/comonviz/";
+	private final File outerDatabaseFile = new File(outerDatabaseDirectory
+			+ dataBaseFileName);
 	private static LayoutAction radicalLayoutAction;
-	
-	
 
-	static ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext(
-			"applicationContext.xml");
-	private static OntologyAxiomService ontologyAxiomService = (OntologyAxiomService) ctx
-			.getBean("ontologyAxiomService");
-	private static OntologyClassService ontologyClassService  = (OntologyClassService) ctx
-	.getBean("ontologyClassService");
-	private static OntologyRelationshipService ontologyRelationshipService = (OntologyRelationshipService) ctx
-	.getBean("ontologyRelationshipService");
+	static ConfigurableApplicationContext ctx;
+	private static OntologyAxiomService ontologyAxiomService;
+	private static OntologyClassService ontologyClassService;
+	private static OntologyRelationshipService ontologyRelationshipService;
+
 	public static OntologyAxiomService getOntologyAxiomService() {
 		return ontologyAxiomService;
 	}
@@ -60,7 +64,6 @@ public class EntryPoint {
 
 	public static OWLOntology ontology = null;
 	private final String internalOWLFilePath = "/COMON_v8_HenryNewRel.owl";
-	
 
 	/** the graph object, performs layouts and renders the model */
 	private static FlatGraph flatGraph;
@@ -76,6 +79,7 @@ public class EntryPoint {
 	private static FilterManager filterManager;
 
 	private static StyleManager styleManager;
+
 	public static FilterManager getFilterManager() {
 		return filterManager;
 	}
@@ -100,6 +104,23 @@ public class EntryPoint {
 	@SuppressWarnings({ "unused", "static-access", "static-access" })
 	public void start() {
 
+		try {
+			initDataBase();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+		ontologyAxiomService = (OntologyAxiomService) ctx
+				.getBean("ontologyAxiomService");
+		ontologyClassService = (OntologyClassService) ctx
+				.getBean("ontologyClassService");
+		ontologyRelationshipService = (OntologyRelationshipService) ctx
+				.getBean("ontologyRelationshipService");
+
 		filterManager = new FilterManager();
 		jFrame = new JFrame("CoMOnViz");
 		graphModel = new NewGraphModel();
@@ -107,55 +128,56 @@ public class EntryPoint {
 		flatGraph = new FlatGraph();
 		topView = new TopView();
 		annotationManager = new AnnotationManager();
-		//graphController = new GraphController();
-		radicalLayoutAction =	new LayoutAction(LayoutConstants.LAYOUT_RADIAL, null, new RadialLayoutAlgorithm(1),EntryPoint.getFlatGraph());
-		
+		// graphController = new GraphController();
+		radicalLayoutAction = new LayoutAction(LayoutConstants.LAYOUT_RADIAL,
+				null, new RadialLayoutAlgorithm(1), EntryPoint.getFlatGraph());
+
 		graphModel.init();
 		topView.initialize();
-		
+
 		styleManager = StyleManager.getStyleManager();
-		
+
 		flatGraph.addInputEventListener(new NodeExpandCollapseListener());
 		filterManager.addListeners();
 		graphModel.addListeners();
 		topView.addListeners();
 		flatGraph.addListeners();
-		
-		
-	
+
 		this.filterManager.getNodeLevelFilter().updateNodeLevels();
 		this.topView.hideSubclassArcType();
 		this.topView.getArcTypeFilterPanel().reload();
 		this.topView.getNodeLevelFilterPanel().reload();
-		
+
 		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Display the window.
 		jFrame.setMinimumSize(new Dimension(800, 600));
 		jFrame.pack();
-		jFrame.setExtendedState(jFrame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		jFrame.setExtendedState(jFrame.getExtendedState()
+				| JFrame.MAXIMIZED_BOTH);
 		jFrame.setVisible(true);
-		
+
 		this.flatGraph.performLayout();
-		//radicalLayoutAction.doAction();
-		//		LayoutAction layoutAction = ((AbstractGraph) graphController.getGraph())
-//				.getLayout(LayoutConstants.LAYOUT_RADIAL);
-		
-//		URL ontologyURL = null;
-//		try {
-//
-//			ontologyURL = this.getClass().getResource(internalOWLFilePath);
-//			//ontologyURL = this.getClass().getResource("/annotationTest.owl");
-//		} catch (NullPointerException e3) {
-//			e3.printStackTrace();
-//		}
-//		
-//		try {
-//			loadOntologyFile(ontologyURL.toURI());
-//		} catch (URISyntaxException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
+		// radicalLayoutAction.doAction();
+		// LayoutAction layoutAction = ((AbstractGraph)
+		// graphController.getGraph())
+		// .getLayout(LayoutConstants.LAYOUT_RADIAL);
+
+		// URL ontologyURL = null;
+		// try {
+		//
+		// ontologyURL = this.getClass().getResource(internalOWLFilePath);
+		// //ontologyURL = this.getClass().getResource("/annotationTest.owl");
+		// } catch (NullPointerException e3) {
+		// e3.printStackTrace();
+		// }
+		//
+		// try {
+		// loadOntologyFile(ontologyURL.toURI());
+		// } catch (URISyntaxException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+
 	}
 
 	public static LayoutAction getRadicalLayoutAction() {
@@ -225,7 +247,6 @@ public class EntryPoint {
 		nodes = graphController.getModel().getAllNodes();
 		TreeInfoManager treeInfoManager = TreeInfoManager.getTreeManager();
 		treeInfoManager.generateTreeInfo(nodes);
-		
 
 		ontologyTree = treeInfoManager.getTreeRoot();
 		DefaultMutableTreeNode root = null;
@@ -233,33 +254,51 @@ public class EntryPoint {
 		TopView topView = graphController.getView();
 		topView.getTreeModel().setRoot(root);
 
-//		StyleManager.initStyleManager(treeInfoManager.getBranchNodes(),
-//				graphController.getModel().getArcTypes());
+		// StyleManager.initStyleManager(treeInfoManager.getBranchNodes(),
+		// graphController.getModel().getArcTypes());
 
-//		for (OWLClass cls : ontology.getClassesInSignature()) {
-//
-//			if (treeInfoManager.getLevel(cls) >= 2) {
-//				graphController.getModel().removeNode(cls);
-//			} else {
-//				graphController.getModel().hideAllDesendants(
-//						graphController.getModel().getNode(cls));
-//				graphController.getModel().show(cls,
-//						EntryPoint.getFlatGraph().getFilterManager());
-//			}
-//		}
+		// for (OWLClass cls : ontology.getClassesInSignature()) {
+		//
+		// if (treeInfoManager.getLevel(cls) >= 2) {
+		// graphController.getModel().removeNode(cls);
+		// } else {
+		// graphController.getModel().hideAllDesendants(
+		// graphController.getModel().getNode(cls));
+		// graphController.getModel().show(cls,
+		// EntryPoint.getFlatGraph().getFilterManager());
+		// }
+		// }
 
 		topView.changeDividerLocation();
 		layoutAction.doAction();
-		
+
 		Collection arcs = EntryPoint.getGraphModel().getAllArcs();
 		Collection visableArcs = EntryPoint.getGraphModel().getVisibleArcs();
 		Collection arcTypes = EntryPoint.getGraphModel().getArcTypes();
 		return;
 	}
 
-	public static void main(String[] args) {
-		new EntryPoint().start();
+	public static void main(String[] args) throws URISyntaxException,
+			IOException {
+		EntryPoint entryPoint = new EntryPoint();
+
+		entryPoint.start();
 
 	}
 
+	private void initDataBase() throws URISyntaxException, IOException {
+		File innerDatabaseResourceFile = new File(this.getClass()
+				.getResource("/database/" + dataBaseFileName).toURI());
+		boolean ok = innerDatabaseResourceFile.exists();
+		FileUtils.forceMkdir(new File(outerDatabaseDirectory));
+		if (outerDatabaseFile.exists()) {
+			if (FileUtils.isFileNewer(innerDatabaseResourceFile,
+					outerDatabaseFile)) {
+				FileUtils
+						.copyFile(innerDatabaseResourceFile, outerDatabaseFile);
+			}
+		} else {
+			FileUtils.copyFile(innerDatabaseResourceFile, outerDatabaseFile);
+		}
+	}
 }
