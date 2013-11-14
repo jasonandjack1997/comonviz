@@ -43,6 +43,8 @@ public class NodeExpandCollapseListener extends PBasicInputEventHandler {
 
 		boolean isExpanded = false;// if any one of the children is visible,
 									// then it is expanded
+		
+		try{
 		for (GraphNode child : children) {
 			if (child.isVisible() == true) {
 				isExpanded = true;
@@ -61,8 +63,11 @@ public class NodeExpandCollapseListener extends PBasicInputEventHandler {
 			}
 			//EntryPoint.getFilterManager().getNodeLevelFilter().setVisibleLevel(visibleLevel);
 		}
+		}catch(NullPointerException e){
+			e.printStackTrace();
+		}
 
-		EntryPoint.getFlatGraph().performLayout();
+		EntryPoint.getFlatGraph().performLayoutWithoutNodeFilters();
 		return;
 	}
 

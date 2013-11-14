@@ -39,7 +39,7 @@ public class RotationHandler extends PBasicInputEventHandler {
 	private double vecLastY;
 	private GraphNode anchorGraphNode;
 
-	public RotationHandler(PCamera camera) {
+	public RotationHandler() {
 		super();
 	}
 
@@ -64,10 +64,9 @@ public class RotationHandler extends PBasicInputEventHandler {
 			return;
 		}
 
-		GraphNode oldNodeInTreeManager = (GraphNode) TreeInfoManager
-				.getTreeRoot().getUserObject();
-		anchorGraphNode = EntryPoint.getGraphModel()
-				.getNode(oldNodeInTreeManager.getUserObject());
+		GraphNode rootNode = EntryPoint.getGraphModel().findRoot();
+		
+		anchorGraphNode = rootNode;
 		ANCHOR_X = ((DefaultGraphNode) anchorGraphNode).getCenterX();
 		ANCHOR_Y = ((DefaultGraphNode) anchorGraphNode).getCenterY();
 
@@ -116,10 +115,9 @@ public class RotationHandler extends PBasicInputEventHandler {
 //			List<OWLEntity> desendantsNode = EntryPoint.getGraphModel().getDesendantList(
 //					(OWLEntity) anchorGraphNode.getUserObject(), false);
 
-			for (OWLEntity nodeEntity : desendantsNode) {
+			for (GraphNode  graphNode : visibleNodes) {
 				// if (graphNode.getText().contains("Compliance")) {
 				{
-					GraphNode graphNode = EntryPoint.getGraphModel().getNode(nodeEntity);
 					if (graphNode == null) {
 						continue;
 					}
@@ -139,24 +137,32 @@ public class RotationHandler extends PBasicInputEventHandler {
 					}
 				}
 			}
+//			for (OWLEntity nodeEntity : desendantsNode) {
+//				// if (graphNode.getText().contains("Compliance")) {
+//				{
+//					GraphNode graphNode = EntryPoint.getGraphModel().getNode(nodeEntity);
+//					if (graphNode == null) {
+//						continue;
+//					}
+//					Point2D lastLocation = new Point2D.Double(
+//							((DefaultGraphNode) graphNode).getCenterX(),
+//							((DefaultGraphNode) graphNode).getCenterY());
+//					Point2D newLocation = new Point2D.Double();
+//					if (!newLocation.equals(lastLocation)) {
+//						rotateTransform.transform(lastLocation, newLocation);
+//						graphNode.setLocation(
+//								newLocation.getX()
+//										- ((DefaultGraphNode) graphNode)
+//												.getWidth() / 2,
+//								newLocation.getY()
+//										- ((DefaultGraphNode) graphNode)
+//												.getHeight() / 2);
+//					}
+//				}
+//			}
 
 		}
 		super.mouseDragged(event);
 
 	}
-
-	@Override
-	public void mouseReleased(PInputEvent event) {
-		// TODO Auto-generated method stub
-		// this.ANCHOR_X = -1l;
-		// this.ANCHOR_Y = -1l;
-		super.mouseReleased(event);
-	}
-
-	@Override
-	public void mouseMoved(PInputEvent event) {
-		// TODO Auto-generated method stub
-		super.mouseMoved(event);
-	}
-
 }

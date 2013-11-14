@@ -10,6 +10,7 @@ import javax.swing.tree.TreePath;
 import au.uq.dke.comonviz.EntryPoint;
 import au.uq.dke.comonviz.GraphController;
 import au.uq.dke.comonviz.filter.FilterManager;
+import au.uq.dke.comonviz.graph.node.DefaultGraphNode;
 import au.uq.dke.comonviz.handler.CameraDragPanHandler;
 import au.uq.dke.comonviz.handler.CameraKeyPanHandler;
 import au.uq.dke.comonviz.handler.FocusOnExtentsHandler;
@@ -25,6 +26,7 @@ import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
 import edu.umd.cs.piccolo.event.PInputEvent;
+import edu.umd.cs.piccolo.util.PBounds;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
 public class FlatGraph extends AbstractGraph {
@@ -67,7 +69,7 @@ public class FlatGraph extends AbstractGraph {
 		camera.addInputEventListener(new FocusOnExtentsHandler(
 				getAnimationHandler()));
 		// rotate handler
-		camera.addInputEventListener(new RotationHandler(camera));
+		camera.addInputEventListener(new RotationHandler());
 
 	}
 

@@ -64,31 +64,34 @@ public class App {
 		//importOWLToDatabase();
 		//importAxiomToDatabase();
 
-
-		OntologyClass com = ontologyClassService
-				.findByName("Compliance Management");
-		
-		ontologyRelationshipService.generateLevelInfo(com);
-		ontologyRelationshipService.generateBranchRootInfo();
 		
 
-		ontologyRelationshipService.findRoot();
+		OntologyClass com = ontologyRelationshipService
+				.findRoot();
+		com.setName("Compliance Management");
+		ontologyClassService.save(com);
 		
-		DefaultMutableTreeNode tree = ontologyRelationshipService.generateMutableTree();
-		classes = ontologyClassService.findAll();
-		axioms = ontologyAxiomService.findAll();
-		relationships = ontologyRelationshipService.findAll();
-		
-		Set<OntologyClass> branchSet = new LinkedHashSet<OntologyClass>();
-		for(OntologyClass cla: classes){
-			if(cla.getBranchId() == null || cla.getBranchId() == 0){
-				int a = 1;
-			}
-			branchSet.add(ontologyClassService.findById(cla.getBranchId()));
-			
-		}
-		
-
+//		
+//		ontologyRelationshipService.generateLevelInfo(com);
+//		ontologyRelationshipService.generateBranchRootInfo();
+//		
+//
+//		ontologyRelationshipService.findRoot();
+//		
+//		classes = ontologyClassService.findAll();
+//		axioms = ontologyAxiomService.findAll();
+//		relationships = ontologyRelationshipService.findAll();
+//		
+//		Set<OntologyClass> branchSet = new LinkedHashSet<OntologyClass>();
+//		for(OntologyClass cla: classes){
+//			if(cla.getBranchId() == null || cla.getBranchId() == 0){
+//				int a = 1;
+//			}
+//			branchSet.add(ontologyClassService.findById(cla.getBranchId()));
+//			
+//		}
+//		
+//
 		return;
 
 	}

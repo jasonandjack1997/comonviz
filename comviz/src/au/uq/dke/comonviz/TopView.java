@@ -43,11 +43,13 @@ import au.uq.dke.comonviz.actions.NoZoomAction;
 import au.uq.dke.comonviz.actions.ZoomInAction;
 import au.uq.dke.comonviz.actions.ZoomOutAction;
 import au.uq.dke.comonviz.filter.FilterManager;
+import au.uq.dke.comonviz.graph.node.DefaultGraphNode;
 import au.uq.dke.comonviz.ui.ArcTypeFilterPanel;
 import au.uq.dke.comonviz.ui.FilterPanel;
 import au.uq.dke.comonviz.ui.NodeLevelFilterPanel;
 import au.uq.dke.comonviz.ui.OpenOntologyFileAction;
 import au.uq.dke.comonviz.ui.StatusProgressBar;
+import ca.uvic.cs.chisel.cajun.graph.AbstractGraph;
 import ca.uvic.cs.chisel.cajun.graph.FlatGraph;
 import ca.uvic.cs.chisel.cajun.graph.Graph;
 import ca.uvic.cs.chisel.cajun.graph.GraphModelAdapter;
@@ -56,6 +58,7 @@ import ca.uvic.cs.chisel.cajun.graph.arc.GraphArc;
 import ca.uvic.cs.chisel.cajun.graph.node.GraphNode;
 import ca.uvic.cs.chisel.cajun.graph.node.NodeCollection;
 import ca.uvic.cs.chisel.cajun.resources.ResourceHandler;
+import database.model.ontology.OntologyClass;
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
 import edu.umd.cs.piccolo.event.PInputEvent;
@@ -92,7 +95,7 @@ public class TopView extends JPanel {
 	private JTree jTree;
 	private JTextPane jTextArea;
 
-	TreeSelectionListener treeSelectionListener = new TreeSelectionListener() {
+	TreeSelectionListener textFieldtreeSelectionListener = new TreeSelectionListener() {
 
 		@Override
 		public void valueChanged(TreeSelectionEvent e) {
@@ -101,20 +104,14 @@ public class TopView extends JPanel {
 					.getSource()).getLastSelectedPathComponent();
 			GraphNode selectedGraphNode = (GraphNode) selectedTreeNode
 					.getUserObject();
-			Object userObject = selectedGraphNode.getUserObject();
-			Collection<OWLAnnotation> owlAnnotationSet = ((OWLClass) userObject)
-					.getAnnotations(EntryPoint.ontology);
-			if (owlAnnotationSet.size() != 0) {
-				String annotation = ((OWLAnnotation) owlAnnotationSet.toArray()[0])
-						.getValue().toString();
-				annotation = annotation.substring(1, annotation.length() - 1);
-				annotation = EntryPoint.getAnnotationManager()
-						.getStylizedAnnotation(annotation);
-				TopView.this.getjTextArea().setText(annotation);
-				TopView.this.getjTextArea().setCaretPosition(0);
-			} else {
-				TopView.this.getjTextArea().setText("");
-			}
+			OntologyClass ontologyClass = (OntologyClass) selectedGraphNode
+					.getUserObject();
+			String annotation = ontologyClass.getDiscription();
+			//annotation = annotation.substring(1, annotation.length() - 1);
+			annotation = EntryPoint.getAnnotationManager()
+					.getStylizedAnnotation(annotation);
+			TopView.this.getjTextArea().setText(annotation);
+			TopView.this.getjTextArea().setCaretPosition(0);
 
 		}
 
@@ -182,7 +179,7 @@ public class TopView extends JPanel {
 		super(new BorderLayout());
 		this.graph = EntryPoint.getFlatGraph();
 		// this.selectedNodes = graph.getNodeSelection();
-		//initialize();
+		// initialize();
 	}
 
 	public void initialize() {
@@ -191,19 +188,21 @@ public class TopView extends JPanel {
 		EntryPoint.getjFrame().add(this);
 		this.add(getToolBar(), BorderLayout.NORTH);
 
-		DefaultMutableTreeNode root = EntryPoint.getGraphModel().generateMutableTree();
+		DefaultMutableTreeNode root = EntryPoint.getGraphModel()
+				.generateMutableTree();
 
 		treeModel = new DefaultTreeModel(root);
 
 		jTextArea = new JTextPane();
 		jTextArea.setContentType("text/html");
 		jTextArea.setMinimumSize(new Dimension(200, 100));
-		jTextArea.setText("hehe");
+		// jTextArea.setText("hehe");
 		jTextArea.setEditable(true);
 		jTextArea.setMargin(new Insets(10, 10, 10, 10));
 		jTree = new JTree(treeModel);
 		jTree.setSelectionRow(0);
 		jTree.setCellRenderer(treeCellRender);
+		jTree.addTreeSelectionListener(textFieldtreeSelectionListener);
 		JScrollPane leftTopJScrollPane = new JScrollPane(jTree);
 
 		leftTopJScrollPane.setMinimumSize(new Dimension(200, 200));
@@ -216,8 +215,10 @@ public class TopView extends JPanel {
 		leftVerticalSplitPane.setOneTouchExpandable(true);
 		leftVerticalSplitPane.setDividerLocation(0.7f);
 
-		centerAndRightHorizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-		centerAndRightHorizontalSplitPane.setMinimumSize(new Dimension(500, 500));
+		centerAndRightHorizontalSplitPane = new JSplitPane(
+				JSplitPane.HORIZONTAL_SPLIT);
+		centerAndRightHorizontalSplitPane
+				.setMinimumSize(new Dimension(500, 500));
 
 		topHorizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		topHorizontalSplitPane.add(leftVerticalSplitPane);
@@ -233,7 +234,7 @@ public class TopView extends JPanel {
 				graph.getGraphArcStyle());
 		nodeLevelFilterPanel = new NodeLevelFilterPanel("Node Levels", null,
 				graph.getGraphArcStyle());
-		
+
 		// right panel
 		centerGraphPanel = new JPanel(new BorderLayout());
 		centerGraphPanel.add(new PScrollPane(graph.getCanvas()),
@@ -241,19 +242,18 @@ public class TopView extends JPanel {
 		centerGraphPanel.setMinimumSize(new Dimension(800, 600));
 
 		rightFilterSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT); // new
-		//rightFilterSplitPane.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+		// rightFilterSplitPane.setBorder(BorderFactory.createEmptyBorder(1, 1,
+		// 1, 1));
 		rightFilterSplitPane.setVisible(true);
 		rightFilterSplitPane.add(arcTypeFilterPanel);
 		rightFilterSplitPane.add(nodeLevelFilterPanel);
-		rightFilterSplitPane.setMaximumSize(new Dimension(300,800));
+		rightFilterSplitPane.setMaximumSize(new Dimension(300, 800));
 		rightFilterSplitPane.setDividerLocation(0.5f);
 		rightFilterSplitPane.setDividerSize(20);
 		centerAndRightHorizontalSplitPane.add(centerGraphPanel);
 		centerAndRightHorizontalSplitPane.add(rightFilterSplitPane);
 		centerAndRightHorizontalSplitPane.setOneTouchExpandable(true);
 		centerAndRightHorizontalSplitPane.setDividerLocation(900);
-
-
 
 	}
 
@@ -329,14 +329,15 @@ public class TopView extends JPanel {
 				}
 			}
 		});
-		EntryPoint.getFilterManager().addFilterChangedListener(arcTypeFilterPanel);
+		EntryPoint.getFilterManager().addFilterChangedListener(
+				arcTypeFilterPanel);
 		graph.getModel().addGraphModelListener(new GraphModelAdapter() {
 			@Override
 			public void graphArcTypeAdded(Object arcType) {
 				arcTypeFilterPanel.reload();
 			}
 		});
-		
+
 		rightFilterSplitPane.addContainerListener(new ContainerListener() {
 			public void componentAdded(ContainerEvent e) {
 				refeshRightPanel();
@@ -346,7 +347,6 @@ public class TopView extends JPanel {
 				refeshRightPanel();
 			}
 		});
-
 
 	}
 
@@ -391,7 +391,6 @@ public class TopView extends JPanel {
 		// }
 		// });
 	}
-
 
 	public JToolBar getToolBar() {
 		if (toolbar == null) {

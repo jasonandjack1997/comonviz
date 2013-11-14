@@ -16,6 +16,9 @@ import java.util.regex.Pattern;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLOntology;
 
+import database.model.ontology.OntologyAxiom;
+import database.model.ontology.OntologyClass;
+import au.uq.dke.comonviz.EntryPoint;
 import au.uq.dke.comonviz.ui.StyleManager;
 
 public class AnnotationManager {
@@ -23,8 +26,8 @@ public class AnnotationManager {
 	private static String[] boldKeywords = new String[] { "Overview",
 			"Definition", "Synonym", "Relationships", "Attributes" };
 
-	private static List<String> owlClasses;
-	private static Collection<String> owlAxioms;
+	private static List<String> ontologyClasses;
+	private static List<String> owlAxioms;
 
 	private Pattern boldKeywordPattern;
 	private Pattern owlClassPattern;
@@ -50,21 +53,26 @@ public class AnnotationManager {
 
 	// owlAxiomPattern =
 
-	public AnnotationManager(OWLOntology ontology) {
-		owlClasses = new ArrayList<String>();
+	public AnnotationManager() {
+		ontologyClasses = new ArrayList<String>();
 
-		for (OWLClass cls : ontology.getClassesInSignature()) {
-			owlClasses.add(getNameFromeStringID(cls.toStringID()));
+		for (OntologyClass cls : EntryPoint.getOntologyClassService().findAll()) {
+			ontologyClasses.add(cls.getName());
 		}
 
 		//sort, longer term first to fully match classes
-		Collections.sort(owlClasses, Collections.reverseOrder());
+		Collections.sort(ontologyClasses, Collections.reverseOrder());
 		
 		
 		owlAxioms = new ArrayList<String>();
-		owlAxioms.add("part of");
-		owlAxioms.add("associated with");
-		owlAxioms.add("type of");
+		for (OntologyAxiom axiom : EntryPoint.getOntologyAxiomService().findAll()) {
+			owlAxioms.add(axiom.getName());
+		}
+		Collections.sort(owlAxioms, Collections.reverseOrder());
+		
+//		owlAxioms.add("part of");
+//		owlAxioms.add("associated with");
+//		owlAxioms.add("type of");
 
 		StringBuffer sb = new StringBuffer("((");
 		int i = 0;
@@ -78,11 +86,11 @@ public class AnnotationManager {
 
 		sb = new StringBuffer("((");
 
-		for (i = 0; i < owlClasses.size() - 1; i++) {
-			sb.append(((ArrayList) owlClasses).get(i));
+		for (i = 0; i < ontologyClasses.size() - 1; i++) {
+			sb.append(((ArrayList) ontologyClasses).get(i));
 			sb.append("|");
 		}
-		sb.append(((ArrayList) owlClasses).get(i));
+		sb.append(((ArrayList) ontologyClasses).get(i));
 		sb.append(")([a-z]){0,2})");
 		owlClassPattern = Pattern.compile(sb.toString());
 	}

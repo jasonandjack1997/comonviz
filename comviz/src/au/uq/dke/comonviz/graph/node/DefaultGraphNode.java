@@ -734,13 +734,13 @@ public class DefaultGraphNode extends PNode implements GraphNode {
 
 		// these can be null
 
-//		Paint bg = style.getBackgroundPaint(this);
-//		Paint borderPaint = style.getBorderPaint(this);
-//		Stroke borderStroke = style.getBorderStroke(this);
+		Paint bg = style.getBackgroundPaint(this);
+		Paint borderPaint = style.getBorderPaint(this);
+		Stroke borderStroke = style.getBorderStroke(this);
 
-		Paint bg = Color.red;
-		Paint borderPaint = Color.red;
-		Stroke borderStroke = new PFixedWidthStroke(3f);
+//		Paint bg = Color.red;
+//		Paint borderPaint = Color.red;
+//		Stroke borderStroke = new PFixedWidthStroke(3f);
 
 
 		Shape drawShape = getEllipse();

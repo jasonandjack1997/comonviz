@@ -39,7 +39,7 @@ public class NewGraphModel extends DefaultGraphModel {
 				OntologyRelationship relationship) {
 			// TODO Auto-generated method stub
 			super.databaseRelationshipUpdated(relationship);
-			//NewGraphModel.this.u(relationship);
+			// NewGraphModel.this.u(relationship);
 		}
 
 		@Override
@@ -55,7 +55,7 @@ public class NewGraphModel extends DefaultGraphModel {
 			// TODO Auto-generated method stub
 			super.databaseClassAdded(cls);
 			NewGraphModel.this.createNode(cls);
-	}
+		}
 
 		@Override
 		public void databaseClassUpdated(OntologyClass cls) {
@@ -104,8 +104,8 @@ public class NewGraphModel extends DefaultGraphModel {
 
 	public NewGraphModel() {
 	}
-	
-	public void init(){
+
+	public void init() {
 		this.nodes = super.getNodes();
 		this.arcs = super.getArcs();
 		this.loadNodesFromDB();
@@ -113,7 +113,7 @@ public class NewGraphModel extends DefaultGraphModel {
 
 	}
 
-//CRUD of node	
+	// CRUD of node
 	// tested
 	public GraphNode findGraphNode(OntologyClass ontologyClass) {
 		for (Map.Entry<Object, GraphNode> entry : nodes.entrySet()) {
@@ -124,6 +124,7 @@ public class NewGraphModel extends DefaultGraphModel {
 
 		return null;
 	}
+
 	// tested
 	private void loadNodesFromDB() {
 
@@ -133,28 +134,29 @@ public class NewGraphModel extends DefaultGraphModel {
 			super.addNode(ontologyClass, ontologyClass.getName(), null);
 		}
 	}
-	
-	private void createNode(OntologyClass ontologyClass){
+
+	private void createNode(OntologyClass ontologyClass) {
 		super.addNode(ontologyClass, ontologyClass.getName(), null);
 	}
-	
-	private void removeNode(OntologyClass ontologyClass){
+
+	private void removeNode(OntologyClass ontologyClass) {
 		GraphNode graphNode = this.findGraphNode(ontologyClass);
-		if(graphNode != null){
+		if (graphNode != null) {
 			super.removeArc(graphNode.getUserObject());
 		}
 	}
-	
-	private void updateNode(OntologyClass ontologyClass){
-		DefaultGraphNode graphNode = (DefaultGraphNode) this.findGraphNode(ontologyClass);
-		if(graphNode != null){
+
+	private void updateNode(OntologyClass ontologyClass) {
+		DefaultGraphNode graphNode = (DefaultGraphNode) this
+				.findGraphNode(ontologyClass);
+		if (graphNode != null) {
 			graphNode.setName(ontologyClass.getName());
 		}
-		
+
 	}
 
-//CRUD of arc
-	
+	// CRUD of arc
+
 	// tested
 	private GraphArc findGraphArc(OntologyRelationship ontologyRelationship) {
 		for (Map.Entry<Object, GraphArc> entry : arcs.entrySet()) {
@@ -185,33 +187,33 @@ public class NewGraphModel extends DefaultGraphModel {
 				.findDestinationOntologyClass(ontologyRelationship);
 		GraphNode sourceNode = findGraphNode(sourceOntologyClass);
 		GraphNode destinationNode = findGraphNode(destinationOntologyClass);
-		super.addArc(ontologyRelationship, sourceNode, destinationNode, ontologyRelationship.getName());
+		super.addArc(ontologyRelationship, sourceNode, destinationNode,
+				ontologyRelationship.getName());
 
 	}
+
 	private void removeArc(OntologyRelationship ontologyRelationship) {
 		GraphArc arc = this.findGraphArc(ontologyRelationship);
-		if(arc != null){
+		if (arc != null) {
 			super.removeArc(arc.getUserObject());
 		}
 	}
 
-/*CRUD of arcTypes, to be added or don't need?
- * since arcTypes are updated by tranverse all arcs and get their types
- * for database, axiom crud is needed, but for model, we may not need it
-*/
-	
-	
-	
+	/*
+	 * CRUD of arcTypes, to be added or don't need? since arcTypes are updated
+	 * by tranverse all arcs and get their types for database, axiom crud is
+	 * needed, but for model, we may not need it
+	 */
 
-//other methods
-	public List<GraphNode> getChildren(GraphNode graphNode){
-		
-		List<GraphNode> childrenGraphNodeList = getGraphNodesFromClasses(this.ontologyRelationshipService.findChildren((OntologyClass) graphNode.getUserObject()));
+	// other methods
+	public List<GraphNode> getChildren(GraphNode graphNode) {
+
+		List<GraphNode> childrenGraphNodeList = getGraphNodesFromClasses(this.ontologyRelationshipService
+				.findChildren((OntologyClass) graphNode.getUserObject()));
 		return childrenGraphNodeList;
 	}
 
-	
-	private List<GraphNode> getRelationSrcNodes(GraphNode graphNode) {
+	public List<GraphNode> getRelationSrcNodes(GraphNode graphNode) {
 		List<OntologyClass> relationSrcClassList = this.ontologyRelationshipService
 				.findRelSrcNeighbourClasses((OntologyClass) graphNode
 						.getUserObject());
@@ -219,7 +221,7 @@ public class NewGraphModel extends DefaultGraphModel {
 		return graphNodeList;
 	}
 
-	private List<GraphNode> getRelationDestNodes(GraphNode graphNode) {
+	public List<GraphNode> getRelationDestNodes(GraphNode graphNode) {
 		List<OntologyClass> relationDestClassList = this.ontologyRelationshipService
 				.findRelDestNeighbourClasses((OntologyClass) graphNode
 						.getUserObject());
@@ -234,6 +236,15 @@ public class NewGraphModel extends DefaultGraphModel {
 		return graphNodeList;
 	}
 
+	public GraphNode getBranchGraphNode(GraphNode graphNode) {
+		Long branchId = ((OntologyClass) graphNode.getUserObject())
+				.getBranchId();
+		OntologyClass branchClass = this.ontologyClassService
+				.findById(branchId);
+		GraphNode branchGraphNode = this.findGraphNode(branchClass);
+		return branchGraphNode;
+	}
+
 	private List<GraphNode> getGraphNodesFromClasses(
 			List<OntologyClass> classList) {
 		List<GraphNode> graphNodeList = new ArrayList<GraphNode>();
@@ -244,28 +255,31 @@ public class NewGraphModel extends DefaultGraphModel {
 		return graphNodeList;
 
 	}
-	
-	//to be tested
-	
-	public DefaultMutableTreeNode generateMutableTree(){
-		
-		DefaultMutableTreeNode rootTreeNode = new DefaultMutableTreeNode(this.findRoot());
-		
+
+	// to be tested
+
+	public DefaultMutableTreeNode generateMutableTree() {
+
+		DefaultMutableTreeNode rootTreeNode = new DefaultMutableTreeNode(
+				this.findRoot());
+
 		generateMutableTreeRecursively(rootTreeNode);
-		
+
 		return rootTreeNode;
-		
+
 	}
 
 	public GraphNode findRoot() {
 		return this.findGraphNode(this.ontologyRelationshipService.findRoot());
 	}
 
-	//to be tested
-	
-	private void generateMutableTreeRecursively(DefaultMutableTreeNode rootTreeNode){
-		List<GraphNode> children = this.getChildren((GraphNode) rootTreeNode.getUserObject());
-		for(GraphNode child: children){
+	// to be tested
+
+	private void generateMutableTreeRecursively(
+			DefaultMutableTreeNode rootTreeNode) {
+		List<GraphNode> children = this.getChildren((GraphNode) rootTreeNode
+				.getUserObject());
+		for (GraphNode child : children) {
 			DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(child);
 			rootTreeNode.add(childNode);
 			generateMutableTreeRecursively(childNode);
@@ -286,7 +300,7 @@ public class NewGraphModel extends DefaultGraphModel {
 
 	public void addListeners() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

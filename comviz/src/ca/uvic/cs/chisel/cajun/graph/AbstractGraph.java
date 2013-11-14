@@ -1,5 +1,6 @@
 package ca.uvic.cs.chisel.cajun.graph;
 
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.FocusEvent;
@@ -60,8 +61,10 @@ import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PLayer;
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PInputEventListener;
+import edu.umd.cs.piccolo.util.PBounds;
 
 public abstract class AbstractGraph extends PCanvas implements Graph {
+	private static final int ANIMATION_DURATION = 1000;
 	private static final long serialVersionUID = -2767059869604101888L;
 
 	public static final int ARC_LAYER_INDEX = 0;
@@ -116,13 +119,13 @@ public abstract class AbstractGraph extends PCanvas implements Graph {
 		@Override
 		public void valueChanged(TreeSelectionEvent e) {
 			// TODO Auto-generated method stub
+			DefaultMutableTreeNode selectedTreeNode = (DefaultMutableTreeNode) ((JTree)e.getSource()).getLastSelectedPathComponent();
 			try {
-				DefaultMutableTreeNode selectedTreeNode = (DefaultMutableTreeNode) ((JTree)e.getSource()).getLastSelectedPathComponent();
 				GraphNode selectedGraphNode = (GraphNode) selectedTreeNode.getUserObject();
 				OntologyClass ontologyClass = (OntologyClass) selectedGraphNode.getUserObject();
 				GraphNode realGraphNode = EntryPoint.getGraphModel().findGraphNode(ontologyClass);
 				AbstractGraph.this.selectedNodes.setNode(realGraphNode);
-				EntryPoint.getGraphController().panTo((DefaultGraphNode) realGraphNode);
+				AbstractGraph.this.panTo((DefaultGraphNode) realGraphNode);
 			} catch(NullPointerException e2){
 				e2.printStackTrace();
 			}
@@ -130,6 +133,21 @@ public abstract class AbstractGraph extends PCanvas implements Graph {
 		}
 		
 	};
+	public void panTo(DefaultGraphNode node) {
+		if(node != null) {
+			double x = node.getFullBoundsReference().getX();
+			double y = node.getFullBoundsReference().getY();
+			double w = node.getFullBoundsReference().getWidth();
+			double h = node.getFullBoundsReference().getHeight();
+			PBounds bounds = new PBounds(x - w * .01, y - h * .02, w + w * .02, h + h * .04);
+			// only pan to the bounds if the node is not already visible
+			if(!this.getCamera().getViewBounds().contains(bounds.getBounds2D())) {
+				this.getRoot().getActivityScheduler().addActivity(
+						this.getCamera().animateViewToCenterBounds(bounds.getBounds2D(), false, ANIMATION_DURATION)
+				);
+			}
+		}
+	}
 	
 	private TreeExpansionListener treeExpensionListener = new TreeExpansionListener(){
 
@@ -604,6 +622,13 @@ public abstract class AbstractGraph extends PCanvas implements Graph {
 			filterManager.applyFilters(model);
 			clearOrphanNodes();//this should be a filter
 			EntryPoint.getRadicalLayoutAction().runLayout();
+	}
+	
+	public void performLayoutWithoutNodeFilters(){
+		
+		filterManager.applyArcFilters(model);
+		EntryPoint.getRadicalLayoutAction().runLayout();
+
 	}
 
 	private void clearOrphanNodes(){

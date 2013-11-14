@@ -105,26 +105,27 @@ public class DefaultGraphArcStyle implements GraphArcStyle {
 
 	public Icon getThumbnail(final Object type, final int width,
 			final int height) {
-		return new Icon() {
-			public int getIconWidth() {
-				return width;
-			}
-
-			public int getIconHeight() {
-				return height;
-			}
-
-			public void paintIcon(Component c, Graphics g, int x, int y) {
-				Graphics2D g2 = (Graphics2D) g;
-				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-						RenderingHints.VALUE_ANTIALIAS_ON);
-				Paint paint = getTypePaint(type);
-				g2.setPaint(paint);
-				g2.setStroke(new BasicStroke(3));
-				int midY = y + (height / 2);
-				g2.drawLine(x + 2, midY, x + width - 4, midY);
-			}
-		};
+		return null;
+//		return new Icon() {
+//			public int getIconWidth() {
+//				return width;
+//			}
+//
+//			public int getIconHeight() {
+//				return height;
+//			}
+//
+//			public void paintIcon(Component c, Graphics g, int x, int y) {
+//				Graphics2D g2 = (Graphics2D) g;
+//				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+//						RenderingHints.VALUE_ANTIALIAS_ON);
+//				Paint paint = getTypePaint(type);
+//				g2.setPaint(paint);
+//				g2.setStroke(new BasicStroke(3));
+//				int midY = y + (height / 2);
+//				g2.drawLine(x + 2, midY, x + width - 4, midY);
+//			}
+//		};
 	}
 
 	/**
@@ -139,8 +140,8 @@ public class DefaultGraphArcStyle implements GraphArcStyle {
 	 */
 	public Paint getTypePaint(Object type) {
 
-//		Paint paint = StyleManager.getStyleManager().getArcColor(type);
-		Paint paint = Color.blue;
+		Paint paint = StyleManager.getStyleManager().getArcColor(type);
+		//Paint paint = Color.blue;
 
 		if (paint != null) {
 			return paint;

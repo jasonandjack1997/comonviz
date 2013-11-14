@@ -63,7 +63,7 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 
 	private boolean inverted;
 
-	private Icon icon;
+	//private Icon icon;
 	private PImage image;
 
 	private ArcLabel arcLabel;
@@ -104,11 +104,11 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 
 		this.inverted = false;
 
-		if (icon != null) {
-			this.icon = icon;
-			image = new PImage(((ImageIcon) icon).getImage());
-			addChild(image);
-		}
+//		if (icon != null) {
+//			this.icon = icon;
+//			image = new PImage(((ImageIcon) icon).getImage());
+//			addChild(image);
+//		}
 
 		this.style = new DefaultGraphArcStyle();
 		String name = ((OntologyRelationship)this.getUserObject()).getName();
@@ -124,7 +124,8 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 	}
 
 	public Icon getIcon() {
-		return icon;
+		return null;
+		//return icon;
 	}
 
 	public Object getUserObject() {
@@ -390,11 +391,11 @@ public class DefaultGraphArc extends PPath implements GraphArc {
 	protected void paint(PPaintContext paintContext) {
 		Graphics2D g2 = paintContext.getGraphics();
 
-//		Stroke stroke = getStroke();
-//		Paint paint = getStrokePaint();
+		Stroke stroke = getStroke();
+		Paint paint = getStrokePaint();
 		
-		Stroke stroke = new PFixedWidthStroke(3f);
-		Paint paint = Color.green;
+//		Stroke stroke = new PFixedWidthStroke(3f);
+//		Paint paint = Color.green;
 		
 		if ((stroke != null) && (paint != null)) {
 			g2.setPaint(paint);

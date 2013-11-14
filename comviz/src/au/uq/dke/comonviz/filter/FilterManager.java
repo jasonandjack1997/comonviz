@@ -136,7 +136,7 @@ public class FilterManager {
 		}
 	}
 
-	private void applyArcFilters(GraphModel model) {
+	public void applyArcFilters(GraphModel model) {
 		Collection<GraphArc> arcs = model.getAllArcs();
 		for (GraphArc arc : arcs) {
 			boolean oldVisibility = arc.isVisible();

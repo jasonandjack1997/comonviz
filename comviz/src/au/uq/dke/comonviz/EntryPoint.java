@@ -75,6 +75,7 @@ public class EntryPoint {
 	private static JFrame jFrame;
 	private static FilterManager filterManager;
 
+	private static StyleManager styleManager;
 	public static FilterManager getFilterManager() {
 		return filterManager;
 	}
@@ -105,11 +106,14 @@ public class EntryPoint {
 		this.getFilterManager().getArcTypeFilter().updateArcTypes();
 		flatGraph = new FlatGraph();
 		topView = new TopView();
+		annotationManager = new AnnotationManager();
 		//graphController = new GraphController();
 		radicalLayoutAction =	new LayoutAction(LayoutConstants.LAYOUT_RADIAL, null, new RadialLayoutAlgorithm(1),EntryPoint.getFlatGraph());
 		
 		graphModel.init();
 		topView.initialize();
+		
+		styleManager = StyleManager.getStyleManager();
 		
 		flatGraph.addInputEventListener(new NodeExpandCollapseListener());
 		filterManager.addListeners();
@@ -203,7 +207,7 @@ public class EntryPoint {
 			e1.printStackTrace();
 		}
 		// Create and set up the window.
-		annotationManager = new AnnotationManager(ontology);
+		annotationManager = new AnnotationManager();
 		graphController.getModel().owlOntology = EntryPoint.ontology;
 		// LayoutAction layoutAction =
 		// ((AbstractGraph)gc.getGraph()).getLayout(LayoutConstants.LAYOUT_SPRING);
@@ -229,8 +233,8 @@ public class EntryPoint {
 		TopView topView = graphController.getView();
 		topView.getTreeModel().setRoot(root);
 
-		StyleManager.initStyleManager(treeInfoManager.getBranchNodes(),
-				graphController.getModel().getArcTypes());
+//		StyleManager.initStyleManager(treeInfoManager.getBranchNodes(),
+//				graphController.getModel().getArcTypes());
 
 //		for (OWLClass cls : ontology.getClassesInSignature()) {
 //
